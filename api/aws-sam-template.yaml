@@ -1,0 +1,30 @@
+Transform: 'AWS::Serverless-2016-10-31'
+
+Description: Serverless API resources for the apydox api
+
+Resources:
+  CheckAccessTokenFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Runtime: go1.x
+      Handler: check_access_token
+      CodeUri: ./cmd/handlers
+      Timeout: 30
+    Environment:
+      Variables:
+        SECRET_ID: !Ref SecretID
+    Events:
+      CheckAccessToken:
+        Type: Api
+        Properties:
+          Path: '/auth/github/check'
+          Method: get
+      CheckAccessTokenPing:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+            Input: '{"ping":true}'
+
+Outputs:
+  Endpoint:
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
