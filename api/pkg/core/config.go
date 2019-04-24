@@ -11,18 +11,10 @@ import (
 // Config provides the definition for configuration
 // used within the application.
 type Config struct {
-	Datastore *DatastoreConfig
-	Github    *GithubConfig
-	Server    *ServerConfig
-	Env       *EnvConfig
-	CORS      *CORSConfig
+	Github *GithubConfig
+	Server *ServerConfig
+	Env    *EnvConfig
 }
-
-// DatastoreConfig for connecting to the main application data store.
-type DatastoreConfig struct {
-}
-
-type CORSConfig struct{}
 
 // EnvConfig provides environment-specific configuration around the source
 // of secrets for the API.
@@ -31,11 +23,14 @@ type EnvConfig struct {
 	SecretID     *string
 }
 
+// GithubConfig provides the secrets for connecting to a github application
+// that works as a back-end for managing and storing the API definitions for the portal.
 type GithubConfig struct {
 	ClientID     *string
 	ClientSecret *string
 }
 
+// ServerConfig provides configuration that is used when serving the API as a http server.
 type ServerConfig struct {
 	APIPort *string
 	TLS     *bool
@@ -50,7 +45,6 @@ func LoadConfig() (*Config, error) {
 	config := &Config{}
 	flag.String(flag.DefaultConfigFlagname, "", "path to config file")
 	config.Env = loadEnvConfig()
-	config.Datastore = loadDatastoreConfig()
 	config.Github = loadGithubConfig()
 	config.Server = loadServerConfig()
 	flag.Parse()
@@ -76,11 +70,6 @@ func loadEnvConfig() *EnvConfig {
 	config := &EnvConfig{}
 	config.SecretSource = flag.String("apydox_api_secret_source", "", "The source for secrets used to connect with databases and third parties in the application")
 	config.SecretID = flag.String("apydox_api_secret_id", "", "In the case the secret source is AWS Secrets Manager, this is the id for the set of secrets")
-	return config
-}
-
-func loadDatastoreConfig() *DatastoreConfig {
-	config := &DatastoreConfig{}
 	return config
 }
 

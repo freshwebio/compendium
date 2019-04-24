@@ -23,11 +23,6 @@ func (ctrl *controllerImpl) GetGitHubAccessToken(w http.ResponseWriter, r *http.
 	codeRequest := &struct {
 		Code string `json:"code"`
 	}{}
-	w.Header().Add("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type, Accept")
-	w.Header().Add("Access-Control-Max-Age", "3600")
-	w.Header().Add("Content-Type", "application/json")
 	err := json.NewDecoder(r.Body).Decode(&codeRequest)
 	if err != nil {
 		w.WriteHeader(400)
@@ -55,12 +50,6 @@ func (ctrl *controllerImpl) GetGitHubAccessToken(w http.ResponseWriter, r *http.
 }
 
 func (ctrl *controllerImpl) CheckGitHubAccessToken(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	w.Header().Add("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type, Accept")
-	w.Header().Add("Access-Control-Max-Age", "3600")
-	w.Header().Add("Content-Type", "application/json")
-
 	token := r.URL.Query().Get("token")
 	if token == "" {
 		w.WriteHeader(401)
@@ -94,12 +83,6 @@ func (ctrl *controllerImpl) CheckGitHubAccessToken(w http.ResponseWriter, r *htt
 }
 
 func (ctrl *controllerImpl) RevokeGitHubAccessToken(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	w.Header().Add("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type, Accept")
-	w.Header().Add("Access-Control-Max-Age", "3600")
-	w.Header().Add("Content-Type", "application/json")
-
 	token := ps.ByName("access_token")
 	if token == "" {
 		w.WriteHeader(400)
