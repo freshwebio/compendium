@@ -1,0 +1,12 @@
+version: '3.2'
+
+services:
+  apydox-api:
+    build:
+      context: '.'
+      dockerfile: Dockerfile
+      args:
+        APYDOX_API_PORT: ${APYDOX_API_PORT}
+        APYDOX_API_CONFIG_FILE: ${APYDOX_API_CONFIG_FILE}
+    ports:
+      - '${APYDOX_API_HOST_PORT}:${APYDOX_API_PORT}'

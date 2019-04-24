@@ -3,21 +3,17 @@ S3_BUCKET := $(AWS_S3_BUCKET)
 STACK_NAME := $(STACK_NAME)
 TEMPLATE = aws-sam-template.yaml
 
-.PHONY: test
-test:
-	go test ./...
-
 .PHONY: clean
 clean:
 	rm -f $(PACKAGED_TEMPLATE)
-	./clean-lambdas.sh
+	./clean-aws-lambdas.sh
 
-.PHONY: awslambda
+.PHONY: lambda
 lambda:
-	./build-lambdas.sh
+	./build-aws-lambdas.sh
 
 .PHONY: build
-build: clean awslambda
+build: clean lambda
 
 .PHONY: api
 api: build

@@ -93,6 +93,7 @@ func loadGithubConfig() *GithubConfig {
 
 func loadServerConfig() *ServerConfig {
 	config := &ServerConfig{}
+	config.APIPort = flag.String("apydox_api_port", "4305", "The port on which the API server should run")
 	config.TLS = flag.Bool("apydox_api_tls", false, "Whether or not TLS should be used to run the server")
 	config.TLSCert = flag.String("apydox_api_tls_cert", "__local_resources/server.crt", "The path of the file that contains the TLS certificate")
 	config.TLSKey = flag.String("apydox_api_tls_key", "__local_resources/server.key", "The path of the file that contains the TLS key")
