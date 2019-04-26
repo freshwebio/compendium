@@ -1,0 +1,60 @@
+.App-Notification {
+  position: relative;
+  width: 300px;
+  height: 73px;
+  margin-top: 20px;
+  overflow: hidden;
+  &-Inside {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(+100%);
+    width: 100%;
+    padding: 22px 10px;
+    font-size: 12pt;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    color: white;
+    transition: transform 300ms ease-in-out;
+
+    &.loaded {
+      transform: translateX(0);
+    }
+
+    &.success {
+      background: #49cc90;
+      border: 2px solid darken(#49cc90, 10%);
+      border-right: none;
+
+      .App-Notification-Close {
+        color: lighten(#49cc90, 30%);
+      }
+    }
+
+    &.error {
+      background: #f93e3e;
+      border: 2px solid darken(#f93e3e, 10%);
+      border-right: none;
+
+      .App-Notification-Close {
+        color: lighten(#f93e3e, 30%);
+      }
+    }
+  }
+
+  &-Icon {
+    font-size: 20pt;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+
+  &-Close {
+    font-size: 8pt;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    cursor: pointer;
+  }
+}

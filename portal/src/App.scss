@@ -1,0 +1,115 @@
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 25px;
+  pointer-events: none;
+}
+
+.App-header {
+  position: relative;
+  background: #2d2d2d;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1rem;
+  color: white;
+  z-index: 3001;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .App-link {
+    background: transparent;
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    outline: none;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.88rem;
+    cursor: pointer;
+
+    &--light {
+      color: white;
+    }
+  }
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-button {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.App-tooltip-container {
+  &:hover {
+    .App-tooltip {
+      visibility: visible;
+    }
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  font-size: 9px;
+  line-height: 1.42857143;
+  color: #444;
+  margin: 0px;
+}
+
+.Madswagger-heading {
+  font-size: 1.5rem;
+}
+
+.Required-Asterisk {
+  color: rgb(170, 0, 0);
+
+  &--Light {
+    color: rgb(236, 101, 101);
+  }
+}
+
+.App-CentreLoader,
+.App-CentreItem {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.App-BackgroundLayer {
+  position: fixed;
+  top: 50px;
+  width: 100vw;
+  height: calc(100vh - 50px);
+  opacity: 0.76;
+  visibility: hidden;
+  background: white;
+  z-index: 3500;
+  &.visible {
+    visibility: visible;
+  }
+}

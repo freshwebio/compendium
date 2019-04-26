@@ -1,0 +1,14 @@
+.LoadingScreen {
+  position: relative;
+  height: calc(100vh - 54px);
+  width: 100vw;
+  background: white;
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    transform: translate(-50%, -50%);
+  }
+}
