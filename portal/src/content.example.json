@@ -1,0 +1,13 @@
+{
+  "global": {
+    "logo": ""
+  },
+  "login": {
+    "title": "Welcome to the apydox portal",
+    "summary": [
+      "Here you'll find the API documentation you need to work with and develop back-end services for the apydox platform.",
+      "Simply login with your github account and make sure you are given access to read from and write to the github repo that backs this portal."
+    ],
+    "buttonText": "Login"
+  }
+}
