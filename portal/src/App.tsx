@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 import Home from './pages/Home'
@@ -9,6 +9,7 @@ import { isLoggedIn, logout } from './services/auth'
 import Header from './components/Header'
 import ConnectedEditor from './pages/ConnectedEditor'
 import Notifications from './components/Notifications'
+import GlobalStyle from './styles/globalStyle'
 
 class App extends Component<any, any> {
   constructor(props: any) {
@@ -43,42 +44,48 @@ class App extends Component<any, any> {
 
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Header
-            isLoading={this.state.isLoading}
-            isLoggedIn={this.state.isLoggedIn}
-            logout={this.logout}
-          />
-          <Notifications />
-          <Switch>
-            <Route
-              path="/"
-              exact
-              render={props => (
-                <Home
-                  {...props}
-                  isLoggedIn={this.state.isLoggedIn}
-                  isLoading={this.state.isLoading}
-                />
-              )}
-            />
-            <Route
-              path="/login/oauth/callback"
-              exact
-              render={props => (
-                <LoginCallback {...props} setIsLoggedIn={this.setIsLoggedIn} />
-              )}
-            />
-            <PrivateRoute
-              path="/edit/:service"
-              render={(props: any) => <ConnectedEditor {...props} />}
-              isLoggedIn={this.state.isLoggedIn}
+      <Fragment>
+        <GlobalStyle />
+        <Router>
+          <div className="App">
+            <Header
               isLoading={this.state.isLoading}
+              isLoggedIn={this.state.isLoggedIn}
+              logout={this.logout}
             />
-          </Switch>
-        </div>
-      </Router>
+            <Notifications />
+            <Switch>
+              <Route
+                path="/"
+                exact
+                render={props => (
+                  <Home
+                    {...props}
+                    isLoggedIn={this.state.isLoggedIn}
+                    isLoading={this.state.isLoading}
+                  />
+                )}
+              />
+              <Route
+                path="/login/oauth/callback"
+                exact
+                render={props => (
+                  <LoginCallback
+                    {...props}
+                    setIsLoggedIn={this.setIsLoggedIn}
+                  />
+                )}
+              />
+              <PrivateRoute
+                path="/edit/:service"
+                render={(props: any) => <ConnectedEditor {...props} />}
+                isLoggedIn={this.state.isLoggedIn}
+                isLoading={this.state.isLoading}
+              />
+            </Switch>
+          </div>
+        </Router>
+      </Fragment>
     )
   }
 }
