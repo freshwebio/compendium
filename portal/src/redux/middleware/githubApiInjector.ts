@@ -1,7 +1,7 @@
 import { RSAA } from 'redux-api-middleware'
-import { COMMIT_CHANGES } from '../actions/editor/types'
+import { COMMIT_CHANGES } from 'appredux/actions/editor/types'
 
-const githubAPIRequestActionTypes: Array<string> = [COMMIT_CHANGES]
+const githubAPIRequestActionTypes: string[] = [COMMIT_CHANGES]
 
 const isGithubAPICall = (rsaa: any) => {
   const type =

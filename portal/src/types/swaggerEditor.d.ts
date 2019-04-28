@@ -1,1 +1,1 @@
-declare module 'swagger-editor';
+declare module 'swagger-editor'

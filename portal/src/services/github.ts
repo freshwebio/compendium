@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { toLabel, idToServiceDefinionPath } from '../utils/files'
+import { toLabel, idToServiceDefinionPath } from 'utils/files'
 
 const createGithubApi = (): AxiosInstance => {
   let token
@@ -33,7 +33,21 @@ const getSHAForBranch = async (
   return sha
 }
 
-const prepareApiDefGroups = (accum: Array<any>, fileEntry: any) => {
+export interface FileEntry {
+  path: string
+  type: string
+}
+
+export interface ApiDefinitionGroup {
+  name: string
+  id: string
+  definitions: FileEntry[]
+}
+
+const prepareApiDefGroups = (
+  accum: ApiDefinitionGroup[],
+  fileEntry: FileEntry
+): ApiDefinitionGroup[] => {
   // We only care about top-level directories for grouping.
   if (fileEntry.type === 'tree' && fileEntry.path.indexOf('/') === -1) {
     return [
@@ -49,10 +63,12 @@ const prepareApiDefGroups = (accum: Array<any>, fileEntry: any) => {
     if (parts.length > 1) {
       const groupId = parts[parts.length - 2]
       const targetGroup = accum.find(
-        currentGroup => currentGroup.id === groupId
+        (currentGroup): boolean => currentGroup.id === groupId
       )
       if (targetGroup) {
-        const rest = accum.filter(currentGroup => currentGroup.id !== groupId)
+        const rest = accum.filter(
+          (currentGroup): boolean => currentGroup.id !== groupId
+        )
         return [
           ...rest,
           {
@@ -67,7 +83,9 @@ const prepareApiDefGroups = (accum: Array<any>, fileEntry: any) => {
   return accum
 }
 
-export const getApiDefs = async (branch: string = 'master') => {
+export const getApiDefs = async (
+  branch: string = 'master'
+): Promise<ApiDefinitionGroup[]> => {
   const owner = process.env.REACT_APP_API_DOCS_REPO_OWNER || ''
   const repo = process.env.REACT_APP_API_DOCS_REPO || ''
   const treeSHA = await getSHAForBranch(branch, owner, repo)
@@ -76,9 +94,12 @@ export const getApiDefs = async (branch: string = 'master') => {
     { params: { recursive: 1 } }
   )
   const { tree: treeAsList } = response.data
-  const apiDefs = treeAsList.reduce(prepareApiDefGroups, [])
+  const apiDefs: ApiDefinitionGroup[] = treeAsList.reduce(
+    prepareApiDefGroups,
+    []
+  )
   // Filter out any directories that do not contain api definitions.
-  return apiDefs.filter((group: any) => group.definitions.length > 0)
+  return apiDefs.filter((group): boolean => group.definitions.length > 0)
 }
 
 /**

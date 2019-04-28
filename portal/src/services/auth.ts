@@ -7,13 +7,13 @@ const api = axios.create({
   },
 })
 
-export const getAccessToken = async (code: string) => {
+export const getAccessToken = async (code: string): Promise<string> => {
   const response = await api.post('/auth/github/oauth/access-token', { code })
   const { token } = response.data
   return token
 }
 
-export const isLoggedIn = async () => {
+export const isLoggedIn = async (): Promise<boolean> => {
   let token
   try {
     token = sessionStorage.getItem('madswagger-gh-token')
@@ -30,7 +30,7 @@ export const isLoggedIn = async () => {
   }
 }
 
-export const logout = async () => {
+export const logout = async (): Promise<boolean> => {
   let token
   try {
     token = sessionStorage.getItem('madswagger-gh-token')

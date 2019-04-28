@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import SwaggerEditor from 'swagger-editor'
-import logo from './logo.svg'
 import './Editor.scss'
 import 'swagger-editor/dist/swagger-editor.css'
-import Sidebar from '../components/Sidebar'
-import { loadServiceDefinition } from '../services/github'
-import LoadingScreen from '../components/LoadingScreen'
+import Sidebar from 'components/Sidebar'
+import { loadServiceDefinition } from 'services/github'
+import LoadingScreen from 'components/LoadingScreen'
 
 class Editor extends Component<any, any> {
   editor: any
@@ -26,13 +25,10 @@ class Editor extends Component<any, any> {
     const {
       match: { params },
       isLoggedIn,
-      shouldCommitChanges,
-      commitDescription,
     } = this.props
     const {
       match: { params: prevParams },
       isLoggedIn: prevIsLoggedIn,
-      shouldCommitChanges: prevShouldCommitChanges,
     } = prevProps
 
     if (params.service !== prevParams.service) {
@@ -43,7 +39,6 @@ class Editor extends Component<any, any> {
           if (this.props.setCurrentDocument) {
             this.props.setCurrentDocument(result.content, result.sha)
           }
-          // console.log(this.editor.spec())
         })
         .catch(err => console.log(err))
     }

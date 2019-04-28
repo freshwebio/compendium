@@ -1,27 +1,32 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import Home from './pages/Home'
-import LoginCallback from './pages/LoginCallback'
+import Home from 'pages/Home'
+import LoginCallback from 'pages/LoginCallback'
 import './App.scss'
-import PrivateRoute from './components/PrivateRoute'
-import { isLoggedIn, logout } from './services/auth'
-import Header from './components/Header'
-import ConnectedEditor from './pages/ConnectedEditor'
-import Notifications from './components/Notifications'
-import GlobalStyle from './styles/globalStyle'
+import PrivateRoute from 'components/PrivateRoute'
+import { isLoggedIn, logout } from 'services/auth'
+import Header from 'components/Header'
+import Editor from 'pages/Editor'
+import Notifications from 'components/Notifications'
+import GlobalStyle from 'styles/globalStyle'
 
-const logoutAndRedirect = () => {
-  logout().then(() => {
-    window.location.href = '/'
-  })
+const logoutAndRedirect = (): void => {
+  logout().then(
+    (): void => {
+      window.location.href = '/'
+    }
+  )
 }
 
-const App: React.SFC<any> = () => {
-  const [ loadingAndAccess, setLoadingAndAccess ] = useState({ isLoggedIn: false, isLoading: true })
+const App: React.SFC<any> = (): React.ReactElement => {
+  const [loadingAndAccess, setLoadingAndAccess] = useState({
+    isLoggedIn: false,
+    isLoading: true,
+  })
 
-  useEffect(() => {
-    const checkLoggedIn = async () => {
+  useEffect((): void => {
+    const checkLoggedIn = async (): Promise<void> => {
       const loggedIn = await isLoggedIn()
       setLoadingAndAccess({ isLoggedIn: loggedIn, isLoading: false })
     }
@@ -43,7 +48,7 @@ const App: React.SFC<any> = () => {
             <Route
               path="/"
               exact
-              render={props => (
+              render={(props): React.ReactElement => (
                 <Home
                   {...props}
                   isLoggedIn={loadingAndAccess.isLoggedIn}
@@ -54,10 +59,10 @@ const App: React.SFC<any> = () => {
             <Route
               path="/login/oauth/callback"
               exact
-              render={props => (
+              render={(props): React.ReactElement => (
                 <LoginCallback
                   {...props}
-                  setIsLoggedIn={(isLoggedIn: boolean) => {
+                  setIsLoggedIn={(isLoggedIn: boolean): void => {
                     setLoadingAndAccess({ isLoggedIn, isLoading: false })
                   }}
                 />
@@ -65,7 +70,7 @@ const App: React.SFC<any> = () => {
             />
             <PrivateRoute
               path="/edit/:service"
-              render={(props: any) => <ConnectedEditor {...props} />}
+              render={(props: any): React.ReactElement => <Editor {...props} />}
               isLoggedIn={loadingAndAccess.isLoggedIn}
               isLoading={loadingAndAccess.isLoading}
             />

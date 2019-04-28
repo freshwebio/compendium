@@ -2,7 +2,7 @@
   padding-top: 50px;
   text-align: center;
   .LoginButton {
-    background: url('../assets/images/GitHub-Mark-Light-64px.png'), #333;
+    background: url('../../assets/images/GitHub-Mark-Light-64px.png'), #333;
     background-repeat: no-repeat;
     background-size: 32px 32px;
     background-position: 79px center;
@@ -17,7 +17,7 @@
     padding-right: 50px;
 
     &:hover {
-      background: url('../assets/images/GitHub-Mark-Light-64px.png'), #222;
+      background: url('../../assets/images/GitHub-Mark-Light-64px.png'), #222;
       background-repeat: no-repeat;
       background-size: 32px 32px;
       background-position: 79px center;

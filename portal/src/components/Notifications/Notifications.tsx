@@ -5,7 +5,7 @@ import { NotificationState } from '../../redux/reducers/global'
 import './Notifications.scss'
 
 export interface NotificationsProps {
-  notifications: Array<NotificationState>
+  notifications: NotificationState[]
   removeNotification: (id: string) => () => void
 }
 

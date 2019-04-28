@@ -6,11 +6,7 @@ import logo from '../../assets/logo.svg'
 import content from '../../content.json'
 
 class Header extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props)
-  }
-
-  render() {
+  render(): React.ReactElement {
     const {
       isLoading,
       isLoggedIn,
@@ -23,7 +19,9 @@ class Header extends React.Component<any, any> {
 
     return (
       <header className="App-header">
-        <Link to="/"><img src={content.global.logo || logo} height="40" /></Link>
+        <Link to="/">
+          <img src={content.global.logo || logo} height="40" alt="Logo" />
+        </Link>
         {!isLoading && isLoggedIn && (
           <button className="App-link App-link--light" onClick={logout}>
             Logout

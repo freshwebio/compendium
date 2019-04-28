@@ -5,7 +5,7 @@ import {
   COMMIT_CHANGES_SUCCESS,
   COMMIT_CHANGES,
   COMMIT_CHANGES_FAILURE,
-} from '../actions/editor/types'
+} from 'appredux/actions/editor/types'
 
 export interface EditorState {
   documentHasChanged: boolean

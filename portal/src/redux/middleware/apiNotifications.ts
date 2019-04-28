@@ -3,9 +3,9 @@ import uuidv4 from 'uuid/v4'
 import {
   COMMIT_CHANGES_SUCCESS,
   COMMIT_CHANGES_FAILURE,
-} from '../actions/editor/types'
-import { addNotification } from '../actions/global'
-import { setCurrentCommitDescription } from '../actions/editor'
+} from 'appredux/actions/editor/types'
+import { addNotification } from 'appredux/actions/global'
+import { setCurrentCommitDescription } from 'appredux/actions/editor'
 
 export default (store: any) => (next: any) => (action: any) => {
   // Check if this action is for a successful

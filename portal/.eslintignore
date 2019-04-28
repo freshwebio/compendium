@@ -1,0 +1,6 @@
+**/serviceWorker.ts
+*.css
+*.svg
+*.scss
+*.json
+*.png

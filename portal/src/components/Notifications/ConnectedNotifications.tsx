@@ -6,7 +6,7 @@ import { GlobalState, NotificationState } from '../../redux/reducers/global'
 import { removeNotification } from '../../redux/actions/global'
 
 interface StateProps {
-  notifications: Array<NotificationState>
+  notifications: NotificationState[]
 }
 
 interface DispatchProps {

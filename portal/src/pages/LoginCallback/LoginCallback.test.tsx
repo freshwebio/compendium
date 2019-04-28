@@ -1,5 +1,3 @@
-
-describe('LoginCallback', () => {
-
-  it('should render without crashing', () => {})
+describe('LoginCallback', (): void => {
+  it('should render without crashing', (): void => {})
 })

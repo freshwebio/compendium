@@ -7,7 +7,7 @@ export interface NotificationState {
 }
 
 export interface GlobalState {
-  notifications: Array<NotificationState>
+  notifications: NotificationState[]
 }
 
 const initialState: GlobalState = {

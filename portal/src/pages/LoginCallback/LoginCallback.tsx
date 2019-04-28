@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { getAccessToken } from 'services/auth'
 import LoadingScreen from 'components/LoadingScreen'
 
-const LoginCallback: React.SFC<any> = (props) => {
-  useEffect(() => {
-    const logUserIn = async () => {
+interface LoginCallbackOwnProps {
+  setIsLoggedIn: (isLoggedIn: boolean) => void
+}
+
+type LoginCallbackProps = RouteComponentProps<any> & LoginCallbackOwnProps
+
+const LoginCallback: React.FunctionComponent<LoginCallbackProps> = (
+  props
+): React.ReactElement => {
+  useEffect((): void => {
+    const logUserIn = async (): Promise<void> => {
       const codeMatch = window.location.href.match(/\?code=(.*)/)
       const code = codeMatch && codeMatch[1]
       if (code) {
@@ -25,6 +33,6 @@ const LoginCallback: React.SFC<any> = (props) => {
     logUserIn()
   }, [])
   return <LoadingScreen />
-};
+}
 
 export default withRouter(LoginCallback)

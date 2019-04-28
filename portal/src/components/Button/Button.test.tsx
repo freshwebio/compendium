@@ -1,4 +1,3 @@
-describe('Button', () => {
-
-  it('should render without crashing', () => {})
+describe('Button', (): void => {
+  it('should render without crashing', (): void => {})
 })

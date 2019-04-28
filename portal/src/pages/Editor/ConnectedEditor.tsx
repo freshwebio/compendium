@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Editor from './Editor'
-import { setDocumentChanged, setCurrentDocument } from '../redux/actions/editor'
-import { EditorState } from '../redux/reducers/editor'
+import { setDocumentChanged, setCurrentDocument } from 'appredux/actions/editor'
+import { EditorState } from 'appredux/reducers/editor'
 
 const mapStateToProps = (state: { editor: EditorState }, ownProps: any) => {
   return {

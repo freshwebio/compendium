@@ -1,8 +1,8 @@
 import React from 'react'
 import './Home.scss'
-import { gitHubAuthUrl } from '../utils/urls'
-import ApiDefList from '../components/ApiDefList'
-import LoadingScreen from '../components/LoadingScreen'
+import { gitHubAuthUrl } from 'utils/urls'
+import ApiDefList from 'components/ApiDefList'
+import LoadingScreen from 'components/LoadingScreen'
 
 class Home extends React.Component<any, any> {
   constructor(props: any) {
