@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 
-import store from './redux/store'
+import store from 'appredux/store'
 
-import './index.css'
-import App from './App'
-import * as serviceWorker from './serviceWorker'
-import apydoxv1 from './styles/themes/apydoxv1'
+import 'index.css'
+import App from 'App'
+import * as serviceWorker from 'serviceWorker'
+import apydoxv1 from 'styles/themes/apydoxv1'
 
 ReactDOM.render(
   <ThemeProvider theme={apydoxv1}>

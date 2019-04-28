@@ -6,7 +6,7 @@ import githubApiInjector from './middleware/githubApiInjector'
 import apiNotifications from './middleware/apiNotifications'
 
 const composeEnhancers = composeWithDevTools({
-  name: 'MadSwaggerAPI Portal',
+  name: 'apydox portal',
 })
 const store = () =>
   createStore(
