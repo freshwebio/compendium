@@ -14,24 +14,24 @@ class Notification extends React.Component<NotificationProps, any> {
     this.state = { loaded: false }
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     // After mounting give the notification a second to update and re-render so the transition
     // loads the notification in.
-    setTimeout(() => {
+    setTimeout((): void => {
       this.setState({ loaded: true })
     }, 1000)
   }
 
-  close = () => {
+  close = (): void => {
     this.setState({ loaded: false })
-    setTimeout(() => {
+    setTimeout((): void => {
       if (this.props.onClose) {
         this.props.onClose()
       }
     }, 500)
   }
 
-  render() {
+  render(): React.ReactElement {
     return (
       <div className={`App-Notification`}>
         <div

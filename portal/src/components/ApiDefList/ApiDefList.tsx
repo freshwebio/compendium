@@ -1,26 +1,26 @@
-import React from 'react'
-import { getApiDefs } from '../../services/github'
+import React, { useState, useEffect } from 'react'
+import { getApiDefs, ApiDefinitionGroup } from '../../services/github'
 import ApiDefGroup from '../ApiDefGroup'
+import { ApiDefListWrapper } from './apiDefList.styles'
 
-class ApiDefList extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props)
-    this.state = { apiDefinitionGroups: [] }
-  }
+const ApiDefList: React.FunctionComponent<{}> = (): React.ReactElement => {
+  const [apiDefinitionGroups, setApiDefinitionGroups] = useState<
+    ApiDefinitionGroup[]
+  >([])
+  useEffect((): void => {
+    getApiDefs()
+      .then(
+        (apiDefs: ApiDefinitionGroup[]): void => {
+          setApiDefinitionGroups(apiDefs)
+        }
+      )
+      .catch((err: any): void => console.log(err))
+  }, [])
 
-  async componentDidMount() {
-    try {
-      const apiDefs = await getApiDefs()
-      this.setState({ apiDefinitionGroups: apiDefs })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  render() {
-    return (
-      <div className="ApiDefList">
-        {this.state.apiDefinitionGroups.map((group: any, index: number) => {
+  return (
+    <ApiDefListWrapper>
+      {apiDefinitionGroups.map(
+        (group: any, index: number): React.ReactElement => {
           return (
             <ApiDefGroup
               key={index}
@@ -28,10 +28,10 @@ class ApiDefList extends React.Component<any, any> {
               definitions={group.definitions}
             />
           )
-        })}
-      </div>
-    )
-  }
+        }
+      )}
+    </ApiDefListWrapper>
+  )
 }
 
 export default ApiDefList

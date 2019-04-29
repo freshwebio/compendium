@@ -8,7 +8,8 @@ module.exports = {
   ],
   plugins: ['@typescript-eslint', 'react'],
   rules: {
-    '@typescript-eslint/indent': ['error', 2],
+    // Prettier controls indentation as it can vary between 4 and 2, especially for formatting type parameters.
+    '@typescript-eslint/indent': 'off',
     // Prevent warnings against empty array dependencies for useEffect,
     // which we can use as an equivalent of componentDidMount in class components.
     'react-hooks/exhaustive-deps': 'off',

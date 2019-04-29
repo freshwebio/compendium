@@ -27,7 +27,7 @@ const mapDispatchToProps = (
   ownProps: any
 ): DispatchProps => {
   return {
-    removeNotification: (id: string) => {
+    removeNotification: (id: string): void => {
       dispatch(removeNotification(id))
     },
   }

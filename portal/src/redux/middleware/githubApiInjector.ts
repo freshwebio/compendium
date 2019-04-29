@@ -3,7 +3,7 @@ import { COMMIT_CHANGES } from 'appredux/actions/editor/types'
 
 const githubAPIRequestActionTypes: string[] = [COMMIT_CHANGES]
 
-const isGithubAPICall = (rsaa: any) => {
+const isGithubAPICall = (rsaa: any): boolean => {
   const type =
     typeof rsaa.types[0] === 'object' ? rsaa.types[0].type : rsaa.types[0]
   return githubAPIRequestActionTypes.includes(type)

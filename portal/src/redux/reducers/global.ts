@@ -14,7 +14,7 @@ const initialState: GlobalState = {
   notifications: [],
 }
 
-const globalReducer = (state = initialState, action: any) => {
+const globalReducer = (state = initialState, action: any): GlobalState => {
   switch (action.type) {
     case ADD_NOTIFICATION:
       return {
@@ -32,7 +32,7 @@ const globalReducer = (state = initialState, action: any) => {
       return {
         ...state,
         notifications: state.notifications.filter(
-          (notification: NotificationState) => {
+          (notification: NotificationState): boolean => {
             return notification.id !== action.id
           }
         ),

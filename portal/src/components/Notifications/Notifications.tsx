@@ -10,21 +10,23 @@ export interface NotificationsProps {
 }
 
 class Notifications extends React.Component<NotificationsProps, any> {
-  removeNotification = (id: string) => () => {
+  removeNotification = (id: string): (() => void) => (): void => {
     this.props.removeNotification(id)
   }
 
-  render() {
+  render(): React.ReactElement {
     return (
       <div className="App-Notifications">
-        {this.props.notifications.map(notification => (
-          <Notification
-            key={notification.id}
-            message={notification.message}
-            type={notification.type}
-            onClose={this.removeNotification(notification.id)}
-          />
-        ))}
+        {this.props.notifications.map(
+          (notification): React.ReactElement => (
+            <Notification
+              key={notification.id}
+              message={notification.message}
+              type={notification.type}
+              onClose={this.removeNotification(notification.id)}
+            />
+          )
+        )}
       </div>
     )
   }
