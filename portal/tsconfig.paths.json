@@ -5,6 +5,7 @@
       "assets/*": ["src/assets/*"],
       "components/*": ["src/components/*"],
       "utils/*": ["src/utils/*"],
+      "hooks/*": ["src/hooks/*"],
       "HoCs/*": ["src/utils/HoCs/*"],
       "services/*": ["src/services/*"],
       "pages/*": ["src/pages/*"],

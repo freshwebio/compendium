@@ -1,86 +1,69 @@
-import React, { Fragment } from 'react'
+import React, { useCallback } from 'react'
 
 import './CommitPanel.scss'
-import Tooltip from '../Tooltip'
-import CommitView from '../CommitView'
+import Tooltip from 'components/Tooltip'
+import CommitView from 'components/CommitView'
+import { EditorState } from 'appredux/reducers/editor'
+import useCollapsibleView from 'hooks/useCollapsibleView'
 
-class CommitPanel extends React.Component<any, any> {
-  commitPanelRef: React.RefObject<HTMLDivElement>
-  constructor(props: any) {
-    super(props)
-    this.state = { showView: false }
-    this.commitPanelRef = React.createRef()
-  }
+interface CommitPanelProps {
+  editor: EditorState
+  commitChanges: () => void
+  setCurrentCommitDescription: () => void
+}
 
-  componentDidMount() {
-    document.addEventListener('mousedown', this.documentClick)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.documentClick)
-  }
-
-  documentClick = (evt: any) => {
-    // If the view is currently displayed and a click outside is made
-    // then hide the view.
-    if (
-      this.state.showView &&
-      this.commitPanelRef.current &&
-      !this.commitPanelRef.current.contains(evt.target)
-    ) {
-      this.setState({ showView: false })
-    }
-  }
-
-  showOrHideView = () => {
+const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
+  props
+): React.ReactElement => {
+  const { viewRef, showView, setShowView } = useCollapsibleView()
+  const showOrHideView = useCallback((): void => {
     const {
       editor: { documentHasChanged },
-    } = this.props
+    } = props
     if (documentHasChanged) {
-      this.setState((prevState: any) => ({ showView: !prevState.showView }))
+      setShowView((prevState: boolean): boolean => !prevState)
     }
-  }
+  }, [props.editor.documentHasChanged])
 
-  render() {
-    const {
-      editor: {
-        documentHasChanged,
-        currentCommitDescription: commitDescription,
-        spec,
-        currentSpecSHA,
-        isCommitting,
-      },
-    } = this.props
-    const extraClasses = !documentHasChanged ? 'disabled' : ''
-    return (
-      <Fragment>
-        <div
-          className={`App-BackgroundLayer ${
-            documentHasChanged && this.state.showView ? 'visible' : ''
-          }`}
+  const {
+    editor: {
+      documentHasChanged,
+      currentCommitDescription: commitDescription,
+      spec,
+      currentSpecSHA,
+      isCommitting,
+    },
+  } = props
+
+  const extraClasses = !documentHasChanged ? 'disabled' : ''
+  return (
+    <>
+      <div
+        className={`App-BackgroundLayer ${
+          documentHasChanged && showView ? 'visible' : ''
+        }`}
+      />
+      <div className={`App-CommitPanel`} ref={viewRef}>
+        <button
+          className={`App-button App-tooltip-container ${extraClasses}`}
+          onClick={showOrHideView}
+          disabled={!documentHasChanged}
+        >
+          <i className="App-CommitPanel-Icon far fa-code-commit" />
+          <Tooltip text={'Commit changes'} />
+        </button>
+        <CommitView
+          show={showView && documentHasChanged}
+          commitChanges={props.commitChanges}
+          commitDescription={commitDescription}
+          spec={spec}
+          currentSpecSHA={currentSpecSHA}
+          isCommitting={isCommitting}
+          setCurrentCommitDescription={props.setCurrentCommitDescription}
         />
-        <div className={`App-CommitPanel`} ref={this.commitPanelRef}>
-          <button
-            className={`App-button App-tooltip-container ${extraClasses}`}
-            onClick={this.showOrHideView}
-            disabled={!documentHasChanged}
-          >
-            <i className="App-CommitPanel-Icon far fa-code-commit" />
-            <Tooltip text={'Commit changes'} />
-          </button>
-          <CommitView
-            show={this.state.showView && documentHasChanged}
-            commitChanges={this.props.commitChanges}
-            commitDescription={commitDescription}
-            spec={spec}
-            currentSpecSHA={currentSpecSHA}
-            isCommitting={isCommitting}
-            setCurrentCommitDescription={this.props.setCurrentCommitDescription}
-          />
-        </div>
-      </Fragment>
-    )
-  }
+      </div>
+    </>
+  )
 }
 
 export default CommitPanel
