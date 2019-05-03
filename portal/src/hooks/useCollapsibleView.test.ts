@@ -67,4 +67,16 @@ describe('useCollapsibleView', (): void => {
     )
     expect(collapsibleView.showView).toBeFalse()
   })
+
+  it('should not update the show view state if the view is already hidden without any problems', async (): Promise<
+    void
+  > => {
+    act(
+      (): void => {
+        const event = new Event('mousedown', { bubbles: true })
+        document.getElementById('clickTargetElement').dispatchEvent(event)
+      }
+    )
+    expect(collapsibleView.showView).toBeFalse()
+  })
 })
