@@ -1,11 +1,15 @@
 import React from 'react'
 
-import './Tooltip.scss'
+import { StyledTooltip } from './tooltip.styles'
 
-class Tooltip extends React.Component<any, any> {
-  render() {
-    return <div className="App-tooltip">{this.props.text}</div>
-  }
+interface TooltipProps {
+  text: string
+}
+
+const Tooltip: React.FunctionComponent<TooltipProps> = ({
+  text,
+}): React.ReactElement => {
+  return <StyledTooltip>{text}</StyledTooltip>
 }
 
 export default Tooltip

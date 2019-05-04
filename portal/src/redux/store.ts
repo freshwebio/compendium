@@ -8,7 +8,8 @@ import apiNotifications from './middleware/apiNotifications'
 const composeEnhancers = composeWithDevTools({
   name: 'apydox portal',
 })
-const store = () =>
+
+const store = (): any =>
   createStore(
     reducer,
     composeEnhancers(

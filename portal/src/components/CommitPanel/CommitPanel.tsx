@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react'
 
-import './CommitPanel.scss'
 import Tooltip from 'components/Tooltip'
 import CommitView from 'components/CommitView'
 import { EditorState } from 'appredux/reducers/editor'
 import useCollapsibleView from 'hooks/useCollapsibleView'
+import { CommitPanelWrapper } from './commitPanel.styles'
+import IconButton from 'components/IconButton'
+import BackgroundLayer from 'components/BackgroundLayer'
 
 interface CommitPanelProps {
   editor: EditorState
@@ -17,12 +19,10 @@ const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
 ): React.ReactElement => {
   const { viewRef, showView, setShowView } = useCollapsibleView()
   const showOrHideView = useCallback((): void => {
-    const {
-      editor: { documentHasChanged },
-    } = props
-    if (documentHasChanged) {
-      setShowView((prevState: boolean): boolean => !prevState)
-    }
+    // Given the disabled state of the icon button we don't need to check
+    // whether or not the document has changed, as the click event won't fire
+    // if the document hasn't changed.
+    setShowView((prevState: boolean): boolean => !prevState)
   }, [props.editor.documentHasChanged])
 
   const {
@@ -35,23 +35,20 @@ const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
     },
   } = props
 
-  const extraClasses = !documentHasChanged ? 'disabled' : ''
   return (
     <>
-      <div
-        className={`App-BackgroundLayer ${
-          documentHasChanged && showView ? 'visible' : ''
-        }`}
-      />
-      <div className={`App-CommitPanel`} ref={viewRef}>
-        <button
-          className={`App-button App-tooltip-container ${extraClasses}`}
+      <BackgroundLayer visible={showView} />
+      <CommitPanelWrapper ref={viewRef}>
+        <IconButton
           onClick={showOrHideView}
           disabled={!documentHasChanged}
+          isTooltipContainer
+          iconClassName="far fa-code-commit"
+          colour="white"
+          iconFontSize="21pt"
         >
-          <i className="App-CommitPanel-Icon far fa-code-commit" />
           <Tooltip text={'Commit changes'} />
-        </button>
+        </IconButton>
         <CommitView
           show={showView && documentHasChanged}
           commitChanges={props.commitChanges}
@@ -61,7 +58,7 @@ const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
           isCommitting={isCommitting}
           setCurrentCommitDescription={props.setCurrentCommitDescription}
         />
-      </div>
+      </CommitPanelWrapper>
     </>
   )
 }

@@ -40,7 +40,7 @@ const mapDispatchToProps = (
       commitDescription: string,
       spec: string,
       currentSpecSHA: string
-    ) => {
+    ): void => {
       const {
         history: { location },
       } = ownProps
@@ -62,7 +62,7 @@ const mapDispatchToProps = (
         )
       }
     },
-    setCurrentCommitDescription: (description: string) => {
+    setCurrentCommitDescription: (description: string): void => {
       dispatch(setCurrentCommitDescription(description))
     },
   }
