@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-
+import icon from 'assets/images/GitHub-Mark-Light-64px.png'
 const HomeWrapper = styled.div`
   padding-top: 50px;
   text-align: center;
 `
 
 const LoginButton = styled.a`
-  background: url('../../assets/images/GitHub-Mark-Light-64px.png'), #333;
+  background: url(${icon}), #333;
   background-repeat: no-repeat;
   background-size: 32px 32px;
   background-position: 79px center;
@@ -21,7 +21,7 @@ const LoginButton = styled.a`
   padding-right: 50px;
 
   &:hover {
-    background: url('../../assets/images/GitHub-Mark-Light-64px.png'), #222;
+    background: url(${icon}), #222;
     background-repeat: no-repeat;
     background-size: 32px 32px;
     background-position: 79px center;
