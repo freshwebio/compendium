@@ -35,5 +35,6 @@ const mapDispatchToProps = (
 
 export default connect(
   mapStateToProps,
+  // @ts-ignore
   mapDispatchToProps
 )(Notifications)

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Home from 'pages/Home'
 import LoginCallback from 'pages/LoginCallback'
-import './App.scss'
 import PrivateRoute from 'components/PrivateRoute'
 import { isLoggedIn, logout } from 'services/auth'
 import Header from 'components/Header'

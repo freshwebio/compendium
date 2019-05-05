@@ -71,6 +71,8 @@ const mapDispatchToProps = (
 export default withRouter(
   connect(
     mapStateToProps,
+    // @see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31363#issuecomment-448013978
+    // @ts-ignore
     mapDispatchToProps
   )(CommitPanel)
 )

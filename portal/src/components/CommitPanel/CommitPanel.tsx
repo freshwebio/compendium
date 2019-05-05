@@ -8,7 +8,7 @@ import { CommitPanelWrapper } from './commitPanel.styles'
 import IconButton from 'components/IconButton'
 import BackgroundLayer from 'components/BackgroundLayer'
 
-interface CommitPanelProps {
+export interface CommitPanelProps {
   editor: EditorState
   commitChanges: () => void
   setCurrentCommitDescription: () => void

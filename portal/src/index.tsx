@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components'
 
 import store from 'appredux/store'
 
-import 'index.css'
 import App from 'App'
 import * as serviceWorker from 'serviceWorker'
 import apydoxv1 from 'styles/themes/apydoxv1'

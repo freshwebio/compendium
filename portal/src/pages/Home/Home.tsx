@@ -1,31 +1,33 @@
 import React from 'react'
-import './Home.scss'
+
 import { gitHubAuthUrl } from 'utils/urls'
 import ApiDefList from 'components/ApiDefList'
 import LoadingScreen from 'components/LoadingScreen'
 
-class Home extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props)
+import { HomeWrapper, LoginButton } from './home.styles'
+
+interface HomeProps {
+  isLoading: boolean
+  isLoggedIn: boolean
+}
+
+const Home: React.FunctionComponent<HomeProps> = ({
+  isLoading,
+  isLoggedIn,
+}): React.ReactElement => {
+  if (isLoading) {
+    return <LoadingScreen />
   }
 
-  render() {
-    if (this.props.isLoading) {
-      return <LoadingScreen />
-    }
-
-    return (
-      <div className="Home">
-        {this.props.isLoggedIn ? (
-          <ApiDefList />
-        ) : (
-          <a className="LoginButton" href={gitHubAuthUrl()}>
-            Login
-          </a>
-        )}
-      </div>
-    )
-  }
+  return (
+    <HomeWrapper>
+      {isLoggedIn ? (
+        <ApiDefList />
+      ) : (
+        <LoginButton href={gitHubAuthUrl()}>Login</LoginButton>
+      )}
+    </HomeWrapper>
+  )
 }
 
 export default Home

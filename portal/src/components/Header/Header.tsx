@@ -1,9 +1,11 @@
 import React from 'react'
 import { withRouter, matchPath } from 'react-router'
 import { Link } from 'react-router-dom'
-import CommitPanel from '../CommitPanel'
-import logo from '../../assets/logo.svg'
-import content from '../../content.json'
+
+import { StyledHeader, ButtonLink } from './header.styles'
+import CommitPanel from 'components/CommitPanel'
+import logo from 'assets/logo.svg'
+import content from 'content.json'
 
 class Header extends React.Component<any, any> {
   render(): React.ReactElement {
@@ -18,17 +20,17 @@ class Header extends React.Component<any, any> {
     })
 
     return (
-      <header className="App-header">
+      <StyledHeader>
         <Link to="/">
           <img src={content.global.logo || logo} height="40" alt="Logo" />
         </Link>
         {!isLoading && isLoggedIn && (
-          <button className="App-link App-link--light" onClick={logout}>
+          <ButtonLink colour="white" onClick={logout}>
             Logout
-          </button>
+          </ButtonLink>
         )}
         {editorMatch && !!editorMatch.params.service && <CommitPanel />}
-      </header>
+      </StyledHeader>
     )
   }
 }

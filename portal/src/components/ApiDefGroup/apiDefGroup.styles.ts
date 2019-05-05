@@ -12,4 +12,8 @@ const ApiDefGroupWrapper = styled.div`
   margin-top: 50px;
 `
 
-export { CardsWrapper, ApiDefGroupWrapper }
+const Heading = styled.h3`
+  font-size: 1.5rem;
+`
+
+export { CardsWrapper, ApiDefGroupWrapper, Heading }

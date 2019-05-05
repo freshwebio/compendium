@@ -1,4 +1,6 @@
-.LoadingScreen {
+import styled from 'styled-components'
+
+const LoadingScreenWrapper = styled.div`
   position: relative;
   height: calc(100vh - 54px);
   width: 100vw;
@@ -11,4 +13,6 @@
     width: 200px;
     transform: translate(-50%, -50%);
   }
-}
+`
+
+export { LoadingScreenWrapper }

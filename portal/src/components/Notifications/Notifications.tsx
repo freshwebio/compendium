@@ -1,35 +1,35 @@
 import React from 'react'
-import Notification from '../Notification'
-import { NotificationState } from '../../redux/reducers/global'
 
-import './Notifications.scss'
+import Notification from 'components/Notification'
+import { NotificationState } from 'appredux/reducers/global'
+
+import { NotificationsWrapper } from './notifications.styles'
 
 export interface NotificationsProps {
   notifications: NotificationState[]
   removeNotification: (id: string) => () => void
 }
 
-class Notifications extends React.Component<NotificationsProps, any> {
-  removeNotification = (id: string): (() => void) => (): void => {
-    this.props.removeNotification(id)
-  }
-
-  render(): React.ReactElement {
-    return (
-      <div className="App-Notifications">
-        {this.props.notifications.map(
-          (notification): React.ReactElement => (
-            <Notification
-              key={notification.id}
-              message={notification.message}
-              type={notification.type}
-              onClose={this.removeNotification(notification.id)}
-            />
-          )
-        )}
-      </div>
-    )
-  }
+const Notifications: React.FunctionComponent<NotificationsProps> = ({
+  notifications,
+  removeNotification,
+}): React.ReactElement => {
+  return (
+    <NotificationsWrapper>
+      {notifications.map(
+        (notification): React.ReactElement => (
+          <Notification
+            key={notification.id}
+            message={notification.message}
+            type={notification.type}
+            onClose={(): void => {
+              removeNotification(notification.id)
+            }}
+          />
+        )
+      )}
+    </NotificationsWrapper>
+  )
 }
 
 export default Notifications

@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import SwaggerEditor from 'swagger-editor'
-import './Editor.scss'
+
 import 'swagger-editor/dist/swagger-editor.css'
 import Sidebar from 'components/Sidebar'
 import { loadServiceDefinition } from 'services/github'
 import LoadingScreen from 'components/LoadingScreen'
+import EditorStyles from './editor.styles'
 
 class Editor extends Component<any, any> {
   editor: any
@@ -15,13 +16,13 @@ class Editor extends Component<any, any> {
     this.state = { originalDocument: '' }
   }
 
-  async componentDidMount() {
+  async componentDidMount(): Promise<void> {
     if (this.props.isLoggedIn) {
       this.initSwaggerEditor()
     }
   }
 
-  componentDidUpdate(prevProps: any) {
+  componentDidUpdate(prevProps: any): void {
     const {
       match: { params },
       isLoggedIn,
@@ -33,14 +34,16 @@ class Editor extends Component<any, any> {
 
     if (params.service !== prevParams.service) {
       loadServiceDefinition(params.service)
-        .then((result: { content: string; sha: string }) => {
-          this.setState({ originalDocument: result.content })
-          this.editor.specActions.updateSpec(result.content)
-          if (this.props.setCurrentDocument) {
-            this.props.setCurrentDocument(result.content, result.sha)
+        .then(
+          (result: { content: string; sha: string }): void => {
+            this.setState({ originalDocument: result.content })
+            this.editor.specActions.updateSpec(result.content)
+            if (this.props.setCurrentDocument) {
+              this.props.setCurrentDocument(result.content, result.sha)
+            }
           }
-        })
-        .catch(err => console.log(err))
+        )
+        .catch((err): void => console.log(err))
     }
 
     if (isLoggedIn && isLoggedIn !== prevIsLoggedIn) {
@@ -48,11 +51,11 @@ class Editor extends Component<any, any> {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.unsubscribe()
   }
 
-  handleEditorChange = () => {
+  handleEditorChange = (): void => {
     const {
       setDocumentChanged,
       setCurrentDocument,
@@ -73,7 +76,7 @@ class Editor extends Component<any, any> {
     }
   }
 
-  initSwaggerEditor = async () => {
+  initSwaggerEditor = async (): Promise<void> => {
     if (!this.editor) {
       const {
         match: { params },
@@ -95,18 +98,19 @@ class Editor extends Component<any, any> {
     }
   }
 
-  render() {
+  render(): React.ReactElement {
     return (
-      <Fragment>
+      <>
+        <EditorStyles />
         {this.props.isLoading ? (
           <LoadingScreen />
         ) : (
-          <Fragment>
+          <>
             <Sidebar />
             <div id="swagger-editor" />
-          </Fragment>
+          </>
         )}
-      </Fragment>
+      </>
     )
   }
 }

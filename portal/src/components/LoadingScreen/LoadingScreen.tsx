@@ -1,12 +1,12 @@
 import React from 'react'
 
-import './LoadingScreen.scss'
-import Loader from '../../assets/images/loader.svg'
+import { LoadingScreenWrapper } from './loadingScreen.styles'
+import Loader from 'assets/images/loader.svg'
 
-const LoadingScreen = () => (
-  <div className="LoadingScreen">
-    <img src={Loader} />
-  </div>
+const LoadingScreen: React.FunctionComponent<{}> = (): React.ReactElement => (
+  <LoadingScreenWrapper>
+    <img src={Loader} alt="Loading" />
+  </LoadingScreenWrapper>
 )
 
 export default LoadingScreen

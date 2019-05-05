@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
-import './Notification.scss'
+import {
+  NotificationWrapper,
+  NotificationIcon,
+  NotificationClose,
+  NotificationInsideWrapper,
+} from './notification.styles'
 
 export interface NotificationProps {
   message: string
@@ -8,51 +13,43 @@ export interface NotificationProps {
   onClose?: () => void
 }
 
-class Notification extends React.Component<NotificationProps, any> {
-  constructor(props: NotificationProps) {
-    super(props)
-    this.state = { loaded: false }
-  }
+const Notification: React.FunctionComponent<NotificationProps> = ({
+  message,
+  type,
+  onClose,
+}): React.ReactElement => {
+  const [loaded, setLoaded] = useState<boolean>(false)
 
-  componentDidMount(): void {
+  useEffect((): void => {
     // After mounting give the notification a second to update and re-render so the transition
     // loads the notification in.
     setTimeout((): void => {
-      this.setState({ loaded: true })
+      setLoaded(true)
     }, 1000)
-  }
+  }, [])
 
-  close = (): void => {
-    this.setState({ loaded: false })
+  const close = useCallback((): void => {
+    setLoaded(false)
     setTimeout((): void => {
-      if (this.props.onClose) {
-        this.props.onClose()
+      if (onClose) {
+        onClose()
       }
     }, 500)
-  }
+  }, [setLoaded, onClose])
 
-  render(): React.ReactElement {
-    return (
-      <div className={`App-Notification`}>
-        <div
-          className={`App-Notification-Inside ${this.props.type} ${
-            this.state.loaded ? 'loaded' : ''
-          }`}
-        >
-          {this.props.message}
-          {this.props.type === 'error' ? (
-            <i className="fas fa-exclamation-circle App-Notification-Icon" />
-          ) : (
-            <i className="fas fa-check-circle App-Notification-Icon" />
-          )}
-          <i
-            className="fas fa-times App-Notification-Close"
-            onClick={this.close}
-          />
-        </div>
-      </div>
-    )
-  }
+  return (
+    <NotificationWrapper>
+      <NotificationInsideWrapper loaded={loaded} type={type}>
+        {message}
+        {type === 'error' ? (
+          <NotificationIcon className="fas fa-exclamation-circle" />
+        ) : (
+          <NotificationIcon className="fas fa-check-circle" />
+        )}
+        <NotificationClose className="fas fa-times" onClick={close} />
+      </NotificationInsideWrapper>
+    </NotificationWrapper>
+  )
 }
 
 export default Notification
