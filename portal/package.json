@@ -30,6 +30,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test --coverage",
+    "codacy-coverage": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint \"src/**\"",
     "fix-lint": "./node_modules/.bin/eslint \"src/**\" --fix"
@@ -59,7 +60,8 @@
     "coverageReporters": [
       "text",
       "html",
-      "cobertura"
+      "cobertura",
+      "lcov"
     ]
   },
   "resolutions": {
@@ -74,6 +76,7 @@
     "@types/redux-mock-store": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
+    "codacy-coverage": "^3.4.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint-config-prettier": "^4.2.0",

@@ -28,11 +28,7 @@ jobs:
       - run: go get github.com/axw/gocov/gocov
       - run: go get github.com/AlekSi/gocov-xml
       - run: gocov test -v ./... | gocov-xml > coverage.xml || TEST_RUNNER_EXIT_CODE=$?
-      - run: echo $TEST_RUNNER_EXIT_CODE > api_test_exit_code
-      - save_cache:
-          key: apydox-api-v1-tests-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - ~/apydox/api
+      - run: exit $TEST_RUNNER_EXIT_CODE
   deps_portal:
     docker:
       - image: circleci/node:10.15.3-browsers-legacy
@@ -57,35 +53,8 @@ jobs:
             - apydox-portal-v1-{{ .Branch }}-
             - apydox-portal-v1-
       - run: yarn test || TEST_RUNNER_EXIT_CODE=$?
-      - run: echo $TEST_RUNNER_EXIT_CODE > coverage/portal_test_exit_code
-      - save_cache:
-          key: apydox-portal-v1-tests-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - ~/apydox/portal/coverage
+      - run: yarn codacy-coverage
       - run: exit $TEST_RUNNER_EXIT_CODE
-  send_coverage:
-    docker:
-      - image: circleci/openjdk:8-jdk-browsers
-    steps:
-      - restore_cache:
-          keys: 
-            - apydox-portal-v1-tests-{{ .Branch }}-{{ .Revision }}
-            - apydox-portal-v1-tests-{{ .Branch }}-
-            - apydox-portal-v1-tests-
-      - restore_cache:
-          keys: 
-            - apydox-api-v1-tests-{{ .Branch }}-{{ .Revision }}
-            - apydox-api-v1-tests-{{ .Branch }}-
-            - apydox-api-v1-tests-
-      - run: sudo apt-get install jq
-      - run: LATEST_CODACY_COVER_VERSION="$(curl -Ls https://api.bintray.com/packages/codacy/Binaries/codacy-coverage-reporter/versions/_latest | jq -r .name)"
-      - run: curl -Ls -o codacy-coverage-reporter-assembly.jar "https://dl.bintray.com/codacy/Binaries/${LATEST_CODACY_COVER_VERSION}/codacy-coverage-reporter-assembly.jar"
-      - run: chmod +x codacy-coverage-reporter-assembly.jar
-      - run: java -jar codacy-coverage-reporter-assembly.jar report -l TypeScript --force-language -r ~/apydox/portal/coverage/cobertura-coverage.xml
-      - run: java -jar codacy-coverage-reporter-assembly.jar report -l Go --force-language -r ~/apydox/api/coverage.xml
-      - run: API_TEST_EXIT_CODE=$(< ~/apydox/api/api_test_exit_code) && PORTAL_TEST_EXIT_CODE=$(< ~/apydox/portal/coverage/portal_test_exit_code)
-      - run: '[ $API_TEST_EXIT_CODE -eq 0 ] || exit 1'
-      - run: '[ $PORTAL_TEST_EXIT_CODE -eq 0 ] || exit 1'
 workflows:
   version: 2
   deps_and_test:
@@ -118,12 +87,3 @@ workflows:
               only: master
           requires:
             - deps_portal
-      - send_coverage:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              only: master
-          requires:
-            - test_portal
-            - test_api
