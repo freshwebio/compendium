@@ -12,6 +12,7 @@
     "@types/styled-components": "^4.1.14",
     "@types/uuid": "^3.4.4",
     "axios": "^0.18.0",
+    "polished": "^3.3.0",
     "react": "^16.9.0-alpha.0",
     "react-dom": "^16.9.0-alpha.0",
     "react-redux": "^7.0.1",

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { darken } from 'polished'
 
 const CommitViewWrapper = styled('div')<any>`
   position: absolute;
@@ -52,7 +53,7 @@ const CommitViewButton = styled.button`
   font-size: 12pt;
   border-radius: 3px;
   cursor: pointer;
-  background: darken(#61affe, 3%);
+  background: ${darken(0.03, '#61affe')};
   color: white;
 
   ${({ disabled }): any =>
