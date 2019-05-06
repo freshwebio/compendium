@@ -32,6 +32,7 @@ jobs:
       - checkout:
           path: ~/apydox
       - run: yarn
+      - run: cp src/content.example.json src/content.json
       - save_cache:
           key: apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
           paths:
