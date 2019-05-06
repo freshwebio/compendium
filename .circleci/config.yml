@@ -5,6 +5,7 @@ jobs:
       # Use one of circleci's images packed with curl, actual language doesn't matter for this job.
       - image: circleci/golang:1.12
     steps:
+      - run: sudo apt-get install jq
       - run: LATEST_CODACY_COVER_VERSION="$(curl -Ls https://api.bintray.com/packages/codacy/Binaries/codacy-coverage-reporter/versions/_latest | jq -r .name)"
       - run: curl -Ls -o /coveragebin/codacy-coverage-reporter "https://dl.bintray.com/codacy/Binaries/${LATEST_CODACY_COVER_VERSION}/codacy-coverage-reporter-linux"
       - run: chmod +x /coveragebin/codacy-coverage-reporter
@@ -20,7 +21,7 @@ jobs:
       - checkout:
           path: ~/apydox
       - run: go get -v -t -d ./...
-      - run: go get github.com/axw/gocov/...
+      - run: go get github.com/axw/gocov/gocov
       - run: go get github.com/AlekSi/gocov-xml
       - save_cache:
           key: apydox-api-v1-{{ .Branch }}-{{ .Revision }}
