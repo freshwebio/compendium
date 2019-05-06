@@ -1,0 +1,80 @@
+version: 2.1
+jobs:
+  deps_api:
+    docker:
+      - image: circleci/golang:1.12
+    working_directory: ~/apydox/api
+    steps:
+      - checkout:
+          path: ~/apydox
+      - run: go get -v -t -d ./...
+      - save_cache:
+          key: apydox-api-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/apydox/api
+            - "/go/pkg"
+            - "/go/src"
+  test_api:
+    docker:
+      - image: circleci/golang:1.12
+    working_directory: ~/apydox/api
+    steps:
+      - restore_cache:
+          keys:
+            - apydox-api-v1-{{ .Branch }}-{{ .Revision }}
+            - apydox-api-v1-{{ .Branch }}-
+            - apydox-api-v1-
+      - run: go test -v ./...
+  deps_portal:
+    docker:
+      - image: circleci/node:10.15.3-browsers-legacy
+    working_directory: ~/apydox/portal
+    steps:
+      - checkout:
+          path: ~/apydox
+      - run: yarn
+      - save_cache:
+          key: apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/apydox/portal
+  test_portal:
+    docker:
+      - image: circleci/node:10.15.3-browsers-legacy
+    working_directory: ~/apydox/portal
+    steps:
+      - restore_cache:
+          keys: 
+            - apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
+            - apydox-portal-v1-{{ .Branch }}-
+            - apydox-portal-v1-
+      - run: yarn test
+workflows:
+  version: 2
+  deps_and_test_api:
+    jobs:
+      - deps_api:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master
+      - test_api:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master
+  deps_and_test_portal:
+    jobs:
+      - deps_portal:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master
+      - test_portal:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master
