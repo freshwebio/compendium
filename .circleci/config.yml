@@ -64,6 +64,8 @@ workflows:
               only: /^v.*/
             branches:
               only: master
+          requires:
+            - deps_api
   deps_and_test_portal:
     jobs:
       - deps_portal:
@@ -78,3 +80,5 @@ workflows:
               only: /^v.*/
             branches:
               only: master
+          requires:
+            - deps_portal
