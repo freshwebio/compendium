@@ -12,7 +12,7 @@ jobs:
       - save_cache:
           key: apydox-all-v1-{{ .Branch }}-{{ .Revision }}
           paths:
-            - ~/project/codacy-coverage-reporter
+            - ~/project
   deps_api:
     docker:
       - image: circleci/golang:1.12
