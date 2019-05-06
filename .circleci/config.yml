@@ -7,12 +7,12 @@ jobs:
     steps:
       - run: sudo apt-get install jq
       - run: LATEST_CODACY_COVER_VERSION="$(curl -Ls https://api.bintray.com/packages/codacy/Binaries/codacy-coverage-reporter/versions/_latest | jq -r .name)"
-      - run: curl -Ls -o /codacy-coverage-reporter "https://dl.bintray.com/codacy/Binaries/${LATEST_CODACY_COVER_VERSION}/codacy-coverage-reporter-linux"
-      - run: chmod +x /codacy-coverage-reporter
+      - run: curl -Ls -o codacy-coverage-reporter "https://dl.bintray.com/codacy/Binaries/${LATEST_CODACY_COVER_VERSION}/codacy-coverage-reporter-linux"
+      - run: chmod +x codacy-coverage-reporter
       - save_cache:
           key: apydox-all-v1-{{ .Branch }}-{{ .Revision }}
           paths:
-            - /codacy-coverage-reporter
+            - ~/project/codacy-coverage-reporter
   deps_api:
     docker:
       - image: circleci/golang:1.12
@@ -44,7 +44,7 @@ jobs:
             - apydox-all-v1-{{ .Branch }}-
             - apydox-all-v1-
       - run: gocov test -v ./... | gocov-xml > coverage.xml
-      - run: /codacy-coverage-reporter report -l Go --force-language -r coverage.xml
+      - run: ~/project/codacy-coverage-reporter report -l Go --force-language -r coverage.xml
   deps_portal:
     docker:
       - image: circleci/node:10.15.3-browsers-legacy
@@ -74,7 +74,7 @@ jobs:
             - apydox-all-v1-{{ .Branch }}-
             - apydox-all-v1-
       - run: yarn test
-      - run: /codacy-coverage-reporter report -l TypeScript --force-language -r coverage/cobertura-coverage.xml
+      - run: ~/project/codacy-coverage-reporter report -l TypeScript --force-language -r coverage/cobertura-coverage.xml
 workflows:
   version: 2
   deps_and_test:
