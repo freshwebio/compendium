@@ -12,8 +12,7 @@ jobs:
           key: apydox-api-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - ~/apydox/api
-            - "/go/pkg"
-            - "/go/src"
+            - "/go/pkg/mod"
   test_api:
     docker:
       - image: circleci/golang:1.12
