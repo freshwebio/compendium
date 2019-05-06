@@ -2,7 +2,7 @@
 
 for d in cmd/handlers/*/; do
   dtrimmed=$(echo $d | sed -e "s/\///g")
-  is_lambda_function=$(cat aws-sam-template.yaml | grep -i -E "CodeUri: (\'|\")?\.\/cmd/handlers/${dtrimmed}")
+  is_lambda_function=$(< aws-sam-template.yaml | grep -i -E "CodeUri: (\'|\")?\.\/cmd/handlers/${dtrimmed}")
   if [ -n "$is_lambda_function" ]; then
     PREV_WORKING_DIR=$(pwd)
     cd "cmd/handlers/$d"
