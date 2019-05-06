@@ -1,5 +1,17 @@
 version: 2.1
 jobs:
+  deps_all:
+    docker:
+      # Use one of circleci's images packed with curl, actual language doesn't matter for this job.
+      - image: circleci/golang:1.12
+    steps:
+      - run: LATEST_CODACY_COVER_VERSION="$(curl -Ls https://api.bintray.com/packages/codacy/Binaries/codacy-coverage-reporter/versions/_latest | jq -r .name)"
+      - run: curl -Ls -o /coveragebin/codacy-coverage-reporter "https://dl.bintray.com/codacy/Binaries/${LATEST_CODACY_COVER_VERSION}/codacy-coverage-reporter-linux"
+      - run: chmod +x /coveragebin/codacy-coverage-reporter
+      - save_cache:
+          key: apydox-all-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - /coveragebin
   deps_api:
     docker:
       - image: circleci/golang:1.12
@@ -8,6 +20,8 @@ jobs:
       - checkout:
           path: ~/apydox
       - run: go get -v -t -d ./...
+      - run: go get github.com/axw/gocov/...
+      - run: go get github.com/AlekSi/gocov-xml
       - save_cache:
           key: apydox-api-v1-{{ .Branch }}-{{ .Revision }}
           paths:
@@ -23,7 +37,13 @@ jobs:
             - apydox-api-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-api-v1-{{ .Branch }}-
             - apydox-api-v1-
-      - run: go test -v ./...
+      - restore_cache:
+          keys:
+            - apydox-all-v1-{{ .Branch }}-{{ .Revision }}
+            - apydox-all-v1-{{ .Branch }}-
+            - apydox-all-v1-
+      - run: gocov test -v ./... | gocov-xml > coverage.xml
+      - run: /coveragebin/codacy-coverage-reporter report -l Go --force-language -r coverage.xml
   deps_portal:
     docker:
       - image: circleci/node:10.15.3-browsers-legacy
@@ -47,11 +67,23 @@ jobs:
             - apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-portal-v1-{{ .Branch }}-
             - apydox-portal-v1-
+      - restore_cache:
+          keys:
+            - apydox-all-v1-{{ .Branch }}-{{ .Revision }}
+            - apydox-all-v1-{{ .Branch }}-
+            - apydox-all-v1-
       - run: yarn test
+      - run: /coveragebin/codacy-coverage-reporter report -l TypeScript --force-language -r coverage/cobertura-coverage.xml
 workflows:
   version: 2
-  deps_and_test_api:
+  deps_and_test:
     jobs:
+      - deps_all:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master 
       - deps_api:
           filters:
             tags:
@@ -66,8 +98,7 @@ workflows:
               only: master
           requires:
             - deps_api
-  deps_and_test_portal:
-    jobs:
+            - deps_all
       - deps_portal:
           filters:
             tags:
@@ -82,3 +113,4 @@ workflows:
               only: master
           requires:
             - deps_portal
+            - deps_all
