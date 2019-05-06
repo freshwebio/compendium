@@ -76,7 +76,7 @@ jobs:
       - run: exit $TEST_RUNNER_EXIT_CODE
   send_coverage:
     docker:
-      image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/openjdk:8-jdk-browsers
     steps:
       - restore_cache:
           keys: 
