@@ -79,7 +79,7 @@ jobs:
             - apydox-api-v1-tests-
       - run: sudo apt-get install jq
       - run: LATEST_CODACY_COVER_VERSION="$(curl -Ls https://api.bintray.com/packages/codacy/Binaries/codacy-coverage-reporter/versions/_latest | jq -r .name)"
-      - run: curl -Ls -o codacy-coverage-reporter-assembly.jar "https://dl.bintray.com/codacy/Binaries/${LATEST_VERSION}/codacy-coverage-reporter-assembly.jar"
+      - run: curl -Ls -o codacy-coverage-reporter-assembly.jar "https://dl.bintray.com/codacy/Binaries/${LATEST_CODACY_COVER_VERSION}/codacy-coverage-reporter-assembly.jar"
       - run: java -jar codacy-coverage-reporter-assembly.jar report -l TypeScript --force-language -r ~/apydox/portal/coverage/cobertura-coverage.xml
       - run: java -jar codacy-coverage-reporter-assembly.jar report -l Go --force-language -r ~/apydox/api/coverage.xml
       - run: API_TEST_EXIT_CODE=$(< ~/apydox/api/api_test_exit_code) && PORTAL_TEST_EXIT_CODE=$(< ~/apydox/portal/coverage/portal_test_exit_code)
