@@ -58,7 +58,8 @@
     },
     "coverageReporters": [
       "text",
-      "html"
+      "html",
+      "cobertura"
     ]
   },
   "resolutions": {
