@@ -1,1 +1,0 @@
-# apydox api - contributing
