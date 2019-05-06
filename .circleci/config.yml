@@ -34,19 +34,16 @@ jobs:
             - apydox-api-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-api-v1-{{ .Branch }}-
             - apydox-api-v1-
-      - restore_cache:
-          keys:
-            - apydox-all-v1-{{ .Branch }}-{{ .Revision }}
-            - apydox-all-v1-{{ .Branch }}-
-            - apydox-all-v1-
-      - run: sudo add-apt-repository ppa:openjdk-r/ppa && sudo apt-get update && sudo apt-get install openjdk-8-jdk
       # Unfortunately couldn't seem to get this working with caching the binary dependencies,
       # so we have to install the global binary packages in the test job.
       - run: go get github.com/axw/gocov/gocov
       - run: go get github.com/AlekSi/gocov-xml
       - run: gocov test -v ./... | gocov-xml > coverage.xml || TEST_RUNNER_EXIT_CODE=$?
-      - run: java -jar ~/project/codacy-coverage-reporter-assembly.jar report -l Go --force-language -r coverage.xml
-      - run: exit TEST_RUNNER_EXIT_CODE
+      - run: echo $TEST_RUNNER_EXIT_CODE > api_test_exit_code
+      - save_cache:
+          key: apydox-api-v1-tests-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/apydox/api
   deps_portal:
     docker:
       - image: circleci/node:10.15.3-browsers-legacy
@@ -70,15 +67,37 @@ jobs:
             - apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-portal-v1-{{ .Branch }}-
             - apydox-portal-v1-
+      - run: yarn test || TEST_RUNNER_EXIT_CODE=$?
+      - run: echo $TEST_RUNNER_EXIT_CODE > coverage/portal_test_exit_code
+      - save_cache:
+          key: apydox-portal-v1-tests-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/apydox/portal/coverage
+      - run: exit $TEST_RUNNER_EXIT_CODE
+  send_coverage:
+    docker:
+      image: circleci/openjdk:8-jdk-browsers
+    steps:
+      - restore_cache:
+          keys: 
+            - apydox-portal-v1-tests-{{ .Branch }}-{{ .Revision }}
+            - apydox-portal-v1-tests-{{ .Branch }}-
+            - apydox-portal-v1-tests-
+      - restore_cache:
+          keys: 
+            - apydox-api-v1-tests-{{ .Branch }}-{{ .Revision }}
+            - apydox-api-v1-tests-{{ .Branch }}-
+            - apydox-api-v1-tests-
       - restore_cache:
           keys:
             - apydox-all-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-all-v1-{{ .Branch }}-
             - apydox-all-v1-
-      - run: sudo add-apt-repository ppa:openjdk-r/ppa && sudo apt-get update && sudo apt-get install openjdk-8-jdk
-      - run: yarn test || TEST_RUNNER_EXIT_CODE=$?
-      - run: java -jar ~/project/codacy-coverage-reporter-assembly.jar report -l TypeScript --force-language -r coverage/cobertura-coverage.xml
-      - run: exit $TEST_RUNNER_EXIT_CODE
+      - run: java -jar codacy-coverage-reporter-assembly.jar report -l TypeScript --force-language -r ~/apydox/portal/coverage/cobertura-coverage.xml
+      - run: java -jar codacy-coverage-reporter-assembly.jar report -l Go --force-language -r ~/apydox/api/coverage.xml
+      - run: API_TEST_EXIT_CODE=$(< ~/apydox/api/api_test_exit_code) && PORTAL_TEST_EXIT_CODE=$(< ~/apydox/portal/coverage/portal_test_exit_code)
+      - run: '[ $API_TEST_EXIT_CODE -eq 0 ] || exit 1'
+      - run: '[ $PORTAL_TEST_EXIT_CODE -eq 0 ] || exit 1'
 workflows:
   version: 2
   deps_and_test:
@@ -119,3 +138,12 @@ workflows:
           requires:
             - deps_portal
             - deps_all
+      - send_coverage:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master
+          requires:
+            - test_portal
+            - test_all
