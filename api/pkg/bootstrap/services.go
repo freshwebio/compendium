@@ -5,6 +5,8 @@ import (
 	"github.com/freshwebio/apydox-api/pkg/core"
 )
 
+// SetupServices deals with setting up the services provided by the modules
+// that make up the portal api.
 func SetupServices() (map[string]interface{}, error) {
 	services := make(map[string]interface{})
 	err := core.SetupServices(services)

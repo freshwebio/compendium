@@ -14,6 +14,8 @@ import (
 	"golang.org/x/oauth2"
 )
 
+// Service provides the functionality that interacts with
+// github for authorisation.
 type Service interface {
 	GetGitHubAccessToken(code string) (string, error)
 	CheckGitHubAccessToken(token string) (bool, error)
@@ -88,7 +90,7 @@ func (s *serviceImpl) setupBasicAuthHTTPClient() *http.Client {
 	return client
 }
 
-func setupHttpClient() *http.Client {
+func setupHTTPClient() *http.Client {
 	return &http.Client{
 		Timeout: time.Second * 10,
 	}
@@ -100,6 +102,8 @@ func setupOAuthClient(token string) *http.Client {
 	return oauth2.NewClient(ctx, ts)
 }
 
+// NewService creates a new instance of a service that connects the portal with github
+// to manage user access to the portal.
 func NewService(config *core.Config) Service {
-	return &serviceImpl{config, setupHttpClient()}
+	return &serviceImpl{config, setupHTTPClient()}
 }

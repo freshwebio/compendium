@@ -9,6 +9,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// Controller provides the set of http handlers that interact with github
+// for authorisation purposes.
 type Controller interface {
 	GetGitHubAccessToken(http.ResponseWriter, *http.Request, httprouter.Params)
 	CheckGitHubAccessToken(http.ResponseWriter, *http.Request, httprouter.Params)
@@ -104,6 +106,9 @@ func (ctrl *controllerImpl) RevokeGitHubAccessToken(w http.ResponseWriter, r *ht
 	w.Write([]byte("{}"))
 }
 
+// NewController creates a new instance of the auth controller
+// used to provide the endpoint handlers for the authorisation and authentication
+// parts of the portal.
 func NewController(authService Service) Controller {
 	return &controllerImpl{authService}
 }

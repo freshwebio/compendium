@@ -6,6 +6,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// RegisterRoutes registers all the routes related to authorisation and authentication for
+// the portal.
 func RegisterRoutes(router *httprouter.Router, services map[string]interface{}) {
 	ctrl := NewController(services["auth.auth"].(Service))
 	router.POST("/auth/github/oauth/access-token", ctrl.GetGitHubAccessToken)
