@@ -2,13 +2,11 @@ version: 2.1
 jobs:
   deps_all:
     docker:
-      # Use one of circleci's images packed with curl, actual language doesn't matter for this job.
-      - image: circleci/golang:1.12
+      - image: circleci/openjdk:8-jdk-browsers
     steps:
       - run: sudo apt-get install jq
       - run: LATEST_CODACY_COVER_VERSION="$(curl -Ls https://api.bintray.com/packages/codacy/Binaries/codacy-coverage-reporter/versions/_latest | jq -r .name)"
-      - run: curl -Ls -o codacy-coverage-reporter "https://dl.bintray.com/codacy/Binaries/${LATEST_CODACY_COVER_VERSION}/codacy-coverage-reporter-linux"
-      - run: chmod +x codacy-coverage-reporter
+      - run: curl -Ls -o codacy-coverage-reporter-assembly.jar "https://dl.bintray.com/codacy/Binaries/${LATEST_VERSION}/codacy-coverage-reporter-assembly.jar"
       - save_cache:
           key: apydox-all-v1-{{ .Branch }}-{{ .Revision }}
           paths:
@@ -41,12 +39,13 @@ jobs:
             - apydox-all-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-all-v1-{{ .Branch }}-
             - apydox-all-v1-
+      - run: sudo add-apt-repository ppa:openjdk-r/ppa && sudo apt-get update && sudo apt-get install openjdk-8-jdk
       # Unfortunately couldn't seem to get this working with caching the binary dependencies,
       # so we have to install the global binary packages in the test job.
       - run: go get github.com/axw/gocov/gocov
       - run: go get github.com/AlekSi/gocov-xml
       - run: gocov test -v ./... | gocov-xml > coverage.xml || TEST_RUNNER_EXIT_CODE=$?
-      - run: ~/project/codacy-coverage-reporter report -l Go --force-language -r coverage.xml
+      - run: java -jar ~/project/codacy-coverage-reporter-assembly.jar report -l Go --force-language -r coverage.xml
       - run: exit TEST_RUNNER_EXIT_CODE
   deps_portal:
     docker:
@@ -76,8 +75,9 @@ jobs:
             - apydox-all-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-all-v1-{{ .Branch }}-
             - apydox-all-v1-
+      - run: sudo add-apt-repository ppa:openjdk-r/ppa && sudo apt-get update && sudo apt-get install openjdk-8-jdk
       - run: yarn test || TEST_RUNNER_EXIT_CODE=$?
-      - run: ~/project/codacy-coverage-reporter report -l TypeScript --force-language -r coverage/cobertura-coverage.xml
+      - run: java -jar ~/project/codacy-coverage-reporter-assembly.jar report -l TypeScript --force-language -r coverage/cobertura-coverage.xml
       - run: exit $TEST_RUNNER_EXIT_CODE
 workflows:
   version: 2
