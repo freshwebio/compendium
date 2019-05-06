@@ -146,4 +146,4 @@ workflows:
               only: master
           requires:
             - test_portal
-            - test_all
+            - test_api
