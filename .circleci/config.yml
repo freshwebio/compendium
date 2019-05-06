@@ -23,11 +23,9 @@ jobs:
             - apydox-api-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-api-v1-{{ .Branch }}-
             - apydox-api-v1-
-      # Unfortunately couldn't seem to get this working with caching the binary dependencies,
-      # so we have to install the global binary packages in the test job.
-      - run: go get github.com/axw/gocov/gocov
-      - run: go get github.com/AlekSi/gocov-xml
-      - run: gocov test -v ./... | gocov-xml > coverage.xml || TEST_RUNNER_EXIT_CODE=$?
+      - run: go get github.com/schrej/godacov
+      - run: go -coverprofile=coverage.out test -v ./... || TEST_RUNNER_EXIT_CODE=$?
+      - run: godacov -t $CODACY_PROJECT_TOKEN -r ./coverage.out -c $CIRCLE_SHA1
       - run: exit $TEST_RUNNER_EXIT_CODE
   deps_portal:
     docker:

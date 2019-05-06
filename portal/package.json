@@ -60,7 +60,6 @@
     "coverageReporters": [
       "text",
       "html",
-      "cobertura",
       "lcov"
     ]
   },
