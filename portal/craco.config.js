@@ -24,10 +24,12 @@ module.exports = {
         '^HoCs(.*)$': '<rootDir>/src/utils/HoCs$1',
         '^hooks(.*)$': '<rootDir>/src/hooks$1',
         '^utils(.*)$': '<rootDir>/src/utils$1',
+        '^testUtils(.*)$': '<rootDir>/src/testUtils$1',
         '^services(.*)$': '<rootDir>/src/services$1',
         '^pages(.*)$': '<rootDir>/src/pages$1',
         '^appredux(.*)$': '<rootDir>/src/redux$1',
         '^styles(.*)$': '<rootDir>/src/styles$1',
+        '^(.*)$': '<rootDir>/src/$1',
       },
       testPathIgnorePatterns: [
         '/node_modules/',
