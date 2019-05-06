@@ -29,7 +29,7 @@ module.exports = {
         '^pages(.*)$': '<rootDir>/src/pages$1',
         '^appredux(.*)$': '<rootDir>/src/redux$1',
         '^styles(.*)$': '<rootDir>/src/styles$1',
-        '^(.*)$': '<rootDir>/src/$1',
+        '^content.json$': '<rootDir>/src/content.json',
       },
       testPathIgnorePatterns: [
         '/node_modules/',
