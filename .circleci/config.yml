@@ -1,16 +1,5 @@
 version: 2.1
 jobs:
-  deps_all:
-    docker:
-      - image: circleci/openjdk:8-jdk-browsers
-    steps:
-      - run: sudo apt-get install jq
-      - run: LATEST_CODACY_COVER_VERSION="$(curl -Ls https://api.bintray.com/packages/codacy/Binaries/codacy-coverage-reporter/versions/_latest | jq -r .name)"
-      - run: curl -Ls -o codacy-coverage-reporter-assembly.jar "https://dl.bintray.com/codacy/Binaries/${LATEST_VERSION}/codacy-coverage-reporter-assembly.jar"
-      - save_cache:
-          key: apydox-all-v1-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - ~/project
   deps_api:
     docker:
       - image: circleci/golang:1.12
@@ -88,11 +77,9 @@ jobs:
             - apydox-api-v1-tests-{{ .Branch }}-{{ .Revision }}
             - apydox-api-v1-tests-{{ .Branch }}-
             - apydox-api-v1-tests-
-      - restore_cache:
-          keys:
-            - apydox-all-v1-{{ .Branch }}-{{ .Revision }}
-            - apydox-all-v1-{{ .Branch }}-
-            - apydox-all-v1-
+      - run: sudo apt-get install jq
+      - run: LATEST_CODACY_COVER_VERSION="$(curl -Ls https://api.bintray.com/packages/codacy/Binaries/codacy-coverage-reporter/versions/_latest | jq -r .name)"
+      - run: curl -Ls -o codacy-coverage-reporter-assembly.jar "https://dl.bintray.com/codacy/Binaries/${LATEST_VERSION}/codacy-coverage-reporter-assembly.jar"
       - run: java -jar codacy-coverage-reporter-assembly.jar report -l TypeScript --force-language -r ~/apydox/portal/coverage/cobertura-coverage.xml
       - run: java -jar codacy-coverage-reporter-assembly.jar report -l Go --force-language -r ~/apydox/api/coverage.xml
       - run: API_TEST_EXIT_CODE=$(< ~/apydox/api/api_test_exit_code) && PORTAL_TEST_EXIT_CODE=$(< ~/apydox/portal/coverage/portal_test_exit_code)
@@ -102,12 +89,6 @@ workflows:
   version: 2
   deps_and_test:
     jobs:
-      - deps_all:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              only: master 
       - deps_api:
           filters:
             tags:
@@ -122,7 +103,6 @@ workflows:
               only: master
           requires:
             - deps_api
-            - deps_all
       - deps_portal:
           filters:
             tags:
@@ -137,7 +117,6 @@ workflows:
               only: master
           requires:
             - deps_portal
-            - deps_all
       - send_coverage:
           filters:
             tags:
