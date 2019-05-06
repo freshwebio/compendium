@@ -28,6 +28,7 @@ jobs:
           paths:
             - ~/apydox/api
             - "/go/pkg"
+            - "/go/bin"
   test_api:
     docker:
       - image: circleci/golang:1.12
@@ -43,7 +44,7 @@ jobs:
             - apydox-all-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-all-v1-{{ .Branch }}-
             - apydox-all-v1-
-      - run: TEST_RUNNER_EXIT_CODE=$(gocov test -v ./... | gocov-xml > coverage.xml)
+      - run: TEST_RUNNER_EXIT_CODE=$(gocov test -v ./... | gocov-xml > coverage.xml) && exit 0
       - run: ~/project/codacy-coverage-reporter report -l Go --force-language -r coverage.xml
       - run: exit TEST_RUNNER_EXIT_CODE
   deps_portal:
@@ -74,7 +75,7 @@ jobs:
             - apydox-all-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-all-v1-{{ .Branch }}-
             - apydox-all-v1-
-      - run: TEST_RUNNER_EXIT_CODE=$(yarn test)
+      - run: TEST_RUNNER_EXIT_CODE=$(yarn test) && exit 0
       - run: ~/project/codacy-coverage-reporter report -l TypeScript --force-language -r coverage/cobertura-coverage.xml
       - run: exit $TEST_RUNNER_EXIT_CODE
 workflows:
