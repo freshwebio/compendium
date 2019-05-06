@@ -24,9 +24,12 @@ jobs:
             - apydox-api-v1-{{ .Branch }}-
             - apydox-api-v1-
       - run: go get github.com/schrej/godacov
-      - run: go test -coverprofile=coverage.out -v ./... || TEST_RUNNER_EXIT_CODE=$?
-      - run: godacov -t $CODACY_PROJECT_TOKEN -r ./coverage.out -c $CIRCLE_SHA1
-      - run: echo "API tests exit code -> $TEST_RUNNER_EXIT_CODE" && exit $TEST_RUNNER_EXIT_CODE
+      - run:
+          name: Run the tests for the api and send coverage
+          command: |
+            go test -coverprofile=coverage.out -v ./... || TEST_RUNNER_EXIT_CODE=$?
+            godacov -t $CODACY_PROJECT_TOKEN -r ./coverage.out -c $CIRCLE_SHA1
+            echo "API tests exit code -> $TEST_RUNNER_EXIT_CODE" && exit $TEST_RUNNER_EXIT_CODE
   deps_portal:
     docker:
       - image: circleci/node:10.15.3-browsers-legacy
@@ -50,9 +53,12 @@ jobs:
             - apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-portal-v1-{{ .Branch }}-
             - apydox-portal-v1-
-      - run: yarn test || TEST_RUNNER_EXIT_CODE=$?
-      - run: yarn codacy-coverage
-      - run: echo "Portal tests exit code -> $TEST_RUNNER_EXIT_CODE" && exit $TEST_RUNNER_EXIT_CODE
+      - run:
+          name: Run the tests for the portal and send coverage
+          command: |
+            yarn test || TEST_RUNNER_EXIT_CODE=$?
+            yarn codacy-coverage
+            echo "Portal tests exit code -> $TEST_RUNNER_EXIT_CODE" && exit $TEST_RUNNER_EXIT_CODE
 workflows:
   version: 2
   deps_and_test:
