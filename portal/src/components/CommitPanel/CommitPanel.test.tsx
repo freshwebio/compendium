@@ -4,6 +4,7 @@ import { act } from 'react-test-renderer'
 
 import CommitPanel from './CommitPanel'
 import IconButton from 'components/IconButton'
+import CommitView from 'components/CommitView'
 
 describe('CommitPanel', (): void => {
   it('should render without any issues', (): void => {
@@ -44,9 +45,7 @@ describe('CommitPanel', (): void => {
         iconButton.simulate('click', { target: {} })
       }
     )
-    // Only lasts for as long as CommitView is a class-based component and not
-    // a styled component.
-    // TODO: Alter test when CommitView is a styled component.
-    expect(wrapper.find('.App-CommitView').hasClass('visible')).toBeTrue()
+    // Does props of a child component count as an implementation detail? possibly find a better approach here.
+    expect(wrapper.find(CommitView).props().show).toBeTrue()
   })
 })

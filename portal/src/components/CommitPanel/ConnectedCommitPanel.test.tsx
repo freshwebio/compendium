@@ -4,6 +4,7 @@ import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import { apiMiddleware } from 'redux-api-middleware'
 import nock from 'nock'
+import { enzymeFind } from 'styled-components/test-utils'
 
 import { MemoryRouter } from 'react-router'
 import { act } from 'react-test-renderer'
@@ -14,6 +15,10 @@ import {
   COMMIT_CHANGES,
   SET_CURRENT_COMMIT_DESCRIPTION,
 } from 'appredux/actions/editor/types'
+import {
+  CommitViewButton,
+  CommitViewTextArea,
+} from 'components/CommitView/commitView.styles'
 
 const mockStore = configureMockStore([githubApiInjector, apiMiddleware])
 
@@ -68,10 +73,9 @@ describe('ConnectedCommitPanel', (): void => {
         </Provider>
       </MemoryRouter>
     )
-    // Breaks when CommitView becomes a styled component.
     act(
       (): void => {
-        wrapper.find('.App-CommitView-Button').simulate('click', { target: {} })
+        enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
       }
     )
     expect(store.getActions()).toEqual([{ type: COMMIT_CHANGES }])
@@ -95,10 +99,9 @@ describe('ConnectedCommitPanel', (): void => {
         </Provider>
       </MemoryRouter>
     )
-    // Breaks when CommitView becomes a styled component.
     act(
       (): void => {
-        wrapper.find('.App-CommitView-TextArea').simulate('change', {
+        enzymeFind(wrapper, CommitViewTextArea).simulate('change', {
           target: { value: 'This is the new description' },
         })
       }
@@ -133,10 +136,9 @@ describe('ConnectedCommitPanel', (): void => {
         </Provider>
       </MemoryRouter>
     )
-    // Breaks when CommitView becomes a styled component.
     act(
       (): void => {
-        wrapper.find('.App-CommitView-Button').simulate('click', { target: {} })
+        enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
       }
     )
     expect(store.getActions()).toEqual([])
