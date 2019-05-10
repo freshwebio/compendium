@@ -3,14 +3,13 @@ import { withRouter } from 'react-router'
 
 import { getApiDefs } from 'services/github'
 import SidebarNavigation from 'components/SidebarNavigation'
-import useCollapsibleView from 'hooks/useCollapsibleView'
-import { SidebarWrapper, CaretIcon } from './sidebar.styles'
+import { SidebarWrapper, ListIcon } from './sidebar.styles'
 
 const Sidebar: React.FunctionComponent<any> = ({
   match,
 }): React.ReactElement => {
   const [apiDefinitionGroups, setApiDefinitionGroups] = useState<any[]>([])
-  const { viewRef, showView, setShowView } = useCollapsibleView()
+  const [showView, setShowView] = useState<boolean>(false)
 
   useEffect((): void => {
     const loadApiDefs = async (): Promise<void> => {
@@ -32,15 +31,13 @@ const Sidebar: React.FunctionComponent<any> = ({
     }
   }, [match.params])
 
-  const caretDirection = showView ? 'left' : 'right'
   return (
-    <SidebarWrapper visible={showView} ref={viewRef}>
-      <CaretIcon
-        className={`fas fa-caret-${caretDirection}`}
-        onClick={(): void => {
-          setShowView((prevState: boolean): boolean => !prevState)
-        }}
-      />
+    <SidebarWrapper
+      visible={showView}
+      onMouseEnter={(): void => setShowView(true)}
+      onMouseLeave={(): void => setShowView(false)}
+    >
+      <ListIcon visible={showView} className={`far fa-list-ul`} />
       <SidebarNavigation groups={apiDefinitionGroups} />
     </SidebarWrapper>
   )

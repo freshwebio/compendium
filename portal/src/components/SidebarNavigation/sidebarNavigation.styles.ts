@@ -32,6 +32,7 @@ const NavWrapper = styled.ul`
   list-style-type: none;
   margin-left: 0;
   padding-left: 15px;
+  padding-right: 25px;
 `
 
 // Expecting styling that is nav group specific from design update.
