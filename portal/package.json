@@ -27,7 +27,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "PORT=5401 NODE_PATH=src craco start",
+    "start": "PORT=5401 NODE_PATH=src HTTPS=true craco start",
     "build": "NODE_PATH=src craco build",
     "test": "craco test --coverage",
     "codacy-coverage": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
