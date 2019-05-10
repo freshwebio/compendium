@@ -43,7 +43,7 @@ const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
           onClick={showOrHideView}
           disabled={!documentHasChanged}
           isTooltipContainer
-          iconClassName="far fa-code-commit"
+          iconClassName="fas fa-cloud-upload-alt"
           colour="white"
           iconFontSize="21pt"
         >
