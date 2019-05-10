@@ -33,7 +33,7 @@ describe('CommitView', (): void => {
         commitDescription=""
         spec=""
         currentSpecSHA=""
-        show
+        show={false}
         isCommitting={false}
         setCurrentCommitDescription={setCurrentCommitDescription}
         commitChanges={(): void => {}}
