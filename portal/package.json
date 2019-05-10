@@ -27,8 +27,8 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "start": "NODE_PATH=src craco start",
+    "build": "NODE_PATH=src craco build",
     "test": "craco test --coverage",
     "codacy-coverage": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
     "eject": "react-scripts eject",
