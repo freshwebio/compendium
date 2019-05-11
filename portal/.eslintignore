@@ -4,3 +4,4 @@
 *.scss
 *.json
 *.png
+craco.config.js

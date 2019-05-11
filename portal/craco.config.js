@@ -1,6 +1,9 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const content = require('./src/content.json')
+
 module.exports = {
   webpack: {
-    configure: (webpackConfig, { paths }) => {
+    configure: (webpackConfig, { env, paths }) => {
       webpackConfig.resolve.alias = {
         ...webpackConfig.resolve.alias,
         assets: `${paths.appSrc}/assets/`,
@@ -13,6 +16,38 @@ module.exports = {
         appredux: `${paths.appSrc}/redux/`,
         styles: `${paths.appSrc}/styles/`,
       }
+
+      webpackConfig.plugins = webpackConfig.plugins.map(plugin => {
+        if (plugin.constructor.name === 'HtmlWebpackPlugin') {
+          if (env === 'development') {
+            plugin = new HtmlWebpackPlugin({
+              inject: true,
+              template: paths.appHtml,
+              title: content.global.title,
+            })
+          } else {
+            plugin = new HtmlWebpackPlugin({
+              inject: true,
+              template: paths.appHtml,
+              minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+              },
+            })
+          }
+        }
+
+        return plugin
+      })
+
       return webpackConfig
     },
   },

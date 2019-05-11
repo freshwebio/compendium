@@ -1,6 +1,7 @@
 {
   "global": {
-    "logo": ""
+    "logo": "",
+    "title": "Apydox Portal"
   },
   "login": {
     "title": "Welcome to the apydox portal",
