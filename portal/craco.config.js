@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const content = require('./src/content.json')
+const config = require('./config.json')
 
 module.exports = {
   webpack: {
@@ -23,7 +23,7 @@ module.exports = {
             plugin = new HtmlWebpackPlugin({
               inject: true,
               template: paths.appHtml,
-              title: content.global.title,
+              title: config.title,
             })
           } else {
             plugin = new HtmlWebpackPlugin({
