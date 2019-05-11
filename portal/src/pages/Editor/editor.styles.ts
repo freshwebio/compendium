@@ -27,6 +27,10 @@ const EditorStyles = createGlobalStyle`
 .Pane2 {
   overflow-y: scroll;
 }
+
+.SplitPane .Pane:first-child {
+  padding-left: 28px;
+}
 `
 
 export default EditorStyles
