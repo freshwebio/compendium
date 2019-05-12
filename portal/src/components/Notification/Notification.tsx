@@ -28,7 +28,7 @@ const Notification: React.FunctionComponent<NotificationProps> = ({
     // loads the notification in.
     setTimeout((): void => {
       setLoaded(true)
-    }, 1000)
+    }, NOTIFICATION_LOAD_WAIT_TIME)
   }, [])
 
   const close = useCallback((): void => {
@@ -37,7 +37,7 @@ const Notification: React.FunctionComponent<NotificationProps> = ({
       if (onClose) {
         onClose()
       }
-    }, 500)
+    }, NOTIFICATION_CLOSE_WAIT_TIME)
   }, [setLoaded, onClose])
 
   return (

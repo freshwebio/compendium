@@ -1,6 +1,18 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const config = require('./config.json')
 
+const templateParametersGenerator = existingGenerator => (
+  compilation,
+  assets,
+  assetTags,
+  options
+) => {
+  return {
+    ...existingGenerator(compilation, assets, assetTags, options),
+    favicon: config.favicon || '%PUBLIC_URL%/favicon.png',
+  }
+}
+
 module.exports = {
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
@@ -24,11 +36,17 @@ module.exports = {
               inject: true,
               template: paths.appHtml,
               title: config.title,
+              templateParameters: templateParametersGenerator(
+                plugin.options.templateParameters
+              ),
             })
           } else {
             plugin = new HtmlWebpackPlugin({
               inject: true,
               template: paths.appHtml,
+              templateParameters: templateParametersGenerator(
+                plugin.options.templateParameters
+              ),
               minify: {
                 removeComments: true,
                 collapseWhitespace: true,
