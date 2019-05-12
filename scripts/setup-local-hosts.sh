@@ -35,34 +35,34 @@ Configuring nginx proxy for apydox.local if it is not already configured."
 if [ ! -f "/usr/local/etc/nginx/servers/apydox.conf" ]; then
   echo "    Adding nginx proxy config for apydox"
   export NGINX_APYDOX_CONFIG=$(cat <<-END
-      server {
-          listen 80;
-          server_name apydox.local;
-          return 301 https://\$server_name\$request_uri;
-      }
+server {
+    listen 80;
+    server_name apydox.local;
+    return 301 https://\$server_name\$request_uri;
+}
 
-      server {
-          listen 433 ssl;
-          server_name apydox.local;
+server {
+    listen 433 ssl;
+    server_name apydox.local;
 
-          ssl_certificate $(pwd)/__local_certs/server.crt;
-          ssl_certificate_key $(pwd)/__local_certs/server.key;
+    ssl_certificate $(pwd)/__local_certs/server.crt;
+    ssl_certificate_key $(pwd)/__local_certs/server.key;
 
-          location / {
-              proxy_pass https://localhost:5401;
-          }
-          
-          location /sockjs-node {
-              proxy_pass https://localhost:5401;
-              proxy_redirect off;
-              proxy_http_version 1.1;
-              proxy_set_header Upgrade \$http_upgrade;
-              proxy_set_header Connection 'upgrade';
-              proxy_set_header Access-Control-Allow-Origin *;
-              proxy_set_header Host \$host;
-              proxy_cache_bypass \$http_upgrade;
-          }
-      }
+    location / {
+        proxy_pass https://localhost:5401;
+    }
+
+    location /sockjs-node {
+        proxy_pass https://localhost:5401;
+        proxy_redirect off;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Access-Control-Allow-Origin *;
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
 END
 )
   sudo -E bash -c 'echo "$NGINX_APYDOX_CONFIG" >> /usr/local/etc/nginx/servers/apydox.conf'
