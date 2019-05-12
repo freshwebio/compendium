@@ -3,9 +3,10 @@ import styled, { css } from 'styled-components'
 import { StyledTooltip } from 'components/Tooltip/tooltip.styles'
 
 const StyledIcon = styled('i')<any>`
-  ${({ iconFontSize, colour }): any => css`
+  ${({ iconFontSize, colour, disabled }): any => css`
     font-size: ${iconFontSize};
     color: ${colour};
+    opacity: ${disabled ? 0.5 : 1};
   `}
 `
 
@@ -19,9 +20,6 @@ const StyledIconButton = styled('button')<any>`
     disabled
       ? css`
           cursor: not-allowed;
-          ${StyledIcon} {
-            opacity: 0.5;
-          }
         `
       : ''}
 

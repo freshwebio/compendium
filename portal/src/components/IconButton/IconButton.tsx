@@ -35,6 +35,7 @@ const IconButton: React.FunctionComponent<IconButtonProps> = ({
         className={iconClassName}
         colour={colour}
         iconFontSize={iconFontSize}
+        disabled={disabled}
       />
       {children}
     </StyledIconButton>
