@@ -13,6 +13,9 @@ export interface NotificationProps {
   onClose?: () => void
 }
 
+export const NOTIFICATION_LOAD_WAIT_TIME = 1000
+export const NOTIFICATION_CLOSE_WAIT_TIME = 500
+
 const Notification: React.FunctionComponent<NotificationProps> = ({
   message,
   type,

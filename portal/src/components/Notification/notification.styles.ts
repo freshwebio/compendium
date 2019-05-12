@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { darken, lighten } from 'polished'
 
 const NotificationIcon = styled.i`
   font-size: 20pt;
@@ -37,24 +38,24 @@ const NotificationInsideWrapper = styled('div')<any>`
   transition: transform 300ms ease-in-out;
   transform: ${({ loaded }): string =>
     loaded ? 'translateX(0)' : 'translateX(+100%)'};
-  ${({ type }): any =>
+  ${({ type, theme }): any =>
     type === 'success'
       ? css`
-          background: #49cc90;
-          border: 2px solid darken(#49cc90, 10%);
+          background: ${theme.colours.green};
+          border: 2px solid ${darken(0.1, theme.colours.green)};
           border-right: none;
 
           ${NotificationClose} {
-            color: lighten(#49cc90, 30%);
+            color: ${lighten(0.3, theme.colours.green)};
           }
         `
       : css`
-          background: #f93e3e;
-          border: 2px solid darken(#f93e3e, 10%);
+          background: ${theme.colours.red};
+          border: 2px solid ${darken(0.1, theme.colours.red)};
           border-right: none;
 
           ${NotificationClose} {
-            color: lighten(#f93e3e, 30%);
+            color: ${lighten(0.3, theme.colours.red)};
           }
         `}
 `
