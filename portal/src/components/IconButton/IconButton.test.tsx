@@ -1,7 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import mountWithTheme from 'testUtils/mountWithTheme'
-import { css } from 'styled-components'
 
 import IconButton from './IconButton'
 import { StyledIcon } from './iconButton.styles'
