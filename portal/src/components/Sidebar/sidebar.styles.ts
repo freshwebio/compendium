@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const SidebarWrapper = styled('div')<any>`
   position: absolute;
-  left: ${({ visible }): string => (visible ? '0' : '-192px')};
+  left: ${({ visible }): string => (visible ? '0' : '-187px')};
   height: calc(100vh - 50px);
   width: 220px;
   z-index: 3000;
@@ -16,7 +16,7 @@ const SidebarWrapper = styled('div')<any>`
 const ListIcon = styled.i<any>`
   opacity: ${({ visible }): string => (visible ? '0' : '1')};
   position: absolute;
-  right: 6px;
+  right: 8px;
   font-size: 12pt;
   color: #eeeeee;
   transition: opacity 200ms ease-in-out 400ms;
