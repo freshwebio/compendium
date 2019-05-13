@@ -7,7 +7,7 @@ import { NotificationsWrapper } from './notifications.styles'
 
 export interface NotificationsProps {
   notifications: NotificationState[]
-  removeNotification: (id: string) => () => void
+  removeNotification: (id: string) => void
 }
 
 const Notifications: React.FunctionComponent<NotificationsProps> = ({
