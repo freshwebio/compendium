@@ -45,8 +45,8 @@ server {
     listen 433 ssl;
     server_name apydox.local;
 
-    ssl_certificate $(pwd)/__local_certs/server.crt;
-    ssl_certificate_key $(pwd)/__local_certs/server.key;
+    ssl_certificate $(pwd)/__apydox_local_certs/apydox.local.crt;
+    ssl_certificate_key $(pwd)/__apydox_local_certs/apydox.local.key;
 
     location / {
         proxy_pass https://localhost:5401;
