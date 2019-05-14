@@ -8,11 +8,11 @@ const PrivateRoute = ({
   isLoggedIn,
   isLoading,
   ...rest
-}: any) => {
+}: any): React.ReactElement => {
   return (
     <Route
       {...rest}
-      render={props => {
+      render={(props: any): React.ReactElement => {
         if (isLoading) {
           return <LoadingScreen />
         } else {
