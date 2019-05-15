@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { getApiDefs, ApiDefinitionGroup } from '../../services/github'
-import ApiDefGroup from '../ApiDefGroup'
+import { getApiDefs, ApiDefinitionGroup } from 'services/github'
+import ApiDefGroup from 'components/ApiDefGroup'
 import { ApiDefListWrapper } from './apiDefList.styles'
 
 const ApiDefList: React.FunctionComponent<{}> = (): React.ReactElement => {
