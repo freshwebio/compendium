@@ -83,6 +83,7 @@ module.exports = {
         '^appredux(.*)$': '<rootDir>/src/redux$1',
         '^styles(.*)$': '<rootDir>/src/styles$1',
         '^content.json$': '<rootDir>/src/content.json',
+        '\\.css$': 'identity-obj-proxy',
       },
       testPathIgnorePatterns: [
         '/node_modules/',

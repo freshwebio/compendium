@@ -3,18 +3,27 @@ import Editor from './Editor'
 import { setDocumentChanged, setCurrentDocument } from 'appredux/actions/editor'
 import { EditorState } from 'appredux/reducers/editor'
 
-const mapStateToProps = (state: { editor: EditorState }, ownProps: any) => {
+interface StateProps {
+  editor: EditorState
+}
+
+interface DispatchProps {
+  setDocumentChanged: (_: boolean) => void
+  setCurrentDocument: (content: string, specSHA?: string) => void
+}
+
+const mapStateToProps = (state: { editor: EditorState }): StateProps => {
   return {
     editor: state.editor,
   }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+const mapDispatchToProps = (dispatch: any): DispatchProps => {
   return {
-    setDocumentChanged: (hasDocumentChanged: boolean) => {
+    setDocumentChanged: (hasDocumentChanged: boolean): void => {
       dispatch(setDocumentChanged(hasDocumentChanged))
     },
-    setCurrentDocument: (content: string, specSHA?: string) => {
+    setCurrentDocument: (content: string, specSHA?: string): void => {
       dispatch(setCurrentDocument(content, specSHA))
     },
   }

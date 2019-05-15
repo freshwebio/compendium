@@ -6,8 +6,26 @@ import Sidebar from 'components/Sidebar'
 import { loadServiceDefinition } from 'services/github'
 import LoadingScreen from 'components/LoadingScreen'
 import EditorStyles from './editor.styles'
+import { EditorState } from 'appredux/reducers/editor'
 
-class Editor extends Component<any, any> {
+export interface EditorCompState {
+  originalDocument: string
+}
+
+export interface EditorMatch {
+  params: { service?: string }
+}
+
+export interface EditorProps {
+  isLoggedIn: boolean
+  isLoading: boolean
+  match: EditorMatch
+  editor: EditorState
+  setCurrentDocument: (spec: string, sha?: string) => void
+  setDocumentChanged: (changed: boolean) => void
+}
+
+class Editor extends Component<EditorProps, EditorCompState> {
   editor: any
   unsubscribe: any
 
@@ -32,7 +50,7 @@ class Editor extends Component<any, any> {
       isLoggedIn: prevIsLoggedIn,
     } = prevProps
 
-    if (params.service !== prevParams.service) {
+    if (params.service && params.service !== prevParams.service) {
       loadServiceDefinition(params.service)
         .then(
           (result: { content: string; sha: string }): void => {
@@ -82,19 +100,22 @@ class Editor extends Component<any, any> {
         match: { params },
         setCurrentDocument,
       } = this.props
-      const result: {
-        content: string
-        sha: string
-      } = await loadServiceDefinition(params.service)
-      this.editor = SwaggerEditor({})
-      this.editor.specActions.updateSpec(result.content)
-      this.setState({ originalDocument: result.content })
-      if (setCurrentDocument) {
-        setCurrentDocument(result.content, result.sha)
+
+      if (params.service) {
+        const result: {
+          content: string
+          sha: string
+        } = await loadServiceDefinition(params.service)
+        this.editor = SwaggerEditor({})
+        this.editor.specActions.updateSpec(result.content)
+        this.setState({ originalDocument: result.content })
+        if (setCurrentDocument) {
+          setCurrentDocument(result.content, result.sha)
+        }
+        this.unsubscribe = this.editor
+          .getStore()
+          .subscribe(this.handleEditorChange)
       }
-      this.unsubscribe = this.editor
-        .getStore()
-        .subscribe(this.handleEditorChange)
     }
   }
 
