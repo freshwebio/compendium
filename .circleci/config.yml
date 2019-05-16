@@ -54,6 +54,12 @@ jobs:
             - apydox-portal-v1-{{ .Branch }}-
             - apydox-portal-v1-
       - run:
+          name: Copy config.example.json to config.json
+          command: cp config.example.json config.json
+      - run:
+          name: Copy content.example.json to content.json
+          command: cp src/content.example.json src/content.json
+      - run:
           name: Run the tests for the portal and send coverage
           command: |
             yarn test || TEST_RUNNER_EXIT_CODE=$?
