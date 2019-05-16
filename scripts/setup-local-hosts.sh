@@ -20,7 +20,7 @@ if ! nginx -v 2>/dev/null; then
     if brew -v; then
       brew install nginx
     fi
-  elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+  elif [ "$((substr $(uname -s) 1 5))" == "Linux" ]; then
     # Install nginx for GNU/Linux platform, only ubuntu at the moment!
     sudo apt-get update
     sudo apt-get install nginx
