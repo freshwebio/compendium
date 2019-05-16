@@ -91,6 +91,8 @@ module.exports = {
         'setupTests.ts',
         'serviceWorker.ts',
         '/styles/themes/',
+        '/src/index.tsx',
+        'redux/store.ts',
       ],
       coveragePathIgnorePatterns: [
         '/node_modules/',
@@ -98,6 +100,8 @@ module.exports = {
         'setupTests.ts',
         'serviceWorker.ts',
         '/styles/themes/',
+        '/src/index.tsx',
+        'redux/store.ts',
       ],
     },
   },

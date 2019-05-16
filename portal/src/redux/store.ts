@@ -9,12 +9,18 @@ const composeEnhancers = composeWithDevTools({
   name: 'apydox portal',
 })
 
+const middleware = applyMiddleware(
+  githubApiInjector,
+  apiMiddleware,
+  apiNotifications
+)
+
 const store = (): any =>
   createStore(
     reducer,
-    composeEnhancers(
-      applyMiddleware(githubApiInjector, apiMiddleware, apiNotifications)
-    )
+    process.env.NODE_ENV !== 'production'
+      ? composeEnhancers(middleware)
+      : middleware
   )
 
 export default store

@@ -4,3 +4,11 @@ export const getAccessToken = async (code: string): Promise<string> => {
   }
   return 'accesscode'
 }
+
+export const logout = async (): Promise<boolean> => {
+  return true
+}
+
+export const isLoggedIn = async (): Promise<boolean> => {
+  return true
+}

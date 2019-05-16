@@ -1,14 +1,11 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
 
-import Home from 'pages/Home'
-import LoginCallback from 'pages/LoginCallback'
-import PrivateRoute from 'components/PrivateRoute'
 import { isLoggedIn, logout } from 'services/auth'
 import Header from 'components/Header'
-import Editor from 'pages/Editor'
 import Notifications from 'components/Notifications'
 import GlobalStyle from 'styles/globalStyle'
+import Routes from './Routes'
 
 const logoutAndRedirect = (): void => {
   logout().then(
@@ -18,7 +15,7 @@ const logoutAndRedirect = (): void => {
   )
 }
 
-const App: React.SFC<any> = (): React.ReactElement => {
+const App: React.FunctionComponent<any> = (): React.ReactElement => {
   const [loadingAndAccess, setLoadingAndAccess] = useState({
     isLoggedIn: false,
     isLoading: true,
@@ -33,7 +30,7 @@ const App: React.SFC<any> = (): React.ReactElement => {
   }, [])
 
   return (
-    <Fragment>
+    <>
       <GlobalStyle />
       <Router>
         <div className="App">
@@ -43,40 +40,13 @@ const App: React.SFC<any> = (): React.ReactElement => {
             logout={logoutAndRedirect}
           />
           <Notifications />
-          <Switch>
-            <Route
-              path="/"
-              exact
-              render={(props): React.ReactElement => (
-                <Home
-                  {...props}
-                  isLoggedIn={loadingAndAccess.isLoggedIn}
-                  isLoading={loadingAndAccess.isLoading}
-                />
-              )}
-            />
-            <Route
-              path="/login/oauth/callback"
-              exact
-              render={(props): React.ReactElement => (
-                <LoginCallback
-                  {...props}
-                  setIsLoggedIn={(isLoggedIn: boolean): void => {
-                    setLoadingAndAccess({ isLoggedIn, isLoading: false })
-                  }}
-                />
-              )}
-            />
-            <PrivateRoute
-              path="/edit/:service"
-              render={(props: any): React.ReactElement => <Editor {...props} />}
-              isLoggedIn={loadingAndAccess.isLoggedIn}
-              isLoading={loadingAndAccess.isLoading}
-            />
-          </Switch>
+          <Routes
+            loadingAndAccess={loadingAndAccess}
+            setLoadingAndAccess={setLoadingAndAccess}
+          />
         </div>
       </Router>
-    </Fragment>
+    </>
   )
 }
 
