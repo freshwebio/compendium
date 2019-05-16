@@ -17,6 +17,7 @@ const LoginCallback: React.FunctionComponent<LoginCallbackProps> = (
     const logUserIn = async (): Promise<void> => {
       const codeMatch = window.location.href.match(/\?code=(.*)/)
       const code = codeMatch && codeMatch[1]
+
       if (code) {
         try {
           const token = await getAccessToken(code)

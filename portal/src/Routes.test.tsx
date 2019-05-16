@@ -11,6 +11,7 @@ describe('Routes', (): void => {
   it('should render the dashboard view without any issues', async (): Promise<
     void
   > => {
+    window.location.href = '/'
     await act(
       async (): Promise<void> => {
         create(
@@ -28,12 +29,15 @@ describe('Routes', (): void => {
   it('should render the login callback view without any issues', async (): Promise<
     void
   > => {
+    window.location.href = '/login/oauth/callback?code=DrewqqeoeWQ'
     await act(
       async (): Promise<void> => {
         create(
-          <MemoryRouter initialEntries={['/login/oauth/callback']}>
+          <MemoryRouter
+            initialEntries={['/login/oauth/callback?code=DrewqqeoeWQ']}
+          >
             <Routes
-              loadingAndAccess={{ isLoggedIn: true, isLoading: false }}
+              loadingAndAccess={{ isLoggedIn: false, isLoading: true }}
               setLoadingAndAccess={jest.fn()}
             />
           </MemoryRouter>
@@ -45,6 +49,7 @@ describe('Routes', (): void => {
   it('should render the editor view without any issues', async (): Promise<
     void
   > => {
+    window.location.href = '/edit/Service32'
     await act(
       async (): Promise<void> => {
         create(
