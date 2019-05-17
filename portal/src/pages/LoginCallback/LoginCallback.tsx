@@ -24,7 +24,10 @@ const LoginCallback: React.FunctionComponent<LoginCallbackProps> = (
           if (props.setIsLoggedIn) {
             props.setIsLoggedIn(true)
           }
-          sessionStorage.setItem('madswagger-gh-token', token)
+          sessionStorage.setItem(
+            process.env.REACT_APP_TOKEN_NAME || 'apydox-token',
+            token
+          )
           window.location.href = '/'
         } catch (err) {
           console.log(err)

@@ -4,7 +4,9 @@ import { toLabel, idToServiceDefinionPath } from 'utils/files'
 const createGithubApi = (): AxiosInstance => {
   let token
   try {
-    token = sessionStorage.getItem('madswagger-gh-token')
+    token = sessionStorage.getItem(
+      process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
+    )
   } catch (e) {
     console.log(e)
   }

@@ -16,7 +16,9 @@ export const getAccessToken = async (code: string): Promise<string> => {
 export const isLoggedIn = async (): Promise<boolean> => {
   let token
   try {
-    token = sessionStorage.getItem('madswagger-gh-token')
+    token = sessionStorage.getItem(
+      process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
+    )
   } catch (err) {
     return false
   }
@@ -33,8 +35,9 @@ export const isLoggedIn = async (): Promise<boolean> => {
 export const logout = async (): Promise<boolean> => {
   let token
   try {
-    token = sessionStorage.getItem('madswagger-gh-token')
-    sessionStorage.removeItem('madswagger-gh-token')
+    const tokenName = process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
+    token = sessionStorage.getItem(tokenName)
+    sessionStorage.removeItem(tokenName)
   } catch (err) {
     return false
   }

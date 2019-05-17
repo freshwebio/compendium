@@ -20,8 +20,9 @@ export default () => (next: any) => (action: any) => {
     // Inject the Authorization header from sessionStorage.
 
     rsaa.headers = Object.assign({}, rsaa.headers, {
-      Authorization: `Bearer ${sessionStorage.getItem('madswagger-gh-token') ||
-        ''}`,
+      Authorization: `Bearer ${sessionStorage.getItem(
+        process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
+      ) || ''}`,
     })
     console.log(rsaa)
   }
