@@ -23,7 +23,7 @@ const initialState = {
   isCommitting: false,
 }
 
-const editorReducer = (state = initialState, action: any) => {
+const editorReducer = (state = initialState, action: any): EditorState => {
   switch (action.type) {
     case SET_DOCUMENT_CHANGED:
       return { ...state, documentHasChanged: action.changed }

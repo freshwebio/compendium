@@ -6,8 +6,14 @@ import {
 } from 'appredux/actions/editor/types'
 import { addNotification } from 'appredux/actions/global'
 import { setCurrentCommitDescription } from 'appredux/actions/editor'
+import { Middleware, MiddlewareAPI, Dispatch, AnyAction } from 'redux'
+import { MiddlewareFunction, DispatchFunction } from './types'
 
-export default (store: any) => (next: any) => (action: any) => {
+const apiNotifications: Middleware = (
+  store: MiddlewareAPI<Dispatch<AnyAction>>
+): MiddlewareFunction => (next: Dispatch<AnyAction>): DispatchFunction => (
+  action: any
+): any => {
   // Check if this action is for a successful
   if (action) {
     if (action.type === COMMIT_CHANGES_SUCCESS) {
@@ -24,3 +30,5 @@ export default (store: any) => (next: any) => (action: any) => {
   // Pass the FSA to the next action.
   return next(action)
 }
+
+export default apiNotifications

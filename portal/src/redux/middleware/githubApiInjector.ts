@@ -1,5 +1,7 @@
 import { RSAA } from 'redux-api-middleware'
 import { COMMIT_CHANGES } from 'appredux/actions/editor/types'
+import { Middleware, Dispatch, AnyAction } from 'redux'
+import { DispatchFunction, MiddlewareFunction } from './types'
 
 const githubAPIRequestActionTypes: string[] = [COMMIT_CHANGES]
 
@@ -9,7 +11,9 @@ const isGithubAPICall = (rsaa: any): boolean => {
   return githubAPIRequestActionTypes.includes(type)
 }
 
-export default () => (next: any) => (action: any) => {
+const githubApiInjector: Middleware = (): MiddlewareFunction => (
+  next: Dispatch<AnyAction>
+): DispatchFunction => (action: any): any => {
   const rsaa = action[RSAA]
 
   // Check if this action is a redux-api-middleware action.
@@ -24,9 +28,10 @@ export default () => (next: any) => (action: any) => {
         process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
       ) || ''}`,
     })
-    console.log(rsaa)
   }
 
   // Pass the FSA to the next action.
   return next(action)
 }
+
+export default githubApiInjector
