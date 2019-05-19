@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { toLabel, idToServiceDefinionPath } from 'utils/files'
+import { toLabel, idToServiceDefinitionPath } from 'utils/files'
 
 const createGithubApi = (): AxiosInstance => {
   let token
@@ -118,7 +118,7 @@ export const loadServiceDefinition = async (
   try {
     const owner = process.env.REACT_APP_API_DOCS_REPO_OWNER || ''
     const repo = process.env.REACT_APP_API_DOCS_REPO || ''
-    const serviceDefinitionPath = idToServiceDefinionPath(service)
+    const serviceDefinitionPath = idToServiceDefinitionPath(service)
     const response = await api.get(
       `/repos/${owner}/${repo}/contents/${serviceDefinitionPath}?ref=${branch}`
     )

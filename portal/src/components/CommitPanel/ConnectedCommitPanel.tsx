@@ -7,7 +7,7 @@ import {
   setCurrentCommitDescription,
 } from '../../redux/actions/editor'
 import { withRouter, matchPath } from 'react-router'
-import { idToServiceDefinionPath } from '../../utils/files'
+import { idToServiceDefinitionPath } from '../../utils/files'
 
 interface StateProps {
   editor: EditorState
@@ -49,7 +49,7 @@ const mapDispatchToProps = (
       })
 
       if (editorMatch && editorMatch.params.service) {
-        const serviceDefinitionPath = idToServiceDefinionPath(
+        const serviceDefinitionPath = idToServiceDefinitionPath(
           editorMatch.params.service
         )
         dispatch(

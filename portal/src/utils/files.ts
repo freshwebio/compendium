@@ -22,7 +22,7 @@ export const toLabel = (pathOrName: string): string => {
   return firstChar + restOfPathOrName.replace(/[-|_]/g, ' ')
 }
 
-export const idToServiceDefinionPath = (serviceId: string): string => {
+export const idToServiceDefinitionPath = (serviceId: string): string => {
   const parts = serviceId.split('::')
   const serviceGroupDir = parts.length > 1 ? `${parts[0]}/` : ''
   const servicePart = parts.length > 1 ? parts[1] : parts[0]
