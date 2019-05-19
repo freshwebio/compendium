@@ -46,6 +46,6 @@ export const logout = async (): Promise<boolean> => {
     const response = await api.delete(`/auth/github/revoke/${token}`)
     return response.data
   } catch (err) {
-    return true
+    return false
   }
 }
