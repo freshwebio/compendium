@@ -10,5 +10,6 @@ require (
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/julienschmidt/httprouter v1.2.0
 	github.com/namsral/flag v1.7.4-pre
+	github.com/stretchr/testify v1.3.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
 )

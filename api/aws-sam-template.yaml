@@ -24,7 +24,48 @@ Resources:
           Properties:
             Schedule: rate(1 minute)
             Input: '{"ping":true}'
-
+  RetrieveAccessTokenFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Runtime: go1.x
+      Handler: retrieve_access_token
+      CodeUri: ./cmd/handlers
+      Timeout: 30
+    Environment:
+      Variables:
+        SECRET_ID: !Ref SecretID
+    Events:
+      RetrieveAccessToken:
+        Type: Api
+        Properties:
+          Path: '/auth/github/oauth/access-token'
+          Method: get
+      RetrieveAccessTokenPing:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+            Input: '{"ping":true}'
+  RevokeAccessTokenFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Runtime: go1.x
+      Handler: revoke_access_token
+      CodeUri: ./cmd/handlers
+      Timeout: 30
+    Environment:
+      Variables:
+        SECRET_ID: !Ref SecretID
+    Events:
+      RetrieveAccessToken:
+        Type: Api
+        Properties:
+          Path: '/auth/github/revoke/{access_token}'
+          Method: delete
+      RetrieveAccessTokenPing:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+            Input: '{"ping":true}'
 Outputs:
   Endpoint:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

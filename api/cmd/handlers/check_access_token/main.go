@@ -14,6 +14,11 @@ import (
 )
 
 func handleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	pingResponse := utils.HandlePing(request)
+	if pingResponse != nil {
+		return *pingResponse, nil
+	}
+
 	services, err := bootstrap.SetupServices()
 	if err != nil {
 		log.Println(err)

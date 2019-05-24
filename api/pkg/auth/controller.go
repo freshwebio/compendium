@@ -3,9 +3,9 @@ package auth
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 
+	"github.com/freshwebio/apydox-api/pkg/core"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -27,19 +27,13 @@ func (ctrl *controllerImpl) GetGitHubAccessToken(w http.ResponseWriter, r *http.
 	}{}
 	err := json.NewDecoder(r.Body).Decode(&codeRequest)
 	if err != nil {
-		w.WriteHeader(400)
-		errorResponse, _ := json.Marshal(struct{ message string }{message: "Bad input"})
-		w.Write(errorResponse)
+		core.HTTPError(w, 400, "Bad input")
 		return
 	}
 
 	token, err := ctrl.authService.GetGitHubAccessToken(codeRequest.Code)
 	if err != nil {
-		w.WriteHeader(500)
-		errorResponse, _ := json.Marshal(struct {
-			Message string `json:"message"`
-		}{Message: "Unexpected server error"})
-		w.Write(errorResponse)
+		core.HTTPError(w, 500, "Unexpected server error")
 		return
 	}
 
@@ -64,12 +58,7 @@ func (ctrl *controllerImpl) CheckGitHubAccessToken(w http.ResponseWriter, r *htt
 
 	validToken, err := ctrl.authService.CheckGitHubAccessToken(token)
 	if err != nil {
-		log.Println(err)
-		w.WriteHeader(500)
-		errorResponse, _ := json.Marshal(struct {
-			Message string `json:"message"`
-		}{Message: "Unexpected server error"})
-		w.Write(errorResponse)
+		core.HTTPError(w, 500, "Unexpected server error")
 		return
 	}
 
@@ -94,12 +83,7 @@ func (ctrl *controllerImpl) RevokeGitHubAccessToken(w http.ResponseWriter, r *ht
 
 	err := ctrl.authService.RevokeAccessToken(token)
 	if err != nil {
-		log.Println(err)
-		w.WriteHeader(500)
-		errorResponse, _ := json.Marshal(struct {
-			Message string `json:"message"`
-		}{Message: "Unexpected server error"})
-		w.Write(errorResponse)
+		core.HTTPError(w, 500, "Unexpected server error")
 		return
 	}
 	w.WriteHeader(200)

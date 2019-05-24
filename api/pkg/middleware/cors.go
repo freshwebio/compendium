@@ -17,6 +17,6 @@ func NewCORS() *CORS {
 }
 
 func (c *CORS) ServeHTTP(w http.ResponseWriter, r *http.Request, ps httprouter.Params, next http.HandlerFunc) {
-	utils.SetHeaders(w)
+	utils.SetHeaders(w, true)
 	next(w, r)
 }

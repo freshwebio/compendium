@@ -16,5 +16,5 @@ func ServerError() events.APIGatewayProxyResponse {
 	errorResponse, _ := json.Marshal(struct {
 		Message string `json:"message"`
 	}{Message: ServerErrorMessage})
-	return events.APIGatewayProxyResponse{StatusCode: 500, Headers: SetHeaders(nil), Body: string(errorResponse)}
+	return events.APIGatewayProxyResponse{StatusCode: 500, Headers: SetHeaders(nil, false), Body: string(errorResponse)}
 }
