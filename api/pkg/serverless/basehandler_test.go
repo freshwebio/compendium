@@ -32,7 +32,7 @@ func TestBaseHandlerPingRequest(t *testing.T) {
 	testResponse(resp, 200, "{}", t)
 	// Do a simple check against the amount of headers we expect to be returned
 	// given the utils.SetHeaders() function is used, as SetHeaders has it's own tests.
-	expectedHeaders := utils.SetHeaders(nil)
+	expectedHeaders := utils.SetHeaders(nil, false)
 	expectedHeadersLen := len(expectedHeaders)
 	headersLen := len(resp.Headers)
 	if expectedHeadersLen != headersLen {
