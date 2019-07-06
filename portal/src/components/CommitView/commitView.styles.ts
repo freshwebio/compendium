@@ -14,7 +14,7 @@ const CommitViewWrapper = styled('div')<any>`
   -webkit-box-shadow: 0 5px 8px -3px black;
   -moz-box-shadow: 0 5px 8px -3px black;
   box-shadow: 0 5px 8px -3px black;
-  background: #2d2d2d;
+  background: #1e1e1e;
   z-index: 3501;
   height: ${({ visible }): string => (visible ? '280px' : '0')};
 `
@@ -39,6 +39,7 @@ const CommitViewTextArea = styled.textarea`
   width: 90%;
   height: 150px;
   margin: 15px auto;
+  padding: 15px;
   resize: none;
   outline: none;
   font-family: 'Roboto', sans-serif;

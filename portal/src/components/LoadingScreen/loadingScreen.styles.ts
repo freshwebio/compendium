@@ -4,7 +4,7 @@ const LoadingScreenWrapper = styled.div`
   position: relative;
   height: calc(100vh - 54px);
   width: 100vw;
-  background: white;
+  background: #1e1e1e;
 
   img {
     position: absolute;

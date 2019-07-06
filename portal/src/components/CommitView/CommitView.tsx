@@ -8,7 +8,7 @@ import {
   CommitViewButton,
   AsteriskWrapper,
 } from './commitView.styles'
-import Loader from 'assets/images/loaderlight.svg'
+import Loader from 'assets/images/loader.svg'
 
 interface CommitViewProps {
   commitDescription: string

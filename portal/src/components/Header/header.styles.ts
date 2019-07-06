@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const StyledHeader = styled.div`
   position: relative;
@@ -33,4 +34,10 @@ const ButtonLink = styled('button')<any>`
   color: ${({ colour }): string => colour};
 `
 
-export { StyledHeader, ButtonLink }
+const DashboardLink = styled(Link)`
+  display: block;
+  position: absolute;
+  right: 108px;
+`
+
+export { StyledHeader, ButtonLink, DashboardLink }

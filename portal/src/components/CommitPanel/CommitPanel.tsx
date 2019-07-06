@@ -37,7 +37,7 @@ const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
 
   return (
     <>
-      <BackgroundLayer visible={showView} />
+      <BackgroundLayer visible={showView && documentHasChanged} />
       <CommitPanelWrapper ref={viewRef}>
         <IconButton
           onClick={showOrHideView}

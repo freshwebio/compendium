@@ -38,7 +38,7 @@ const Sidebar: React.FunctionComponent<any> = ({
       onMouseLeave={(): void => setShowView(false)}
     >
       <ListIcon visible={showView} className={`far fa-list-ul`} />
-      <SidebarNavigation groups={apiDefinitionGroups} />
+      <SidebarNavigation visible={showView} groups={apiDefinitionGroups} />
     </SidebarWrapper>
   )
 }

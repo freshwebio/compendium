@@ -6,14 +6,7 @@ const CardsWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-`
-
-const ApiDefGroupWrapper = styled.div`
-  margin-top: 50px;
-
-  ::first-child {
-    margin-top: 0;
-  }
+  margin-bottom: 50px;
 `
 
 const Heading = styled('h3')<{ theme: any }>`
@@ -23,6 +16,7 @@ const Heading = styled('h3')<{ theme: any }>`
   background-color: #414141;
   color: #c5c5c5;
   padding: 10px;
+  margin-bottom: 50px;
 
   ::after {
     content: '';
@@ -32,6 +26,16 @@ const Heading = styled('h3')<{ theme: any }>`
     width: 50%;
     height: 9px;
     background-color: #414141;
+  }
+`
+
+const ApiDefGroupWrapper = styled.div`
+  :first-child {
+    margin-top: 0;
+
+    ${Heading} {
+      margin-top: 0;
+    }
   }
 `
 

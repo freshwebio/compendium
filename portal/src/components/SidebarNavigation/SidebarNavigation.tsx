@@ -14,10 +14,11 @@ import {
 const SidebarNavigation: React.FunctionComponent<any> = ({
   match,
   groups,
+  visible,
 }): React.ReactElement => {
   const { params } = match
   return (
-    <NavWrapper>
+    <NavWrapper visible={visible}>
       {groups.map(
         (group: any, index: number): React.ReactElement => {
           return (

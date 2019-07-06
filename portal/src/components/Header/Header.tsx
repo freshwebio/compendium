@@ -2,8 +2,9 @@ import React from 'react'
 import { withRouter, matchPath, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import { StyledHeader, ButtonLink } from './header.styles'
+import { StyledHeader, ButtonLink, DashboardLink } from './header.styles'
 import CommitPanel from 'components/CommitPanel'
+import IconButton from 'components/IconButton'
 import logo from 'assets/logo.svg'
 import content from 'content.json'
 
@@ -34,7 +35,20 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           Logout
         </ButtonLink>
       )}
-      {editorMatch && !!editorMatch.params.service && <CommitPanel />}
+      {editorMatch && !!editorMatch.params.service && (
+        <>
+          <DashboardLink to="/">
+            <IconButton
+              onClick={(): void => {}}
+              iconClassName="fas fa-home"
+              colour="white"
+              iconFontSize="13pt"
+            />
+            {'dashboard'}
+          </DashboardLink>
+          <CommitPanel />
+        </>
+      )}
     </StyledHeader>
   )
 }
