@@ -9635,9 +9635,10 @@ svgo@^1.0.0, svgo@^1.2.1:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swagger-client@^3.8.25:
-  version "3.8.25"
-  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.8.25.tgz#89cb58b000c103ee5e23accc13a9db1e686035e6"
+swagger-client@^3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.9.0.tgz#b94ea65baa0194f4cb3fad2f8bd552c531d57e03"
+  integrity sha512-uyCq2xoaAtmE0oIQ0fCfnsDoy/v97ANnAZywtyk4yumBP74xXp4NFlpZaqZJHN9K9dbPzgs3MH98VocZeM0ExQ==
   dependencies:
     "@kyleshockey/js-yaml" "^1.0.1"
     "@kyleshockey/object-assign-deep" "^0.4.0"
@@ -9653,13 +9654,15 @@ swagger-client@^3.8.25:
     lodash "^4.16.2"
     qs "^6.3.0"
     querystring-browser "^1.0.4"
+    traverse "^0.6.6"
     url "^0.11.0"
     utf8-bytes "0.0.1"
     utfstring "^2.0.0"
 
-swagger-editor@^3.6.27:
-  version "3.6.28"
-  resolved "https://registry.yarnpkg.com/swagger-editor/-/swagger-editor-3.6.28.tgz#95c94dc2f5802309f5237b5b4bbc69d366822818"
+swagger-editor@^3.6.31:
+  version "3.6.31"
+  resolved "https://registry.yarnpkg.com/swagger-editor/-/swagger-editor-3.6.31.tgz#ee60eac9a87cd103edf1e2fa5af960d86072a94e"
+  integrity sha512-EQsAVCSU4H0ZG0rgPtMlhwAJSiXkrGFZ2gGF7KPXyTPqGqPd89zCGdqVrRY8vDqOiTggjP332RH9u8WH2bmvYw==
   dependencies:
     "@kyleshockey/js-yaml" "^1.0.1"
     ajv "^5.2.2"
@@ -9692,15 +9695,16 @@ swagger-editor@^3.6.27:
     react-transition-group "^1.1.1"
     redux "^3.x.x"
     reselect "^2.5.4"
-    swagger-client "^3.8.25"
-    swagger-ui "^3.22.1"
+    swagger-client "^3.9.0"
+    swagger-ui "^3.23.0"
     traverse "^0.6.6"
     whatwg-fetch "^2.0.3"
     yaml-js "^0.1.4"
 
-swagger-ui@^3.22.1:
-  version "3.22.1"
-  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.22.1.tgz#5a2cc1d7fe3d6854bd09a7e2c2034ef68f3b1d34"
+swagger-ui@^3.23.0:
+  version "3.23.0"
+  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.23.0.tgz#baf085a094616bb7ac4916ac9e8e881f15cdd0c9"
+  integrity sha512-Q88wQtCWKFtmTg0LfnobTOnvPK3fxLIouzv5iRe8GHuuFXMcy3nm9F97JC2HYjSl2cezZGInzWe8SzVc1mfrPg==
   dependencies:
     "@braintree/sanitize-url" "^2.0.2"
     "@kyleshockey/js-yaml" "^1.0.1"
@@ -9731,7 +9735,7 @@ swagger-ui@^3.22.1:
     remarkable "^1.7.1"
     reselect "^2.5.4"
     serialize-error "^2.1.0"
-    swagger-client "^3.8.25"
+    swagger-client "^3.9.0"
     url-parse "^1.4.3"
     xml-but-prettier "^1.0.1"
     zenscroll "^4.0.2"
