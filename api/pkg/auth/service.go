@@ -3,15 +3,12 @@ package auth
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
-	"time"
 
 	"github.com/freshwebio/apydox-api/pkg/core"
 	"github.com/google/go-github/github"
-	"golang.org/x/oauth2"
 )
 
 // Service provides the functionality that interacts with
@@ -23,13 +20,13 @@ type Service interface {
 }
 
 type serviceImpl struct {
-	config *core.Config
-	client *http.Client
+	config               *core.Config
+	client               core.HTTPClient
+	authorisationsClient GithubAuthorisationsClient
 }
 
 func (s *serviceImpl) GetGitHubAccessToken(code string) (token string, err error) {
-	body := "client_id=" + *s.config.Github.ClientID + "&client_secret=" + *s.config.Github.ClientSecret + "&code=" + code
-	fmt.Printf("request to github: %s\n", body)
+	body := BuildGithubOAuthBody(s.config, code)
 	request, _ := http.NewRequest("POST", "https://github.com/login/oauth/access_token", strings.NewReader(body))
 	request.Header.Add("Accept", "application/json")
 	var response *http.Response
@@ -44,22 +41,14 @@ func (s *serviceImpl) GetGitHubAccessToken(code string) (token string, err error
 	if err != nil {
 		return
 	}
-	fmt.Printf("response from github: %s\n", string(bytes))
-
 	err = json.Unmarshal(bytes, &tokenHolder)
 	token = tokenHolder.AccessToken
-	// err = json.NewDecoder(response.Body).Decode(&tokenHolder)
-	// if err != nil {
-	//	return
-	// }
 	return
 }
 
 func (s *serviceImpl) CheckGitHubAccessToken(token string) (validToken bool, err error) {
-	basicAuthClient := s.setupBasicAuthHTTPClient()
-	ghClient := github.NewClient(basicAuthClient)
 	ctx := context.Background()
-	_, resp, err := ghClient.Authorizations.Check(ctx, *s.config.Github.ClientID, token)
+	_, resp, err := s.authorisationsClient.Check(ctx, *s.config.Github.ClientID, token)
 	if err != nil && resp.StatusCode >= 500 {
 		return
 	}
@@ -73,37 +62,23 @@ func (s *serviceImpl) CheckGitHubAccessToken(token string) (validToken bool, err
 }
 
 func (s *serviceImpl) RevokeAccessToken(token string) (err error) {
-	basicAuthClient := s.setupBasicAuthHTTPClient()
-	ghClient := github.NewClient(basicAuthClient)
 	ctx := context.Background()
-	_, err = ghClient.Authorizations.Revoke(ctx, *s.config.Github.ClientID, token)
+	_, err = s.authorisationsClient.Revoke(ctx, *s.config.Github.ClientID, token)
 	return
 }
 
-func (s *serviceImpl) setupBasicAuthHTTPClient() *http.Client {
-	transport := &github.BasicAuthTransport{
-		Username: *s.config.Github.ClientID,
-		Password: *s.config.Github.ClientSecret,
-	}
-	client := transport.Client()
-	client.Timeout = time.Second * 10
-	return client
-}
-
-func setupHTTPClient() *http.Client {
-	return &http.Client{
-		Timeout: time.Second * 10,
-	}
-}
-
-func setupOAuthClient(token string) *http.Client {
-	ctx := context.Background()
-	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
-	return oauth2.NewClient(ctx, ts)
-}
-
 // NewService creates a new instance of a service that connects the portal with github
-// to manage user access to the portal.
-func NewService(config *core.Config) Service {
-	return &serviceImpl{config, setupHTTPClient()}
+// to manage user access to the portal. This takes the github authorisations client
+// and client for retrieving access token as dependencies.
+func NewService(config *core.Config, httpClient core.HTTPClient, authorisationsClient GithubAuthorisationsClient) Service {
+	return &serviceImpl{config, httpClient, authorisationsClient}
+}
+
+// NewDefaultService creates a new instance of a service that connects the portal with github.
+// This deals with setting up the github authorisations client for you based off of the provided configuration.
+func NewDefaultService(config *core.Config) Service {
+	basicAuthClient := SetupBasicAuthHTTPClient(config)
+	ghClient := github.NewClient(basicAuthClient)
+
+	return &serviceImpl{config, SetupHTTPClient(), ghClient.Authorizations}
 }

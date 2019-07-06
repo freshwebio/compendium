@@ -22,7 +22,7 @@
     "redux": "^4.0.1",
     "redux-api-middleware": "^3.0.1",
     "styled-components": "^4.2.0",
-    "swagger-editor": "^3.6.27",
+    "swagger-editor": "^3.6.31",
     "typescript": "3.4.2",
     "uuid": "^3.3.2"
   },

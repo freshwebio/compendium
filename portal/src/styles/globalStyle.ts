@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 9px;
     line-height: 1.42857143;
     color: #444;
+    background-color: #1e1e1e;
     margin: 0;
     padding: 0;
   }

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const StyledHeader = styled.div`
   position: relative;
-  background: #2d2d2d;
+  background: #1e1e1e;
   height: 50px;
   display: flex;
   flex-direction: column;

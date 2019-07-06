@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import icon from 'assets/images/GitHub-Mark-Light-64px.png'
 const HomeWrapper = styled.div`
-  padding-top: 50px;
   text-align: center;
 `
 

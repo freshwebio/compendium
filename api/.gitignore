@@ -2,3 +2,4 @@ apydox-api
 apydox-api.conf
 .env
 coverage.out
+**/main

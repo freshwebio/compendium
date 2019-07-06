@@ -21,6 +21,7 @@ type Config struct {
 type EnvConfig struct {
 	SecretSource *string
 	SecretID     *string
+	Test         *bool
 }
 
 // GithubConfig provides the secrets for connecting to a github application
@@ -70,6 +71,7 @@ func loadEnvConfig() *EnvConfig {
 	config := &EnvConfig{}
 	config.SecretSource = flag.String("apydox_api_secret_source", "", "The source for secrets used to connect with databases and third parties in the application")
 	config.SecretID = flag.String("apydox_api_secret_id", "", "In the case the secret source is AWS Secrets Manager, this is the id for the set of secrets")
+	config.Test = flag.Bool("apydox_env_test", false, "Whether or not the current environment is for automated tests")
 	return config
 }
 

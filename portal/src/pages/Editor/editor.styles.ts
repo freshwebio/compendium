@@ -28,6 +28,10 @@ const EditorStyles = createGlobalStyle`
   overflow-y: scroll;
 }
 
+.SplitPane {
+  background-color: white;
+}
+
 .SplitPane .Pane:first-child {
   padding-left: 28px;
 }
