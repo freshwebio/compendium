@@ -4,4 +4,4 @@
 
 apydox is a happy, light-weight API documentation portal for your team
 
-The documentation for deploying your very own instance of apydox and extra information on contributing the project can be found [here](https://freshwebio.gitbook.io/apydox/).
+The documentation for deploying your very own instance of apydox and extra information on contributing the project can be found [here](https://apydox.freshweb.io).
