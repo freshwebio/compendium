@@ -28,7 +28,7 @@ const ButtonLink = styled('button')<any>`
   transform: translateY(-50%);
   outline: none;
   border: none;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Slab', sans-serif;
   font-size: 0.88rem;
   cursor: pointer;
   color: ${({ colour }): string => colour};
