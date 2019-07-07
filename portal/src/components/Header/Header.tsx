@@ -2,11 +2,17 @@ import React from 'react'
 import { withRouter, matchPath, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import { StyledHeader, ButtonLink, DashboardLink } from './header.styles'
+import {
+  StyledHeader,
+  ButtonLink,
+  DashboardLink,
+  AddGroupWrapper,
+} from './header.styles'
 import CommitPanel from 'components/CommitPanel'
 import IconButton from 'components/IconButton'
 import logo from 'assets/logo.svg'
 import content from 'content.json'
+import InlineAddField from 'components/InlineAddField'
 
 type HeaderProps = RouteComponentProps<any> & {
   isLoading: boolean
@@ -32,7 +38,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
       </Link>
       {!isLoading && isLoggedIn && (
         <ButtonLink colour="white" onClick={logout}>
-          Logout
+          logout
         </ButtonLink>
       )}
       {editorMatch && !!editorMatch.params.service && (
@@ -48,6 +54,17 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           </DashboardLink>
           <CommitPanel />
         </>
+      )}
+      {(!editorMatch || !editorMatch.params.service) && (
+        <AddGroupWrapper>
+          <InlineAddField
+            entityName={'group'}
+            iconColour={'white'}
+            alignment={'left'}
+            onSave={(): void => {}}
+            finished={false}
+          />
+        </AddGroupWrapper>
       )}
     </StyledHeader>
   )

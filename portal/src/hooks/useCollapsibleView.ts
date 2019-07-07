@@ -1,9 +1,11 @@
 import { useRef, RefObject, useState, useEffect } from 'react'
 
-export interface CollapsibleViewElements {
-  viewRef: RefObject<HTMLDivElement>
+export interface CollapsibleViewElements<T extends HTMLElement> {
+  viewRef: RefObject<T>
   showView: boolean
   setShowView: React.Dispatch<React.SetStateAction<boolean>>
+  blockingState: boolean
+  setBlockingState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 /**
@@ -14,14 +16,25 @@ export interface CollapsibleViewElements {
  *
  * Secondly, a collapsible view means when you click outside of the component it will be hidden.
  *
- * One restriction in using this hook is that an element the viewRef is assigned to must be a div.
+ * Thirdly, a mechanism is provided to allow blocking users from collapsing a view for components like inline
+ * editing fields that show their own loading indicator while data is being saved or something is happening.
  */
-const useCollapsibleView = (): CollapsibleViewElements => {
-  const viewRef = useRef<HTMLDivElement>(null)
+const useCollapsibleView = <T extends HTMLElement>(): CollapsibleViewElements<
+  T
+> => {
+  const viewRef = useRef<T>(null)
   const [showView, setShowView] = useState<boolean>(false)
+  // Provides an optional extra to allow components to provide a state that indicates
+  // that the view cannot be collapsed as long as it is true.
+  const [blockingState, setBlockingState] = useState<boolean>(false)
 
   const documentClick = (evt: any): void => {
-    if (showView && viewRef.current && !viewRef.current.contains(evt.target)) {
+    if (
+      showView &&
+      !blockingState &&
+      viewRef.current &&
+      !viewRef.current.contains(evt.target)
+    ) {
       setShowView(false)
     }
   }
@@ -31,9 +44,9 @@ const useCollapsibleView = (): CollapsibleViewElements => {
     return (): void => {
       document.removeEventListener('mousedown', documentClick)
     }
-  }, [showView, viewRef.current])
+  }, [showView, blockingState, viewRef.current])
 
-  return { viewRef, showView, setShowView }
+  return { viewRef, showView, setShowView, blockingState, setBlockingState }
 }
 
 export default useCollapsibleView

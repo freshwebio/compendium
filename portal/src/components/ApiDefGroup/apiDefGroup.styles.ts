@@ -39,4 +39,14 @@ const ApiDefGroupWrapper = styled.div`
   }
 `
 
-export { CardsWrapper, ApiDefGroupWrapper, Heading }
+const AddServiceWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: white;
+  right: 30px;
+  z-index: 300;
+`
+
+export { CardsWrapper, ApiDefGroupWrapper, Heading, AddServiceWrapper }

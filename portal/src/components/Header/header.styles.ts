@@ -26,6 +26,7 @@ const ButtonLink = styled('button')<any>`
   right: 25px;
   top: 50%;
   transform: translateY(-50%);
+  margin: 0;
   outline: none;
   border: none;
   font-family: 'Roboto Slab', sans-serif;
@@ -38,6 +39,12 @@ const DashboardLink = styled(Link)`
   display: block;
   position: absolute;
   right: 108px;
+  font-size: 0.88rem;
 `
 
-export { StyledHeader, ButtonLink, DashboardLink }
+const AddGroupWrapper = styled.div`
+  position: absolute;
+  left: 25px;
+`
+
+export { StyledHeader, ButtonLink, DashboardLink, AddGroupWrapper }

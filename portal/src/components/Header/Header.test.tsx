@@ -28,7 +28,7 @@ describe('Header', (): void => {
     )
     const buttonLinks = wrapper.find(ButtonLink)
     expect(buttonLinks.length).toBe(1)
-    expect(buttonLinks.text()).toBe('Logout')
+    expect(buttonLinks.text()).toBe('logout')
   })
 
   it('should not contain a logout link when authentication is not yet finished', (): void => {

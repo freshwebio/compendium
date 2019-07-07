@@ -17,7 +17,9 @@ export interface CommitPanelProps {
 const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
   props
 ): React.ReactElement => {
-  const { viewRef, showView, setShowView } = useCollapsibleView()
+  const { viewRef, showView, setShowView } = useCollapsibleView<
+    HTMLDivElement
+  >()
   const showOrHideView = useCallback((): void => {
     // Given the disabled state of the icon button we don't need to check
     // whether or not the document has changed, as the click event won't fire

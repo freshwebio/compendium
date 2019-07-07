@@ -25,7 +25,7 @@ describe('ApiDefGroup', (): void => {
     )
     const title = wrapper.find('h3')
     expect(title.length).toBe(1)
-    expect(title.text()).toBe('Core services')
+    expect(title.text()).toInclude('Core services')
     const cards = wrapper.find(ApiDefCard)
     expect(cards.length).toBe(2)
   })

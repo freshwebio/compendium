@@ -14,7 +14,6 @@ const apiNotifications: Middleware = (
 ): MiddlewareFunction => (next: Dispatch<AnyAction>): DispatchFunction => (
   action: any
 ): any => {
-  // Check if this action is for a successful
   if (action) {
     if (action.type === COMMIT_CHANGES_SUCCESS) {
       store.dispatch(addNotification(uuidv4(), 'Changes committed', 'success'))

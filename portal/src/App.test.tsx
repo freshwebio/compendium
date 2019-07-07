@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 
 import Header from 'components/Header'
 import App from './App'
+import { ButtonLink } from 'components/Header/header.styles'
 
 const mockStore = configureMockStore([])
 
@@ -58,7 +59,7 @@ describe('App', (): void => {
     )
 
     const header = rendered.root.findByType(Header)
-    const logoutButton = header.findByType('button')
+    const logoutButton = header.findByType(ButtonLink)
 
     expect(window.location.href).toBe('http://localhost/')
     await act(
