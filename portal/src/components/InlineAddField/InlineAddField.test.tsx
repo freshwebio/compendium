@@ -6,7 +6,6 @@ import mockTheme from 'testUtils/mockTheme'
 import InlineAddField from './InlineAddField'
 import { AddCTAWrapper, AddInputWrapper } from './inlineAddField.styles'
 import IconButton from 'components/IconButton'
-import delay from 'utils/delay'
 
 describe('InlineAddField', (): void => {
   it('should render without crashing', (): void => {
