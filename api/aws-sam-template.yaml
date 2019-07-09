@@ -1,18 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
 Description: Serverless API resources for the apydox api
 
+Parameters: 
+  SecretID:
+    Type: String
+    Default: APYDOX-SECRETS
+    Description: The name of the secret that holds all the secrets and configuration needed for the apydox api
+  SecurityGroupID:
+    Type: String
+    Description: The security group the lambda functions in the apydox api belong to
+  SubnetID:
+    Type: String
+    Description: The subnet the lambda functions in the apydox api belong to
+
+Globals:
+  Function:
+    Runtime: go1.x
+    Timeout: 60
+    Environment:
+      SECRET_ID: !Ref SecretID
+      APYDOX_API_SECRET_SOURCE: aws_secrets_manager
+    VpcConfig:
+      SecurityGroupIds:
+        - !Ref SecurityGroupID
+      SubnetIds:
+        - !Ref SubnetID
+  Api:
+    Cors:
+      AllowMethods: "'*'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
+      MaxAge: "'600'"
+      AllowCredentials: true
 Resources:
+  ApydoxApi:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: 'v1'
   CheckAccessTokenFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Runtime: go1.x
-      Handler: check_access_token
-      CodeUri: ./cmd/handlers
-      Timeout: 30
-    Environment:
-      Variables:
-        SECRET_ID: !Ref SecretID
+      CodeUri: ./cmd/handlers/check_access_token
+      Handler: main
     Events:
       CheckAccessToken:
         Type: Api
@@ -22,18 +53,13 @@ Resources:
       CheckAccessTokenPing:
           Type: Schedule
           Properties:
-            Schedule: rate(1 minute)
+            Schedule: rate(5 minutes)
             Input: '{"ping":true}'
   RetrieveAccessTokenFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Runtime: go1.x
-      Handler: retrieve_access_token
-      CodeUri: ./cmd/handlers
-      Timeout: 30
-    Environment:
-      Variables:
-        SECRET_ID: !Ref SecretID
+      CodeUri: ./cmd/handlers/retrieve_access_token
+      Handler: main
     Events:
       RetrieveAccessToken:
         Type: Api
@@ -43,18 +69,13 @@ Resources:
       RetrieveAccessTokenPing:
           Type: Schedule
           Properties:
-            Schedule: rate(1 minute)
+            Schedule: rate(5 minutes)
             Input: '{"ping":true}'
   RevokeAccessTokenFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Runtime: go1.x
-      Handler: revoke_access_token
-      CodeUri: ./cmd/handlers
-      Timeout: 30
-    Environment:
-      Variables:
-        SECRET_ID: !Ref SecretID
+      CodeUri: ./cmd/handlers/revoke_access_token
+      Handler: main
     Events:
       RetrieveAccessToken:
         Type: Api
@@ -64,8 +85,5 @@ Resources:
       RetrieveAccessTokenPing:
           Type: Schedule
           Properties:
-            Schedule: rate(1 minute)
+            Schedule: rate(5 minutes)
             Input: '{"ping":true}'
-Outputs:
-  Endpoint:
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
