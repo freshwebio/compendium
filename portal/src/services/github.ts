@@ -15,6 +15,9 @@ const createGithubApi = (): AxiosInstance => {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token || ''}`,
+      // Ensure we never get a cached response from github as we want data in the dashboard
+      // to update instantly when changes are made.
+      'If-None-Match': '',
     },
   })
 }
@@ -50,6 +53,7 @@ const prepareApiDefGroups = (
   accum: ApiDefinitionGroup[],
   fileEntry: FileEntry
 ): ApiDefinitionGroup[] => {
+  const isGitKeep = fileEntry.path.endsWith('.gitkeep')
   // We only care about top-level directories for grouping.
   if (fileEntry.type === 'tree' && fileEntry.path.indexOf('/') === -1) {
     return [
@@ -57,9 +61,12 @@ const prepareApiDefGroups = (
       { name: toLabel(fileEntry.path), id: fileEntry.path, definitions: [] },
     ]
   } else if (
-    (fileEntry.path.endsWith('.yaml') || fileEntry.path.endsWith('.yml')) &&
+    (fileEntry.path.endsWith('.yaml') ||
+      fileEntry.path.endsWith('.yml') ||
+      isGitKeep) &&
     fileEntry.type === 'blob'
   ) {
+    // ^ Allow .gitkeep so we can add new services to empty groups that have been created through the UI.
     const parts = fileEntry.path.split('/')
     // Ignore api definition files that are not in a group directory.
     if (parts.length > 1) {
@@ -76,7 +83,9 @@ const prepareApiDefGroups = (
           {
             name: targetGroup.name,
             id: targetGroup.id,
-            definitions: [...targetGroup.definitions, fileEntry],
+            definitions: !isGitKeep
+              ? [...targetGroup.definitions, fileEntry]
+              : targetGroup.definitions,
           },
         ]
       }
@@ -100,8 +109,7 @@ export const getApiDefs = async (
     prepareApiDefGroups,
     []
   )
-  // Filter out any directories that do not contain api definitions.
-  return apiDefs.filter((group): boolean => group.definitions.length > 0)
+  return apiDefs
 }
 
 /**

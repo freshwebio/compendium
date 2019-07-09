@@ -24,7 +24,7 @@ const ApiDefCardText = styled.div`
 
 const ApiDefCardLink = styled(Link)`
   margin-right: 10px;
-  margin-top: 10px;
+  margin-top: 20px;
   width: 300px;
   height: 150px;
   font-size: 1.3rem;

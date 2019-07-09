@@ -9,5 +9,11 @@
       "Simply login with your github account and make sure you are given access to read from and write to the github repo that backs this portal."
     ],
     "buttonText": "Login"
+  },
+  "dashboard": {
+    "emptyGroupText": [
+      "There are no service definitions for this group.",
+      "Add a service by clicking the call to action in the section header."
+    ]
   }
 }

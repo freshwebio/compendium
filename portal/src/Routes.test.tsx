@@ -15,12 +15,18 @@ describe('Routes', (): void => {
     await act(
       async (): Promise<void> => {
         create(
-          <MemoryRouter initialEntries={['/']}>
-            <Routes
-              loadingAndAccess={{ isLoggedIn: true, isLoading: false }}
-              setLoadingAndAccess={jest.fn()}
-            />
-          </MemoryRouter>
+          <Provider
+            store={mockStore({
+              entities: { isAddingGroup: false, addingServiceStates: {} },
+            })}
+          >
+            <MemoryRouter initialEntries={['/']}>
+              <Routes
+                loadingAndAccess={{ isLoggedIn: true, isLoading: false }}
+                setLoadingAndAccess={jest.fn()}
+              />
+            </MemoryRouter>
+          </Provider>
         )
       }
     )

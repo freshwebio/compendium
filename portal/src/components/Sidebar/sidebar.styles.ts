@@ -5,6 +5,7 @@ const SidebarWrapper = styled('div')<any>`
   left: ${({ visible }): string => (visible ? '0' : '-187px')};
   height: calc(100vh - 50px);
   width: 220px;
+  overflow: hidden;
   z-index: 3000;
   background: #1e1e1e;
   transition: left 500ms ease-in-out;

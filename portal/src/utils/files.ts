@@ -22,6 +22,20 @@ export const toLabel = (pathOrName: string): string => {
   return firstChar + restOfPathOrName.replace(/[-|_]/g, ' ')
 }
 
+const sanitiseStringAlphaNumeric = (input: string): string => {
+  return input.replace(/[^0-9a-zA-Z_-\s]/gi, '')
+}
+
+export const serviceInputToFile = (serviceName: string): string => {
+  const sanitised = sanitiseStringAlphaNumeric(serviceName)
+  return `${sanitised.replace(/[\s]/g, '-')}.yaml`
+}
+
+export const groupInputToDir = (groupName: string): string => {
+  const sanitised = sanitiseStringAlphaNumeric(groupName)
+  return sanitised.replace(/[\s]/g, '-')
+}
+
 export const idToServiceDefinitionPath = (serviceId: string): string => {
   const parts = serviceId.split('::')
   const serviceGroupDir = parts.length > 1 ? `${parts[0]}/` : ''

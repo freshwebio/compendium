@@ -2,8 +2,13 @@ import { RSAA } from 'redux-api-middleware'
 import { COMMIT_CHANGES } from 'appredux/actions/editor/types'
 import { Middleware, Dispatch, AnyAction } from 'redux'
 import { DispatchFunction, MiddlewareFunction } from './types'
+import { ADD_GROUP, ADD_SERVICE } from 'appredux/actions/entities/types'
 
-const githubAPIRequestActionTypes: string[] = [COMMIT_CHANGES]
+const githubAPIRequestActionTypes: string[] = [
+  COMMIT_CHANGES,
+  ADD_GROUP,
+  ADD_SERVICE,
+]
 
 const isGithubAPICall = (rsaa: any): boolean => {
   const type =

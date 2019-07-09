@@ -7,11 +7,18 @@ import {
   CardsWrapper,
   Heading,
   AddServiceWrapper,
+  TextWrapper,
 } from './apiDefGroup.styles'
 import InlineAddField from 'components/InlineAddField'
+import { EntitiesState } from 'appredux/reducers/entities'
+
+import content from 'content.json'
 
 interface ApiDefGroupProps {
   group: string
+  groupId: string
+  entities: EntitiesState
+  addService: (groupPath: string, serviceNameInput: string) => void
   definitions: FileEntry[]
 }
 
@@ -26,19 +33,31 @@ const ApiDefGroup: React.FunctionComponent<ApiDefGroupProps> = (
           <InlineAddField
             entityName={'service'}
             alignment={'right'}
-            onSave={(): void => {}}
+            onSave={(serviceInput: string): void => {
+              props.addService(props.groupId, serviceInput)
+            }}
             iconColour={'white'}
-            finished={false}
+            finished={!props.entities.addingServiceStates[props.groupId]}
           />
         </AddServiceWrapper>
       </Heading>
-      <CardsWrapper>
-        {props.definitions.map(
-          (definition: any, index: number): React.ReactElement => {
-            return <ApiDefCard key={definition.path} definition={definition} />
-          }
-        )}
-      </CardsWrapper>
+      {props.definitions.length > 0 ? (
+        <CardsWrapper>
+          {props.definitions.map(
+            (definition: any, index: number): React.ReactElement => {
+              return (
+                <ApiDefCard key={definition.path} definition={definition} />
+              )
+            }
+          )}
+        </CardsWrapper>
+      ) : (
+        content.dashboard.emptyGroupText.map(
+          (line, index): React.ReactElement => (
+            <TextWrapper key={line.charAt(0) + index}>{line}</TextWrapper>
+          )
+        )
+      )}
     </ApiDefGroupWrapper>
   )
 }

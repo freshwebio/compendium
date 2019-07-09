@@ -3,7 +3,7 @@ import { create, act, ReactTestRenderer } from 'react-test-renderer'
 import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 
-import Header from 'components/Header'
+import StandaloneHeader from 'components/Header/Header'
 import App from './App'
 import { ButtonLink } from 'components/Header/header.styles'
 
@@ -24,6 +24,7 @@ describe('App', (): void => {
                 isCommitting: false,
               },
               global: { notifications: [] },
+              entities: { isAddingGroup: false, addingServiceStates: {} },
             })}
           >
             <App />
@@ -50,6 +51,7 @@ describe('App', (): void => {
                 isCommitting: false,
               },
               global: { notifications: [] },
+              entities: { isAddingGroup: false, addingServiceStates: {} },
             })}
           >
             <App />
@@ -58,7 +60,7 @@ describe('App', (): void => {
       }
     )
 
-    const header = rendered.root.findByType(Header)
+    const header = rendered.root.findByType(StandaloneHeader)
     const logoutButton = header.findByType(ButtonLink)
 
     expect(window.location.href).toBe('http://localhost/')

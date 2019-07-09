@@ -1,11 +1,12 @@
 import React from 'react'
-import { act } from 'react-test-renderer'
-import { mount } from 'enzyme'
+import { act, create, ReactTestRenderer } from 'react-test-renderer'
 import { MemoryRouter } from 'react-router'
+import { Provider } from 'react-redux'
+import createMockStore from 'redux-mock-store'
 
 import { getApiDefs, ApiDefinitionGroup } from 'services/github'
 import ApiDefList from './ApiDefList'
-import ApiDefGroup from 'components/ApiDefGroup'
+import StandaloneApiDefGroup from 'components/ApiDefGroup/ApiDefGroup'
 import delay from 'utils/delay'
 
 jest.mock(
@@ -14,6 +15,8 @@ jest.mock(
     getApiDefs: jest.fn(),
   })
 )
+
+const mockStore = createMockStore()
 
 describe('ApiDefList', (): void => {
   it('should render without any issues and load in API definition groups', async (): Promise<
@@ -51,23 +54,24 @@ describe('ApiDefList', (): void => {
         ])
     )
 
-    const wrapper = mount(
-      <MemoryRouter>
-        <ApiDefList />
-      </MemoryRouter>
-    )
-    expect(wrapper.find(ApiDefGroup).length).toBe(0)
-    // async act scoping to suppress warnings against setting hook state
-    // outside of an act boundary and provide a consistent boundary where once we update
-    // the appropriate state that matches that of the UI in the browser.
+    let wrapper: ReactTestRenderer
     await act(
       async (): Promise<void> => {
-        await delay(100)
+        wrapper = create(
+          <Provider
+            store={mockStore({
+              entities: { isAddingGroup: false, addingServiceStates: {} },
+            })}
+          >
+            <MemoryRouter>
+              <ApiDefList finishedSaving={true} />
+            </MemoryRouter>
+          </Provider>
+        )
       }
     )
-    // We must update the wrapper to force the latest render.
-    wrapper.update()
-    expect(wrapper.find(ApiDefGroup).length).toBe(2)
+
+    expect(wrapper.root.findAllByType(StandaloneApiDefGroup).length).toBe(2)
   })
 
   it('should render without any issues and fail gracefully in failure to load API definitions', async (): Promise<
@@ -78,12 +82,25 @@ describe('ApiDefList', (): void => {
         Promise.reject(new Error('Failed to load API definitions'))
     )
 
-    const wrapper = mount(
-      <MemoryRouter>
-        <ApiDefList />
-      </MemoryRouter>
+    let wrapper: ReactTestRenderer
+
+    await act(
+      async (): Promise<void> => {
+        wrapper = create(
+          <Provider
+            store={mockStore({
+              entities: { isAddingGroup: false, addingServiceStates: {} },
+            })}
+          >
+            <MemoryRouter>
+              <ApiDefList finishedSaving={true} />
+            </MemoryRouter>
+          </Provider>
+        )
+      }
     )
-    expect(wrapper.find(ApiDefGroup).length).toBe(0)
+
+    expect(wrapper.root.findAllByType(StandaloneApiDefGroup).length).toBe(0)
     // Wait in an act boundary for asynchronous rejection response.
     await act(
       async (): Promise<void> => {
@@ -91,7 +108,6 @@ describe('ApiDefList', (): void => {
       }
     )
     // Update the wrapper to force the latest render.
-    wrapper.update()
-    expect(wrapper.find(ApiDefGroup).length).toBe(0)
+    expect(wrapper.root.findAllByType(StandaloneApiDefGroup).length).toBe(0)
   })
 })

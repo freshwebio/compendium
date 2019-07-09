@@ -38,12 +38,30 @@ const InlineAddField: React.FunctionComponent<InlineAddFieldProps> = ({
   } = useCollapsibleView<HTMLDivElement>()
 
   useEffect((): void => {
+    // If the data from this field was saving and has finished
+    // ensure we update the saving/blocking state.
     if (finished) {
-      setSaving(false)
       setShowView(false)
+    }
+  }, [finished])
+
+  useEffect((): void => {
+    // If we are no longer showing the view and have finished
+    // saving then clear the blocking state.
+    if (!showView && finished) {
+      // Add a timeout to ensure the field slides out of display before resetting
+      // the text and showing the saving state.
+      setTimeout((): void => setSaving(false), 450)
+    }
+  }, [showView, finished])
+
+  useEffect((): void => {
+    // Once we know our field is no longer being saved
+    // go ahead and clear it's text.
+    if (!saving) {
       setText('')
     }
-  }, [saving, finished])
+  }, [saving])
 
   return (
     <InlineAddWrapper>

@@ -1,10 +1,9 @@
 import React from 'react'
-import { mount, ReactWrapper } from 'enzyme'
 import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 
 import { MemoryRouter, Route } from 'react-router'
-import { act } from 'react-test-renderer'
+import { act, create, ReactTestRenderer } from 'react-test-renderer'
 
 import ConnectedEditor from './ConnectedEditor'
 import {
@@ -18,10 +17,10 @@ const mockStore = configureMockStore([])
 
 describe('ConnectedEditor', (): void => {
   it('should render without any issues', async (): Promise<void> => {
-    let wrapper
+    let wrapper: ReactTestRenderer
     await act(
       async (): Promise<void> => {
-        wrapper = mount(
+        wrapper = create(
           <MemoryRouter initialEntries={['/edit/Service1']}>
             <Provider
               store={mockStore({
@@ -51,7 +50,7 @@ describe('ConnectedEditor', (): void => {
         )
       }
     )
-    expect(wrapper.find('div').length).toBeGreaterThan(0)
+    expect(wrapper.root.findAllByType('div').length).toBeGreaterThan(0)
   })
 
   it("should dispatch action for when the document has changed from it's original state when loaded in", async (): Promise<
@@ -67,11 +66,11 @@ describe('ConnectedEditor', (): void => {
       },
       global: { notifications: [] },
     })
-    let wrapper: ReactWrapper
+    let wrapper: ReactTestRenderer
 
     await act(
       async (): Promise<void> => {
-        wrapper = mount(
+        wrapper = create(
           <MemoryRouter initialEntries={['/edit/core::Service1']}>
             <Provider store={store}>
               <Route
@@ -93,11 +92,7 @@ describe('ConnectedEditor', (): void => {
     await act(
       async (): Promise<void> => {
         // We need to access the swagger editor instance on the inner component.
-        const innerEditor = wrapper
-          .find(Editor)
-          .at(0)
-          .instance()
-
+        const innerEditor = wrapper.root.findByType(Editor).instance
         innerEditor.editor.specActions.updateSpec(
           'This is a modified example specification'
         )

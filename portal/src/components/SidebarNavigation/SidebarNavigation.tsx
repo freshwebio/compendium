@@ -20,7 +20,11 @@ const SidebarNavigation: React.FunctionComponent<any> = ({
   return (
     <NavWrapper visible={visible}>
       {groups.map(
-        (group: any, index: number): React.ReactElement => {
+        (group: any, index: number): React.ReactElement | null => {
+          if (group.definitions.length === 0) {
+            return null
+          }
+
           return (
             <NavGroup key={group.id}>
               <NavHeading>{group.name}</NavHeading>
@@ -37,7 +41,9 @@ const SidebarNavigation: React.FunctionComponent<any> = ({
                         key={definition.path}
                         active={serviceId === params.service}
                       >
-                        <Link to={`/edit/${serviceId}`}>{service}</Link>
+                        <Link to={`/edit/${serviceId}`}>
+                          {service.replace(/-|_/g, ' ')}
+                        </Link>
                       </NavItem>
                     )
                   }

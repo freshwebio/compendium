@@ -1,1 +1,1 @@
-export { default } from './ApiDefGroup'
+export { default } from './ConnectedApiDefGroup'

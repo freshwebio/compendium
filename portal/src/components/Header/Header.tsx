@@ -13,16 +13,21 @@ import IconButton from 'components/IconButton'
 import logo from 'assets/logo.svg'
 import content from 'content.json'
 import InlineAddField from 'components/InlineAddField'
+import { EntitiesState } from 'appredux/reducers/entities'
 
 type HeaderProps = RouteComponentProps<any> & {
   isLoading: boolean
   isLoggedIn: boolean
+  entities: EntitiesState
+  addGroup: (groupName: string) => void
   logout: () => void
 }
 
 const Header: React.FunctionComponent<HeaderProps> = ({
   isLoading,
   isLoggedIn,
+  entities,
+  addGroup,
   logout,
   history,
 }): React.ReactElement => {
@@ -55,14 +60,14 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           <CommitPanel />
         </>
       )}
-      {(!editorMatch || !editorMatch.params.service) && (
+      {(!editorMatch || !editorMatch.params.service) && isLoggedIn && (
         <AddGroupWrapper>
           <InlineAddField
             entityName={'group'}
             iconColour={'white'}
             alignment={'left'}
-            onSave={(): void => {}}
-            finished={false}
+            onSave={addGroup}
+            finished={!entities.isAddingGroup}
           />
         </AddGroupWrapper>
       )}

@@ -25,6 +25,9 @@ const NavWrapper = styled('ul')<{ visible: boolean }>`
   margin-left: 0;
   margin-top: 0;
   padding-left: 0;
+  height: 100%;
+  width: 220px;
+  overflow-y: auto;
   opacity: ${({ visible }): number => (visible ? 1 : 0)};
   transition: opacity 200ms ease-in-out 400ms;
 `

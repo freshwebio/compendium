@@ -10,6 +10,7 @@ import { EditorState } from 'appredux/reducers/editor'
 
 export interface EditorCompState {
   originalDocument: string
+  loaded: boolean
 }
 
 export interface EditorMatch {
@@ -31,7 +32,7 @@ class Editor extends Component<EditorProps, EditorCompState> {
 
   constructor(props: any) {
     super(props)
-    this.state = { originalDocument: '' }
+    this.state = { originalDocument: '', loaded: false }
   }
 
   async componentDidMount(): Promise<void> {
@@ -54,7 +55,7 @@ class Editor extends Component<EditorProps, EditorCompState> {
       loadServiceDefinition(params.service)
         .then(
           (result: { content: string; sha: string }): void => {
-            this.setState({ originalDocument: result.content })
+            this.setState({ originalDocument: result.content, loaded: true })
             this.editor.specActions.updateSpec(result.content)
             if (this.props.setCurrentDocument) {
               this.props.setCurrentDocument(result.content, result.sha)
@@ -108,7 +109,7 @@ class Editor extends Component<EditorProps, EditorCompState> {
         } = await loadServiceDefinition(params.service)
         this.editor = SwaggerEditor({})
         this.editor.specActions.updateSpec(result.content)
-        this.setState({ originalDocument: result.content })
+        this.setState({ originalDocument: result.content, loaded: true })
         if (setCurrentDocument) {
           setCurrentDocument(result.content, result.sha)
         }
@@ -123,14 +124,18 @@ class Editor extends Component<EditorProps, EditorCompState> {
     return (
       <>
         <EditorStyles />
-        {this.props.isLoading ? (
+        {this.props.isLoading || !this.state.loaded ? (
           <LoadingScreen />
         ) : (
-          <>
-            <Sidebar />
-            <div id="swagger-editor" />
-          </>
+          <Sidebar />
         )}
+        <div
+          id="swagger-editor"
+          style={{
+            display:
+              this.props.isLoading || !this.state.loaded ? 'none' : 'block',
+          }}
+        />
       </>
     )
   }

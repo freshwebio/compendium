@@ -8,9 +8,9 @@ const LoadingScreenWrapper = styled.div`
 
   img {
     position: absolute;
-    top: 50%;
+    top: 25%;
     left: 50%;
-    width: 200px;
+    width: 100px;
     transform: translate(-50%, -50%);
   }
 `

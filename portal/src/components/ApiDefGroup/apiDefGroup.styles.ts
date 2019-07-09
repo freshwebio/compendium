@@ -6,6 +6,8 @@ const CardsWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
   margin-bottom: 50px;
 `
 
@@ -49,4 +51,17 @@ const AddServiceWrapper = styled.div`
   z-index: 300;
 `
 
-export { CardsWrapper, ApiDefGroupWrapper, Heading, AddServiceWrapper }
+const TextWrapper = styled.div`
+  font-size: 1rem;
+  max-width: 900px;
+  padding-bottom: 10px;
+  margin: 0 auto;
+`
+
+export {
+  CardsWrapper,
+  ApiDefGroupWrapper,
+  Heading,
+  AddServiceWrapper,
+  TextWrapper,
+}

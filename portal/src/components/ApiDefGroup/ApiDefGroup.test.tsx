@@ -7,7 +7,15 @@ import ApiDefCard from 'components/ApiDefCard'
 
 describe('ApiDefGroup', (): void => {
   it('should render without crashing', (): void => {
-    const wrapper = mount(<ApiDefGroup group="" definitions={[]} />)
+    const wrapper = mount(
+      <ApiDefGroup
+        groupId="core-services"
+        addService={(): void => {}}
+        entities={{ isAddingGroup: false, addingServiceStates: {} }}
+        group=""
+        definitions={[]}
+      />
+    )
     expect(wrapper.find('div').length).toBeGreaterThanOrEqual(1)
   })
 
@@ -16,6 +24,9 @@ describe('ApiDefGroup', (): void => {
       <MemoryRouter>
         <ApiDefGroup
           group="Core services"
+          groupId="core-services"
+          addService={(): void => {}}
+          entities={{ isAddingGroup: false, addingServiceStates: {} }}
           definitions={[
             { type: 'blob', path: 'core-services/Service1.yaml' },
             { type: 'blob', path: 'core-services/Service2.yaml' },

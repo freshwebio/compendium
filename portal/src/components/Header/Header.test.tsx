@@ -14,7 +14,13 @@ describe('Header', (): void => {
   it('should render without any issues', (): void => {
     const wrapper = mount(
       <MemoryRouter>
-        <Header isLoading={false} isLoggedIn={true} logout={(): void => {}} />
+        <Header
+          isLoading={false}
+          entities={{ isAddingGroup: false, addingServiceStates: {} }}
+          addGroup={(): void => {}}
+          isLoggedIn={true}
+          logout={(): void => {}}
+        />
       </MemoryRouter>
     )
     expect(wrapper.find('div').length).toBeGreaterThan(0)
@@ -23,7 +29,13 @@ describe('Header', (): void => {
   it('should contain a logout link when authentication is complete and the user is logged in', (): void => {
     const wrapper = mount(
       <MemoryRouter>
-        <Header isLoading={false} isLoggedIn={true} logout={(): void => {}} />
+        <Header
+          isLoading={false}
+          entities={{ isAddingGroup: false, addingServiceStates: {} }}
+          addGroup={(): void => {}}
+          isLoggedIn={true}
+          logout={(): void => {}}
+        />
       </MemoryRouter>
     )
     const buttonLinks = wrapper.find(ButtonLink)
@@ -34,7 +46,13 @@ describe('Header', (): void => {
   it('should not contain a logout link when authentication is not yet finished', (): void => {
     const wrapper = mount(
       <MemoryRouter>
-        <Header isLoading={true} isLoggedIn={false} logout={(): void => {}} />
+        <Header
+          isLoading={true}
+          entities={{ isAddingGroup: false, addingServiceStates: {} }}
+          addGroup={(): void => {}}
+          isLoggedIn={false}
+          logout={(): void => {}}
+        />
       </MemoryRouter>
     )
     const buttonLinks = wrapper.find(ButtonLink)
@@ -44,7 +62,13 @@ describe('Header', (): void => {
   it('should not contain a logout link when authentication is complete and the user is not logged in', (): void => {
     const wrapper = mount(
       <MemoryRouter>
-        <Header isLoading={false} isLoggedIn={false} logout={(): void => {}} />
+        <Header
+          isLoading={false}
+          entities={{ isAddingGroup: false, addingServiceStates: {} }}
+          addGroup={(): void => {}}
+          isLoggedIn={false}
+          logout={(): void => {}}
+        />
       </MemoryRouter>
     )
     const buttonLinks = wrapper.find(ButtonLink)
@@ -54,7 +78,13 @@ describe('Header', (): void => {
   it('should not contain a commit panel when the current page is not for an edit service page', (): void => {
     const wrapper = mount(
       <MemoryRouter>
-        <Header isLoading={false} isLoggedIn={true} logout={(): void => {}} />
+        <Header
+          isLoading={false}
+          entities={{ isAddingGroup: false, addingServiceStates: {} }}
+          addGroup={(): void => {}}
+          isLoggedIn={true}
+          logout={(): void => {}}
+        />
       </MemoryRouter>
     )
     const commitPanel = wrapper.find(CommitPanel)
@@ -76,7 +106,13 @@ describe('Header', (): void => {
         })}
       >
         <MemoryRouter initialEntries={['/edit/test-services::Service1']}>
-          <Header isLoading={false} isLoggedIn={true} logout={(): void => {}} />
+          <Header
+            isLoading={false}
+            entities={{ isAddingGroup: false, addingServiceStates: {} }}
+            addGroup={(): void => {}}
+            isLoggedIn={true}
+            logout={(): void => {}}
+          />
         </MemoryRouter>
       </Provider>
     )

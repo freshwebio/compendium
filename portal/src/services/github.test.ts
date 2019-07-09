@@ -9,7 +9,7 @@ describe('github api interactions', (): void => {
   )
 
   describe('#getApiDefs()', (): void => {
-    it('should load api definitions and exclude directories without api definitions', async (): Promise<
+    it('should load api definitions and provide a list of empty defintions for directories without any api definition documents', async (): Promise<
       void
     > => {
       nock('https://api.github.com')
@@ -18,7 +18,7 @@ describe('github api interactions', (): void => {
         .options('/repos/freshwebio/test-content/branches/master')
         .reply(200, null, {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Authorization',
+          'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
         })
         .get(
           '/repos/freshwebio/test-content/git/trees/fsdf2403fsdf3493ds?recursive=1'
@@ -26,6 +26,8 @@ describe('github api interactions', (): void => {
         .reply(200, {
           tree: [
             { path: 'extra-services', type: 'tree' },
+            { path: 'extra-services-2', type: 'tree' },
+            { path: 'extra-services-2/.gitkeep', type: 'blob' },
             { path: 'core-services', type: 'tree' },
             { path: 'core-services/Configuration.yaml', type: 'blob' },
             { path: 'core-services/Events.yml', type: 'blob' },
@@ -39,13 +41,23 @@ describe('github api interactions', (): void => {
         )
         .reply(200, null, {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Authorization',
+          'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
         })
 
       process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'
       process.env.REACT_APP_API_DOCS_REPO = 'test-content'
       const apiDefs = await getApiDefs()
       expect(apiDefs).toEqual([
+        {
+          name: 'Extra services',
+          id: 'extra-services',
+          definitions: [],
+        },
+        {
+          name: 'Extra services 2',
+          id: 'extra-services-2',
+          definitions: [],
+        },
         {
           name: 'Core services',
           id: 'core-services',
@@ -83,7 +95,7 @@ describe('github api interactions', (): void => {
         )
         .reply(200, null, {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Authorization',
+          'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
         })
 
       process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'
@@ -113,7 +125,7 @@ describe('github api interactions', (): void => {
         )
         .reply(200, null, {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Authorization',
+          'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
         })
 
       process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'

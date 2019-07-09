@@ -1,1 +1,1 @@
-export { default } from './ApiDefList'
+export { default } from './ConnectedApiDefList'
