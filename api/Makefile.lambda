@@ -1,0 +1,42 @@
+PACKAGED_TEMPLATE = aws-sam-packaged.yaml
+S3_BUCKET := $(AWS_S3_BUCKET)
+STACK_NAME := $(STACK_NAME)
+TEMPLATE = aws-sam-template.yaml
+AWS_REGION = $(AWS_REGION)
+
+.PHONY: clean
+clean:
+	rm -f $(PACKAGED_TEMPLATE)
+	./clean-aws-lambdas.sh
+
+.PHONY: lambda
+lambda:
+	./build-aws-lambdas.sh
+
+.PHONY: build
+build: clean lambda
+
+.PHONY: docker-deps
+docker-deps:
+	docker-compose -p apydox_lambda_deps -f docker-compose.deps.yml up -d
+	echo "Waiting for docker depedency services to be ready"
+	sleep 20s
+
+.PHONY: localstack-data
+localstack-data:
+	./setup-localstack-data.sh
+
+.PHONY: dependencies
+dependencies: docker-deps localstack-data
+
+.PHONY: api
+api: build dependencies
+	sam local start-api --template $(TEMPLATE) --region $(AWS_REGION) --parameter-overrides "ParameterKey=SecretSourceEndpoint,ParameterValue=http://host.docker.internal:4584"
+
+.PHONY: package
+package: build
+	sam package --template-file $(TEMPLATE) --s3-bucket $(S3_BUCKET) --output-template-file $(PACKAGED_TEMPLATE)
+
+.PHONY: deploy
+deploy: package
+	sam deploy --stack-name $(STACK_NAME) --template-file $(PACKAGED_TEMPLATE) --parameter-overrides "ParameterKey=EnvType,ParameterValue=production" --capabilities CAPABILITY_IAM

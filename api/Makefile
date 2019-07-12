@@ -11,8 +11,8 @@ build: clean
 	cd cmd/server && \
 	GOOS=linux GOARCH=amd64 go build -o main && \
 	cd ../.. && \
-	docker-compose build
+	docker-compose -p apydox_server build
 
 .PHONY: api
 api: build
-	docker-compose up
+	docker-compose -p apydox_server up

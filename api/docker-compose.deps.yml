@@ -1,0 +1,16 @@
+version: '3.2'
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - '4567-4584:4567-4584'
+      - '${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}'
+    environment:
+      SERVICES: 'secretsmanager'
+      DATA_DIR: '/tmp/localstack'
+      DOCKER_HOST: 'unix:///var/run/docker.sock'
+      DEFAULT_REGION: 'eu-west-2'
+      DEBUG: 1
+    volumes:
+      - '/private${TMPDIR}:/tmp/localstack'

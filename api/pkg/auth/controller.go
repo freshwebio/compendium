@@ -2,7 +2,6 @@ package auth
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/freshwebio/apydox-api/pkg/core"
@@ -37,7 +36,6 @@ func (ctrl *controllerImpl) GetGitHubAccessToken(w http.ResponseWriter, r *http.
 		return
 	}
 
-	fmt.Printf("token: %s\n", token)
 	responseData, _ := json.Marshal(struct {
 		Token string `json:"token"`
 	}{Token: token})
@@ -77,7 +75,7 @@ func (ctrl *controllerImpl) RevokeGitHubAccessToken(w http.ResponseWriter, r *ht
 	token := ps.ByName("access_token")
 	if token == "" {
 		w.WriteHeader(400)
-		w.Write([]byte("{}"))
+		w.Write([]byte("{\"message\":\"Please provide a valid access token\"}"))
 		return
 	}
 

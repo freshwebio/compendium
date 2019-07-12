@@ -16,30 +16,29 @@ import (
 func requestHandler(services map[string]interface{}) serverless.RequestHandler {
 	return func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 		authService := services["auth.auth"].(auth.Service)
-		token := request.QueryStringParameters["token"]
-		if token == "" {
-			errorResponse, _ := json.Marshal(struct {
-				ValidToken bool `json:"validToken"`
-			}{ValidToken: false})
+
+		codeRequest := &struct {
+			Code string `json:"code"`
+		}{}
+		err := json.Unmarshal([]byte(request.Body), &codeRequest)
+		if err != nil {
 			return events.APIGatewayProxyResponse{
-				StatusCode: 401,
+				StatusCode: 400,
 				Headers:    utils.SetHeaders(nil, false),
-				Body:       string(errorResponse),
+				Body:       "{\"message\":\"Bad input\"}",
 			}, nil
 		}
-		validToken, err := authService.CheckGitHubAccessToken(token)
+
+		token, err := authService.GetGitHubAccessToken(codeRequest.Code)
 		if err != nil {
 			log.Println(err)
 			return utils.ServerError(), nil
 		}
 
 		responseData, _ := json.Marshal(struct {
-			ValidToken bool `json:"validToken"`
-		}{ValidToken: validToken})
+			Token string `json:"token"`
+		}{Token: token})
 		statusCode := 200
-		if !validToken {
-			statusCode = 401
-		}
 		return events.APIGatewayProxyResponse{
 			StatusCode: statusCode,
 			Headers:    utils.SetHeaders(nil, false),

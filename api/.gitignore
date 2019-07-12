@@ -3,3 +3,4 @@ apydox-api.conf
 .env
 coverage.out
 **/main
+secrets.json

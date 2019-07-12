@@ -3,6 +3,7 @@ package serverless
 
 import (
 	"context"
+	"log"
 
 	"github.com/aws/aws-lambda-go/events"
 
@@ -23,8 +24,16 @@ func CreateBaseHandler(handlerCreator RequestHandlerFactory) RequestHandler {
 
 	services, err := bootstrap.SetupServices()
 	if err != nil {
-		// If we can't bootsrap services then go no further.
-		panic(err)
+		// If we can't bootsrap services then go no further, by returning a function that returns an error.
+		log.Println(err)
+
+		return func (ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+			return events.APIGatewayProxyResponse{
+				StatusCode: 500,
+				Headers:    utils.SetHeaders(nil, false),
+				Body:       "{\"message\":\"Unexpected error occurred\"}",
+			}, nil
+		}
 	}
 
 	handleRequest := handlerCreator(services)

@@ -1,6 +1,7 @@
 package core
 
 import (
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
 	"github.com/namsral/flag"
@@ -19,9 +20,10 @@ type Config struct {
 // EnvConfig provides environment-specific configuration around the source
 // of secrets for the API.
 type EnvConfig struct {
-	SecretSource *string
-	SecretID     *string
-	Test         *bool
+	SecretSource         *string
+	SecretSourceEndpoint *string
+	SecretID             *string
+	Test                 *bool
 }
 
 // GithubConfig provides the secrets for connecting to a github application
@@ -51,7 +53,17 @@ func LoadConfig() (*Config, error) {
 	flag.Parse()
 	if *config.Env.SecretSource == "aws_secrets_manager" {
 		// Override the sensitive credentials with values from secrets manager.
-		secretsMgr := secretsmanager.New(session.New())
+		var secretsMgr *secretsmanager.SecretsManager
+		// Where a custom secrets source endpoint is provided, ensure we use that
+		// in connecting to the secrets manager instance.
+		// This is useful for local development environments especially.
+		if *config.Env.SecretSourceEndpoint != "" {
+			secretsmgrConfig := &aws.Config{Endpoint: config.Env.SecretSourceEndpoint}
+			secretsMgr = secretsmanager.New(session.New(), secretsmgrConfig)
+		} else {
+			secretsMgr = secretsmanager.New(session.New())
+		}
+
 		secrets, err := utils.GetSecrets(*config.Env.SecretID, secretsMgr)
 		if err != nil {
 			return nil, err
@@ -72,6 +84,7 @@ func loadEnvConfig() *EnvConfig {
 	config.SecretSource = flag.String("apydox_api_secret_source", "", "The source for secrets used to connect with databases and third parties in the application")
 	config.SecretID = flag.String("apydox_api_secret_id", "", "In the case the secret source is AWS Secrets Manager, this is the id for the set of secrets")
 	config.Test = flag.Bool("apydox_env_test", false, "Whether or not the current environment is for automated tests")
+	config.SecretSourceEndpoint = flag.String("apydox_api_secret_source_endpoint", "", "The endpoint to connect to the secrets source, used for AWS Secrets Manager")
 	return config
 }
 

@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"log"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -16,34 +15,27 @@ import (
 func requestHandler(services map[string]interface{}) serverless.RequestHandler {
 	return func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 		authService := services["auth.auth"].(auth.Service)
-		token := request.QueryStringParameters["token"]
+
+		token := request.PathParameters["access_token"]
 		if token == "" {
-			errorResponse, _ := json.Marshal(struct {
-				ValidToken bool `json:"validToken"`
-			}{ValidToken: false})
 			return events.APIGatewayProxyResponse{
-				StatusCode: 401,
+				StatusCode: 400,
 				Headers:    utils.SetHeaders(nil, false),
-				Body:       string(errorResponse),
+				Body:       "{\"message\":\"Please provide a valid access token\"}",
 			}, nil
 		}
-		validToken, err := authService.CheckGitHubAccessToken(token)
+
+		err := authService.RevokeAccessToken(token)
 		if err != nil {
 			log.Println(err)
 			return utils.ServerError(), nil
 		}
 
-		responseData, _ := json.Marshal(struct {
-			ValidToken bool `json:"validToken"`
-		}{ValidToken: validToken})
 		statusCode := 200
-		if !validToken {
-			statusCode = 401
-		}
 		return events.APIGatewayProxyResponse{
 			StatusCode: statusCode,
 			Headers:    utils.SetHeaders(nil, false),
-			Body:       string(responseData),
+			Body:       "{}",
 		}, nil
 	}
 }

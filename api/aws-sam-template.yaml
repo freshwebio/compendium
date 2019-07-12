@@ -6,22 +6,34 @@ Description: Serverless API resources for the apydox api
 Parameters: 
   SecretID:
     Type: String
-    Default: APYDOX-SECRETS
+    Default: APYDOX/API-SECRETS
     Description: The name of the secret that holds all the secrets and configuration needed for the apydox api
+  SecretSourceEndpoint:
+    Type: String
+    Description: A custom endpoint for the secrets manager instance used by the api.
   SecurityGroupID:
     Type: String
     Description: The security group the lambda functions in the apydox api belong to
   SubnetID:
     Type: String
     Description: The subnet the lambda functions in the apydox api belong to
+  EnvType:
+    Type: String
+    Default: local
+    Description: The environment the API is running in.
+
+Conditions:
+  LocalEnvOnly: !Equals [ !Ref EnvType, local ]
 
 Globals:
   Function:
     Runtime: go1.x
     Timeout: 60
     Environment:
-      SECRET_ID: !Ref SecretID
-      APYDOX_API_SECRET_SOURCE: aws_secrets_manager
+      Variables:
+        APYDOX_API_SECRET_ID: !Ref SecretID
+        APYDOX_API_SECRET_SOURCE: aws_secrets_manager
+        APYDOX_API_SECRET_SOURCE_ENDPOINT: !Ref SecretSourceEndpoint
     VpcConfig:
       SecurityGroupIds:
         - !Ref SecurityGroupID
@@ -29,44 +41,64 @@ Globals:
         - !Ref SubnetID
   Api:
     Cors:
-      AllowMethods: "'*'"
-      AllowHeaders: "'*'"
+      AllowMethods: "'OPTIONS,GET,POST,PUT,DELETE'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
       AllowOrigin: "'*'"
       MaxAge: "'600'"
       AllowCredentials: true
+
 Resources:
   ApydoxApi:
     Type: 'AWS::Serverless::Api'
+    Name: ApydoxApi
     Properties:
       StageName: 'v1'
+  OptionsFunction:
+    Type: AWS::Serverless::Function
+    Condition: LocalEnvOnly
+    Properties:
+      # create a custom handler to return 200 and appropriate headers for your OPTIONS requests
+      FunctionName: ApyDox-OptionsFunction
+      CodeUri: ./cmd/handlers/options
+      Handler: main
+      Events:
+        Options:
+          Type: Api
+          Properties:
+            Path: /{cors+}
+            Method: options
   CheckAccessTokenFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
+      FunctionName: ApyDox-CheckAccessTokenFunction
       CodeUri: ./cmd/handlers/check_access_token
       Handler: main
-    Events:
-      CheckAccessToken:
-        Type: Api
-        Properties:
-          Path: '/auth/github/check'
-          Method: get
-      CheckAccessTokenPing:
-          Type: Schedule
+      Events:
+        CheckAccessToken:
+          Type: Api
           Properties:
-            Schedule: rate(5 minutes)
-            Input: '{"ping":true}'
+            RestApiId: !Ref ApydoxApi
+            Path: '/auth/github/check'
+            Method: get
+        CheckAccessTokenPing:
+            Type: Schedule
+            Properties:
+              Schedule: rate(5 minutes)
+              Input: '{"ping":true}'
   RetrieveAccessTokenFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
+      FunctionName: ApyDox-RetrieveAccessTokenFunction
       CodeUri: ./cmd/handlers/retrieve_access_token
       Handler: main
-    Events:
-      RetrieveAccessToken:
-        Type: Api
-        Properties:
-          Path: '/auth/github/oauth/access-token'
-          Method: get
-      RetrieveAccessTokenPing:
+      Events:
+        RetrieveAccessToken:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApydoxApi
+            Path: '/auth/github/oauth/access-token'
+            Method: post
+        RetrieveAccessTokenPing:
           Type: Schedule
           Properties:
             Schedule: rate(5 minutes)
@@ -74,15 +106,17 @@ Resources:
   RevokeAccessTokenFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
+      FunctionName: ApyDox-RevokeAccessTokenFunction
       CodeUri: ./cmd/handlers/revoke_access_token
       Handler: main
-    Events:
-      RetrieveAccessToken:
-        Type: Api
-        Properties:
-          Path: '/auth/github/revoke/{access_token}'
-          Method: delete
-      RetrieveAccessTokenPing:
+      Events:
+        RevokeAccessToken:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApydoxApi
+            Path: '/auth/github/revoke/{access_token}'
+            Method: delete
+        RevokeAccessTokenPing:
           Type: Schedule
           Properties:
             Schedule: rate(5 minutes)
