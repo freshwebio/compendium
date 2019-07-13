@@ -12,6 +12,9 @@ COPY ./cmd/server/main apydox-api
 
 COPY "${APYDOX_API_CONFIG_FILE}" .
 
+# Local self-signed TLS.
+COPY __local_resources/ ./__local_resources
+
 RUN chmod +x apydox-api
 
 EXPOSE "${APYDOX_API_PORT}"

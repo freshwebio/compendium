@@ -17,6 +17,9 @@ Parameters:
   SubnetID:
     Type: String
     Description: The subnet the lambda functions in the apydox api belong to
+  SecretResourceARN:
+    Type: String
+    Description: 'The exact ARN of the secret or with wildcards as per the format here: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html'
   EnvType:
     Type: String
     Default: local
@@ -73,6 +76,14 @@ Resources:
       FunctionName: ApyDox-CheckAccessTokenFunction
       CodeUri: ./cmd/handlers/check_access_token
       Handler: main
+      Policies:
+        - Statement:
+            - Sid: SecretsManagerGetApydoxSecret
+              Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+                - secretsmanager:DescribeSecret
+              Resource: !Ref SecretResourceARN
       Events:
         CheckAccessToken:
           Type: Api
@@ -91,6 +102,14 @@ Resources:
       FunctionName: ApyDox-RetrieveAccessTokenFunction
       CodeUri: ./cmd/handlers/retrieve_access_token
       Handler: main
+      Policies:
+        - Statement:
+            - Sid: SecretsManagerGetApydoxSecret
+              Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+                - secretsmanager:DescribeSecret
+              Resource: !Ref SecretResourceARN
       Events:
         RetrieveAccessToken:
           Type: Api
@@ -109,6 +128,14 @@ Resources:
       FunctionName: ApyDox-RevokeAccessTokenFunction
       CodeUri: ./cmd/handlers/revoke_access_token
       Handler: main
+      Policies:
+        - Statement:
+            - Sid: SecretsManagerGetApydoxSecret
+              Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+                - secretsmanager:DescribeSecret
+              Resource: !Ref SecretResourceARN
       Events:
         RevokeAccessToken:
           Type: Api

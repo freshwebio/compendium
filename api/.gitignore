@@ -4,3 +4,5 @@ apydox-api.conf
 coverage.out
 **/main
 secrets.json
+aws-sam-packaged.yaml
+sam-deploy-params.json

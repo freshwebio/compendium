@@ -1,0 +1,4 @@
+{
+  "EnvType": "production" ,
+  "SecretResourceARN": "arn:aws:secretsmanager:EXAMPLE_REGION:ACCOUNT_ID:secret:APYDOX/API-SECRETS-*"
+}

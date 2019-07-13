@@ -4,7 +4,7 @@ services:
   apydox-api:
     build:
       context: '.'
-      dockerfile: Dockerfile
+      dockerfile: ${APYDOX_DOCKERFILE}
       args:
         APYDOX_API_PORT: ${APYDOX_API_PORT}
         APYDOX_API_CONFIG_FILE: ${APYDOX_API_CONFIG_FILE}
