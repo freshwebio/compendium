@@ -10,16 +10,6 @@ const ApiDefCardText = styled.div`
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
   background-color: #5b5b5b;
-
-  ::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    width: 50%;
-    height: 9px;
-    background-color: #5b5b5b;
-  }
 `
 
 const ApiDefCardLink = styled(Link)`

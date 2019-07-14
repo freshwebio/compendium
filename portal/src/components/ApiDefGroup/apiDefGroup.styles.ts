@@ -18,17 +18,7 @@ const Heading = styled('h3')<{ theme: any }>`
   background-color: #414141;
   color: #c5c5c5;
   padding: 10px;
-  margin-bottom: 50px;
-
-  ::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    width: 50%;
-    height: 9px;
-    background-color: #414141;
-  }
+  margin-bottom: 32px;
 `
 
 const ApiDefGroupWrapper = styled.div`
