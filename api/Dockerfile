@@ -1,7 +1,7 @@
 FROM alpine:latest
 
-ARG APYDOX_API_PORT=4301
-ARG APYDOX_API_CONFIG_FILE=apydox-api.conf
+ARG APYDOX_API_PORT=4305
+ARG APYDOX_API_CONFIG_FILE=/config/apydox-api.conf
 
 # Will be overriden if provided at container runtime.
 ENV APYDOX_API_CONFIG_FILE=$APYDOX_API_CONFIG_FILE
@@ -9,8 +9,6 @@ ENV APYDOX_API_CONFIG_FILE=$APYDOX_API_CONFIG_FILE
 RUN apk --no-cache add ca-certificates
 
 COPY ./cmd/server/main apydox-api
-
-COPY "${APYDOX_API_CONFIG_FILE}" .
 
 RUN chmod +x apydox-api
 

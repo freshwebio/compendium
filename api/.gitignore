@@ -6,3 +6,7 @@ coverage.out
 secrets.json
 aws-sam-packaged.yaml
 sam-deploy-params.json
+
+# Ignore scripts that are used for things like testing out shell functionality
+# that might be added to a Makefile or as a part of a job in the circleci configuration.
+test-*.sh
