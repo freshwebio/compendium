@@ -10,6 +10,8 @@ import (
 	"github.com/freshwebio/apydox-api/pkg/utils"
 )
 
+// CheckAccessTokenRequestHandler produces a request handler to be used
+// to check a provided access token in github for the configured Github OAuth app.
 func CheckAccessTokenRequestHandler(services map[string]interface{}) RequestHandler {
 	return func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 		authService := services["auth.auth"].(auth.Service)
@@ -45,6 +47,8 @@ func CheckAccessTokenRequestHandler(services map[string]interface{}) RequestHand
 	}
 }
 
+// RevokeAccessTokenRequestHandler produces a request handler to be used
+// to revoke access from a provided token in github for the configured Github OAuth app.
 func RevokeAccessTokenRequestHandler(services map[string]interface{}) RequestHandler {
 	return func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 		authService := services["auth.auth"].(auth.Service)
@@ -73,6 +77,8 @@ func RevokeAccessTokenRequestHandler(services map[string]interface{}) RequestHan
 	}
 }
 
+// RetrieveAccessTokenRequestHandler produces a request handler to be used
+// to retrieve an access token as part of the OAuth flow for the configured Github OAuth app.
 func RetrieveAccessTokenRequestHandler(services map[string]interface{}) RequestHandler {
 	return func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 		authService := services["auth.auth"].(auth.Service)
