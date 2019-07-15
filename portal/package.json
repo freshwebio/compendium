@@ -65,7 +65,10 @@
     ]
   },
   "resolutions": {
-    "babel-jest": "24.7.1"
+    "babel-jest": "24.7.1",
+    "lodash": "4.17.13",
+    "lodash.mergewith": "4.6.2",
+    "underscore.string": "3.3.5"
   },
   "devDependencies": {
     "@types/enzyme": "^3.9.1",
