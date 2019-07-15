@@ -18,7 +18,7 @@ build: clean
 
 .PHONY: cibuild
 cibuild: clean
-  cd cmd/server && \
+	cd cmd/server && \
 	GOOS=linux GOARCH=amd64 go build -o main && \
 	cd ../.. && \
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
