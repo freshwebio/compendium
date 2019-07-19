@@ -100,13 +100,17 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only: master
+              only: 
+                - master
+                - development
       - test_api:
           filters:
             tags:
               only: /^v.*/
             branches:
-              only: master
+              only: 
+                - master
+                - development
           requires:
             - deps_api
       - deps_portal:
@@ -114,13 +118,17 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only: master
+              only: 
+                - master
+                - development
       - test_portal:
           filters:
             tags:
               only: /^v.*/
             branches:
-              only: master
+              only: 
+                - master
+                - development
           requires:
             - deps_portal
       - build_publish_api_docker:
