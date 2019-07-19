@@ -62,7 +62,7 @@ jobs:
       - run:
           name: Run the tests for the portal and send coverage
           command: |
-            yarn test || TEST_RUNNER_EXIT_CODE=$?
+            yarn test -w 1 || TEST_RUNNER_EXIT_CODE=$?
             yarn codacy-coverage
             exit $TEST_RUNNER_EXIT_CODE
   build_publish_api_docker:
