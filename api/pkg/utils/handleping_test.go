@@ -27,3 +27,12 @@ func TestHandlePingForNonPingRequest(t *testing.T) {
 		t.Errorf("Expected nil response for a request that is not a ping but received a response object %+v", response)
 	}
 }
+
+func TestHandlePingForInvalidInput(t *testing.T) {
+	response := HandlePing(events.APIGatewayProxyRequest{
+		Body: "{\"other_request\":true",
+	})
+	if response != nil {
+		t.Errorf("Expected nil response for a request that is not a valid request body received a response object %+v", response)
+	}
+}
