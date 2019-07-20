@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
-func TestHandlePingForPingRequest(t *testing.T) {
+func Test_a_correct_200_response_is_produced_for_a_ping_request(t *testing.T) {
 	response := HandlePing(events.APIGatewayProxyRequest{
 		Body: "{\"ping\":true}",
 	})
@@ -19,7 +19,7 @@ func TestHandlePingForPingRequest(t *testing.T) {
 	}
 }
 
-func TestHandlePingForNonPingRequest(t *testing.T) {
+func Test_a_nil_response_is_produced_for_a_non_ping_request(t *testing.T) {
 	response := HandlePing(events.APIGatewayProxyRequest{
 		Body: "{\"other_request\":true}",
 	})
@@ -28,7 +28,7 @@ func TestHandlePingForNonPingRequest(t *testing.T) {
 	}
 }
 
-func TestHandlePingForInvalidInput(t *testing.T) {
+func Test_a_nil_response_is_produced_for_malformed_json_input(t *testing.T) {
 	response := HandlePing(events.APIGatewayProxyRequest{
 		Body: "{\"other_request\":true",
 	})

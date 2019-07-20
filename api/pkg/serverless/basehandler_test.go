@@ -17,7 +17,7 @@ func testResponse(resp events.APIGatewayProxyResponse, expectedStatusCode int, e
 	}
 }
 
-func TestBaseHandlerPingRequest(t *testing.T) {
+func Test_base_handler_produces_correct_response_for_a_valid_ping_request(t *testing.T) {
 	mainHandlerCreator := func(services map[string]interface{}) RequestHandler {
 		return func(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 			return events.APIGatewayProxyResponse{}, nil
@@ -40,7 +40,7 @@ func TestBaseHandlerPingRequest(t *testing.T) {
 	}
 }
 
-func TestBaseHandlerWithMainRequestHandler(t *testing.T) {
+func Test_base_handler_produces_correct_response_for_a_provided_main_handler(t *testing.T) {
 	mainHandlerCreator := func(services map[string]interface{}) RequestHandler {
 		return func(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 			return events.APIGatewayProxyResponse{StatusCode: 200, Body: "{\"success\":true,\"results\":[\"Value1\",\"Value2\"]}"}, nil

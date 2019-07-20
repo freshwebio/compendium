@@ -10,7 +10,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func TestContentType(t *testing.T) {
+func Test_content_type_header_is_added_to_http_response_and_main_handler_response_is_produced(t *testing.T) {
 	contentTypeMw := NewContentType("application/json")
 	nextHandler := func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)

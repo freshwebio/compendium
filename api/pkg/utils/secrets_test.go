@@ -39,7 +39,7 @@ func (s *mockSecretRetriever) GetSecretValue(secretInput *secretsmanager.GetSecr
 	return nil, nil
 }
 
-func TestGetSecretsValidFromString(t *testing.T) {
+func Test_retrieving_secrets_from_valid_secrets_string_succeeds(t *testing.T) {
 	secretsRetriever := &mockSecretRetriever{}
 	secrets, err := GetSecrets("validFromString", secretsRetriever)
 	if err != nil {
@@ -53,7 +53,7 @@ func TestGetSecretsValidFromString(t *testing.T) {
 	}
 }
 
-func TestGetSecretsValidFromBytes(t *testing.T) {
+func Test_retrieving_secrets_from_valid_secrets_binary_succeeds(t *testing.T) {
 	secretsRetriever := &mockSecretRetriever{}
 	secrets, err := GetSecrets("validFromBytes", secretsRetriever)
 	if err != nil {
@@ -67,7 +67,7 @@ func TestGetSecretsValidFromBytes(t *testing.T) {
 	}
 }
 
-func TestGetSecretsNetworkOrAuthError(t *testing.T) {
+func Test_retrieving_secrets_with_network_or_auth_error_fails_with_error(t *testing.T) {
 	secretsRetriever := &mockSecretRetriever{}
 	secrets, err := GetSecrets("networkOrAuthError", secretsRetriever)
 	if err == nil {
@@ -78,7 +78,7 @@ func TestGetSecretsNetworkOrAuthError(t *testing.T) {
 	}
 }
 
-func TestGetSecretsInvalidJSON(t *testing.T) {
+func Test_retrieving_secrets_for_invalid_json_fails_with_error(t *testing.T) {
 	secretsRetriever := &mockSecretRetriever{}
 	secrets, err := GetSecrets("invalidJSON", secretsRetriever)
 	if err == nil {
@@ -89,7 +89,7 @@ func TestGetSecretsInvalidJSON(t *testing.T) {
 	}
 }
 
-func TestGetSecretsInvalidBase64(t *testing.T) {
+func Test_retrieving_secrets_for_binary_that_is_not_base64_encoded_fails_with_error(t *testing.T) {
 	secretsRetriever := &mockSecretRetriever{}
 	secrets, err := GetSecrets("invalidBase64", secretsRetriever)
 	if err == nil {

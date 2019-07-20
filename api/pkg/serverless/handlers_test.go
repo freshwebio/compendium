@@ -31,7 +31,7 @@ func (s *mockAuthService) RevokeAccessToken(accessToken string) error {
 	return errors.New("Server error")
 }
 
-func TestCheckAccessTokenRequestHandler(t *testing.T) {
+func Test_checking_valid_access_token_produces_a_response_specifying_it_is_valid(t *testing.T) {
 	services := make(map[string]interface{})
 	services["auth.auth"] = &mockAuthService{}
 	requestHandler := CheckAccessTokenRequestHandler(services)
@@ -49,8 +49,13 @@ func TestCheckAccessTokenRequestHandler(t *testing.T) {
 	if response.Body != "{\"validToken\":true}" {
 		t.Errorf("Expected response body to be an object with validToken set to true but got %s", response.Body)
 	}
+}
 
-	response, err = requestHandler(context.Background(), events.APIGatewayProxyRequest{
+func Test_checking_access_token_for_invalid_token_produces_a_response_with_a_401_response(t *testing.T) {
+	services := make(map[string]interface{})
+	services["auth.auth"] = &mockAuthService{}
+	requestHandler := CheckAccessTokenRequestHandler(services)
+	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
 		QueryStringParameters: map[string]string{
 			"token": "test-invvalid-access-token",
 		},
@@ -66,7 +71,7 @@ func TestCheckAccessTokenRequestHandler(t *testing.T) {
 	}
 }
 
-func TestRevokeAccessTokenRequestHandler(t *testing.T) {
+func Test_revoking_valid_access_token_is_successful(t *testing.T) {
 	services := make(map[string]interface{})
 	services["auth.auth"] = &mockAuthService{}
 	requestHandler := RevokeAccessTokenRequestHandler(services)
@@ -87,8 +92,13 @@ func TestRevokeAccessTokenRequestHandler(t *testing.T) {
 	if response.Body != "{}" {
 		t.Errorf("Expected empty JSON object as response body but got %s", response.Body)
 	}
+}
 
-	response, err = requestHandler(context.Background(), events.APIGatewayProxyRequest{
+func Test_revoking_empty_access_token_fails_with_400_response(t *testing.T) {
+	services := make(map[string]interface{})
+	services["auth.auth"] = &mockAuthService{}
+	requestHandler := RevokeAccessTokenRequestHandler(services)
+	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
 		PathParameters: map[string]string{
 			"access_token": "",
 		},
@@ -101,8 +111,13 @@ func TestRevokeAccessTokenRequestHandler(t *testing.T) {
 	if response.StatusCode != 400 {
 		t.Errorf("Expected a response status code of 400 for an empty access token but got %d", response.StatusCode)
 	}
+}
 
-	response, err = requestHandler(context.Background(), events.APIGatewayProxyRequest{
+func Test_revoking_access_token_with_server_error_fails_with_500_response(t *testing.T) {
+	services := make(map[string]interface{})
+	services["auth.auth"] = &mockAuthService{}
+	requestHandler := RevokeAccessTokenRequestHandler(services)
+	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
 		PathParameters: map[string]string{
 			"access_token": "dasdasdAsdasddXCCXc",
 		},
@@ -119,12 +134,11 @@ func TestRevokeAccessTokenRequestHandler(t *testing.T) {
 	}
 }
 
-func TestRetrieveAccessTokenRequestHandler(t *testing.T) {
+func Test_retrieving_access_token_for_valid_code_produces_response_with_access_token(t *testing.T) {
 	services := make(map[string]interface{})
 	services["auth.auth"] = &mockAuthService{}
 	requestHandler := RetrieveAccessTokenRequestHandler(services)
 
-	// Valid code and successful response.
 	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
 		Body: "{\"code\": \"test-valid-code\"}",
 	})
@@ -146,8 +160,14 @@ func TestRetrieveAccessTokenRequestHandler(t *testing.T) {
 		)
 	}
 
-	// Bad input (Malformed JSON).
-	response, err = requestHandler(context.Background(), events.APIGatewayProxyRequest{
+}
+
+func Test_retrieving_access_token_fails_for_malformed_json_with_400_response(t *testing.T) {
+	services := make(map[string]interface{})
+	services["auth.auth"] = &mockAuthService{}
+	requestHandler := RetrieveAccessTokenRequestHandler(services)
+
+	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
 		Body: "{\"code\":\"test-valid-code\"",
 	})
 	if err != nil {
@@ -158,8 +178,14 @@ func TestRetrieveAccessTokenRequestHandler(t *testing.T) {
 		t.Errorf("Expected a 400 bad input response for an invalid JSON body but got %d", response.StatusCode)
 	}
 
-	// Server error.
-	response, err = requestHandler(context.Background(), events.APIGatewayProxyRequest{
+}
+
+func Test_retrieving_access_token_with_server_error_fails_with_500_response(t *testing.T) {
+	services := make(map[string]interface{})
+	services["auth.auth"] = &mockAuthService{}
+	requestHandler := RetrieveAccessTokenRequestHandler(services)
+
+	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
 		Body: "{\"code\":\"test-invalid-code\"}",
 	})
 
