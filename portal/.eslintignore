@@ -1,4 +1,4 @@
-**/serviceWorker.ts
+src/serviceWorker.ts
 *.css
 *.svg
 *.scss
