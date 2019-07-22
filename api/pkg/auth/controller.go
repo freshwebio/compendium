@@ -26,7 +26,12 @@ func (ctrl *controllerImpl) GetGitHubAccessToken(w http.ResponseWriter, r *http.
 	}{}
 	err := json.NewDecoder(r.Body).Decode(&codeRequest)
 	if err != nil {
-		core.HTTPError(w, 400, "Bad input")
+		core.HTTPError(w, 400, "Please provide a valid code in a JSON object")
+		return
+	}
+
+	if codeRequest.Code == "" {
+		core.HTTPError(w, 400, "Please provide a valid code in a JSON object")
 		return
 	}
 

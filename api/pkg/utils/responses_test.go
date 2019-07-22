@@ -2,7 +2,7 @@ package utils
 
 import "testing"
 
-func TestServerError(t *testing.T) {
+func Test_a_correct_server_error_http_response_is_produced(t *testing.T) {
 	errResponse := ServerError()
 	if errResponse.StatusCode != 500 {
 		t.Errorf("Error response contains an incorrect status code; expected: 500 got: %d", errResponse.StatusCode)

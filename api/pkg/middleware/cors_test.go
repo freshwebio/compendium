@@ -10,7 +10,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func TestCORS(t *testing.T) {
+func Test_cors_headers_are_added_to_http_response_and_main_handler_response_is_produced(t *testing.T) {
 	corsMiddleware := NewCORS()
 	nextHandler := func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
