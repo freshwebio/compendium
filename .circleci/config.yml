@@ -85,7 +85,7 @@ jobs:
             echo 'export IMAGE_TAG=$IMAGE_TAG' >> $BASH_ENV
       - run:
           name: Build api server binary and docker image 
-          command: make cibuild
+          command: make -f Makefile cibuild
       - run:
           name: Publish Docker image to Docker Hub
           command: |
