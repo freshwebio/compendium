@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const cspHtmlWebpackPlugin = require('csp-html-webpack-plugin')
 const config = require('./config.json')
 
 const templateParametersGenerator = existingGenerator => (
@@ -11,6 +12,14 @@ const templateParametersGenerator = existingGenerator => (
     ...existingGenerator(compilation, assets, assetTags, options),
     favicon: config.favicon || '%PUBLIC_URL%/favicon.png',
   }
+}
+
+const cspConfigPolicy = {
+  'default-src': "'none'",
+  'base-uri': "'self'",
+  'object-src': "'none'",
+  'script-src': ["'self'"],
+  'style-src': ["'self'"],
 }
 
 module.exports = {
@@ -65,6 +74,10 @@ module.exports = {
 
         return plugin
       })
+
+      if (env === 'production') {
+        webpackConfig.plugins.push(new cspHtmlWebpackPlugin(cspConfigPolicy))
+      }
 
       return webpackConfig
     },
