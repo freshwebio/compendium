@@ -83,7 +83,7 @@ jobs:
             else
               IMAGE_TAG=${CIRCLE_TAG//v/version-}
             fi
-            echo 'export IMAGE_TAG=$IMAGE_TAG' >> $BASH_ENV
+            echo "export IMAGE_TAG=$IMAGE_TAG" >> $BASH_ENV
       - run:
           name: Build api server binary and docker image 
           command: make -f Makefile cibuild
