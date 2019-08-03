@@ -10,15 +10,19 @@ Parameters:
     Description: The name of the secret that holds all the secrets and configuration needed for the apydox api
   SecretSourceEndpoint:
     Type: String
+    Default: false
     Description: A custom endpoint for the secrets manager instance used by the api.
   SecurityGroupID:
     Type: String
+    Default: false
     Description: The security group the lambda functions in the apydox api belong to
   SubnetID:
     Type: String
+    Default: false
     Description: The subnet the lambda functions in the apydox api belong to
   SecretResourceARN:
     Type: String
+    Default: false
     Description: 'The exact ARN of the secret or with wildcards as per the format here: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html'
   EnvType:
     Type: String
@@ -27,6 +31,9 @@ Parameters:
 
 Conditions:
   LocalEnvOnly: !Equals [ !Ref EnvType, local ]
+  HasSubnetID: !Not [ !Equals [ !Ref SubnetID, false ] ]
+  HasSecurityGroupID: !Not [ !Equals [ !Ref SecurityGroupID, false ] ]
+  HasSecretSourceEndpoint: !Not [ !Equals [ !Ref SecretSourceEndpoint, false ] ]
 
 Globals:
   Function:
@@ -36,19 +43,28 @@ Globals:
       Variables:
         APYDOX_API_SECRET_ID: !Ref SecretID
         APYDOX_API_SECRET_SOURCE: aws_secrets_manager
-        APYDOX_API_SECRET_SOURCE_ENDPOINT: !Ref SecretSourceEndpoint
+        APYDOX_API_SECRET_SOURCE_ENDPOINT:
+          Fn::If:
+            - HasSecretSourceEndpoint
+            - Ref: SecretSourceEndpoint
+            - Ref: AWS::NoValue
     VpcConfig:
       SecurityGroupIds:
-        - !Ref SecurityGroupID
+        - Fn::If:
+            - HasSecurityGroupID
+            - Ref: SecurityGroupID
+            - Ref: AWS::NoValue
       SubnetIds:
-        - !Ref SubnetID
+        - Fn::If:
+            - HasSubnetID
+            - Ref: SubnetID
+            - Ref: AWS::NoValue
   Api:
     Cors:
       AllowMethods: "'OPTIONS,GET,POST,PUT,DELETE'"
       AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
       AllowOrigin: "'*'"
       MaxAge: "'600'"
-      AllowCredentials: true
 
 Resources:
   ApydoxApi:
