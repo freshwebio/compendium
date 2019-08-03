@@ -1,8 +1,8 @@
-PACKAGED_TEMPLATE = aws-sam-packaged.yaml
-S3_BUCKET := $(AWS_S3_BUCKET)
-STACK_NAME := $(STACK_NAME)
-AWS_REGION := $(AWS_REGION)
-TEMPLATE = aws-sam-template.yaml
+export PACKAGED_TEMPLATE := aws-sam-packaged.yaml
+export S3_BUCKET := $(AWS_S3_BUCKET)
+export STACK_NAME := $(STACK_NAME)
+export AWS_REGION := $(AWS_REGION)
+export TEMPLATE := aws-sam-template.yaml
 
 .PHONY: clean
 clean:
