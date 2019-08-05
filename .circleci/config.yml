@@ -79,7 +79,7 @@ jobs:
           name: Setup docker image tag environment variable
           command: |
             if [ "$CIRCLE_BRANCH" = "master" ]; then
-              IMAGE_TAG="latest"
+              IMAGE_TAG="dev"
             else
               IMAGE_TAG=${CIRCLE_TAG//v/version-}
             fi
