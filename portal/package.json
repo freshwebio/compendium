@@ -23,7 +23,7 @@
     "redux-api-middleware": "^3.0.1",
     "reselect": "^4.0.0",
     "styled-components": "^4.2.0",
-    "swagger-editor": "^3.6.31",
+    "swagger-editor": "^3.6.32",
     "typescript": "3.4.2",
     "uuid": "^3.3.2"
   },
@@ -68,8 +68,7 @@
     "babel-jest": "24.7.1",
     "lodash": "4.17.13",
     "lodash.mergewith": "4.6.2",
-    "underscore.string": "3.3.5",
-    "remarkable": "1.7.4"
+    "underscore.string": "3.3.5"
   },
   "devDependencies": {
     "@types/enzyme": "^3.9.1",

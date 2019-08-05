@@ -755,6 +755,14 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-transform-typescript" "^7.3.2"
 
+"@babel/runtime-corejs2@^7.0.0", "@babel/runtime-corejs2@^7.5.5":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.5.5.tgz#c3214c08ef20341af4187f1c9fbdc357fbec96b2"
+  integrity sha512-FYATQVR00NSNi7mUfpPDp7E8RYMXDuO8gaix7u/w3GekfUinKgX1AcTxs7SoiEmoEW9mbpjrwqWSW6zCmw5h8A==
+  dependencies:
+    core-js "^2.6.5"
+    regenerator-runtime "^0.13.2"
+
 "@babel/runtime@7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.3.tgz#79888e452034223ad9609187a0ad1fe0d2ad4bdc"
@@ -995,12 +1003,6 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
-
-"@kyleshockey/js-yaml@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@kyleshockey/js-yaml/-/js-yaml-1.0.1.tgz#5c036bb67caee77fa887738e695dc02949889bfd"
-  dependencies:
-    argparse "^1.0.7"
 
 "@kyleshockey/object-assign-deep@^0.4.0", "@kyleshockey/object-assign-deep@^0.4.2":
   version "0.4.2"
@@ -2506,7 +2508,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.1.3, classnames@^2.2.5:
+classnames@^2.1.3, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
@@ -2785,6 +2787,11 @@ core-js@^1.0.0:
 core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.5.1:
   version "2.6.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
+
+core-js@^2.6.5:
+  version "2.6.9"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
+  integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -3193,13 +3200,13 @@ deep-equal@^1.0.0, deep-equal@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
 
-deep-extend@0.5.1, deep-extend@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.5.1.tgz#b894a9dd90d3023fbf1c55a394fb858eb2066f1f"
-
-deep-extend@^0.6.0:
+deep-extend@0.6.0, deep-extend@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
+
+deep-extend@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.5.1.tgz#b894a9dd90d3023fbf1c55a394fb858eb2066f1f"
 
 deep-is@~0.1.3:
   version "0.1.3"
@@ -3400,9 +3407,10 @@ domkit@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/domkit/-/domkit-0.0.1.tgz#88399d586794efc1154fec6c22cfe50f19bd4dbb"
 
-dompurify@^1.0.4:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-1.0.10.tgz#18d7353631c86ee25049e38fbca8c6b2c5a2af87"
+dompurify@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-1.0.11.tgz#fe0f4a40d147f7cebbe31a50a1357539cfc1eb4d"
+  integrity sha512-XywCTXZtc/qCX3iprD1pIklRVk/uhl8BKpkTxr+ZyMVUzSUg7wkQXRBp/euJ5J5moa1QvfpvaPQVP71z1O59dQ==
 
 domutils@1.5.1:
   version "1.5.1"
@@ -4101,9 +4109,10 @@ fast-glob@^2.0.2:
     merge2 "^1.2.3"
     micromatch "^3.1.10"
 
-fast-json-patch@^2.0.6:
+fast-json-patch@~2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/fast-json-patch/-/fast-json-patch-2.1.0.tgz#e348c330a5b2481b14f5fffd707aebfef8b7bef6"
+  integrity sha512-PipOsAKamRw7+CXtKiieehyjUeDVPJ5J7b2kdJYerEf6TSUQoD2ijpVyZ88KQm5YXziff4h762bz3+vzf56khg==
   dependencies:
     deep-equal "^1.0.1"
 
@@ -4901,7 +4910,7 @@ identity-obj-proxy@3.0.0, identity-obj-proxy@^3.0.0:
   dependencies:
     harmony-reflect "^1.4.6"
 
-ieee754@^1.1.4, ieee754@^1.1.8:
+ieee754@^1.1.13, ieee754@^1.1.4:
   version "1.1.13"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.13.tgz#ec168558e95aa181fd87d37f55c32bbcb6708b84"
 
@@ -6319,7 +6328,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@4.17.13, "lodash@>=3.5 <5", lodash@^4.15.0, lodash@^4.16.2, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0:
+lodash@4.17.13, "lodash@>=3.5 <5", lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0:
   version "4.17.13"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.13.tgz#0bdc3a6adc873d2f4e0c4bac285df91b64fc7b93"
   integrity sha512-vm3/XWXfWtRua0FkUyEHBZy8kCPjErNBT9fJx8Zvs+U6zjqPbTUOpkaoum3O5uiA8sm+yNMHXfYkTUHFoMxFNA==
@@ -8798,9 +8807,10 @@ relateurl@0.2.x:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
 
-remarkable@^1.7.1, remarkable@freshwebio/remarkable#fix-redos:
-  version "1.7.0"
-  resolved "https://codeload.github.com/freshwebio/remarkable/tar.gz/49a8485ac5397ccaa827c55927f15e40026d8361"
+remarkable@^1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/remarkable/-/remarkable-1.7.4.tgz#19073cb960398c87a7d6546eaa5e50d2022fcd00"
+  integrity sha512-e6NKUXgX95whv7IgddywbeN/ItCkWbISmc2DiqHJb0wTrqZIexqdco5b8Z3XZoo/48IdNVKM9ZCvTPJ4F5uvhg==
   dependencies:
     argparse "^1.0.10"
     autolinker "~0.28.0"
@@ -9673,23 +9683,23 @@ svgo@^1.0.0, svgo@^1.2.1:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swagger-client@^3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.9.0.tgz#b94ea65baa0194f4cb3fad2f8bd552c531d57e03"
-  integrity sha512-uyCq2xoaAtmE0oIQ0fCfnsDoy/v97ANnAZywtyk4yumBP74xXp4NFlpZaqZJHN9K9dbPzgs3MH98VocZeM0ExQ==
+swagger-client@^3.9.2:
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.9.2.tgz#fbfc148733f8de9d324872d8f42e0dd215cef752"
+  integrity sha512-33C183Gk0SekyXooi786Xq7CsBxGpy8JIT4BxxiRN+ajdjJYX8H7/W/y32+0MdNLzGMmSkrgCrcXadvGSthTkg==
   dependencies:
-    "@kyleshockey/js-yaml" "^1.0.1"
+    "@babel/runtime-corejs2" "^7.0.0"
     "@kyleshockey/object-assign-deep" "^0.4.0"
-    babel-runtime "^6.26.0"
     btoa "1.1.2"
     buffer "^5.1.0"
     cookie "^0.3.1"
     cross-fetch "0.0.8"
     deep-extend "^0.5.1"
     encode-3986 "^1.0.0"
-    fast-json-patch "^2.0.6"
+    fast-json-patch "~2.1.0"
     isomorphic-form-data "0.0.1"
-    lodash "^4.16.2"
+    js-yaml "^3.13.1"
+    lodash "^4.17.14"
     qs "^6.3.0"
     querystring-browser "^1.0.4"
     traverse "^0.6.6"
@@ -9697,12 +9707,11 @@ swagger-client@^3.9.0:
     utf8-bytes "0.0.1"
     utfstring "^2.0.0"
 
-swagger-editor@^3.6.31:
-  version "3.6.31"
-  resolved "https://registry.yarnpkg.com/swagger-editor/-/swagger-editor-3.6.31.tgz#ee60eac9a87cd103edf1e2fa5af960d86072a94e"
-  integrity sha512-EQsAVCSU4H0ZG0rgPtMlhwAJSiXkrGFZ2gGF7KPXyTPqGqPd89zCGdqVrRY8vDqOiTggjP332RH9u8WH2bmvYw==
+swagger-editor@^3.6.32:
+  version "3.6.32"
+  resolved "https://registry.yarnpkg.com/swagger-editor/-/swagger-editor-3.6.32.tgz#9ea525a36bf8b9cdc54e7ba473d79bf356758f03"
+  integrity sha512-C9LarT8ZarEFps1AavupN5RQhQ4d2Jo4xCDmRmWT4j4Id259f3DIXXgDXwbQjT6rJmwWb1lkc/nI9u3nn06ang==
   dependencies:
-    "@kyleshockey/js-yaml" "^1.0.1"
     ajv "^5.2.2"
     ajv-errors "^1.0.1"
     ajv-keywords "^3.4.0"
@@ -9714,9 +9723,10 @@ swagger-editor@^3.6.31:
     file-dialog "0.0.7"
     immutable "^3.x.x"
     is-json "^2.0.1"
+    js-yaml "^3.13.1"
     json-beautify "^1.0.1"
     json-refs "^3.0.4"
-    lodash "^4.17.4"
+    lodash "^4.17.15"
     promise-worker "^1.1.1"
     prop-types "15.6.0"
     querystring-browser "^1.0.4"
@@ -9733,33 +9743,34 @@ swagger-editor@^3.6.31:
     react-transition-group "^1.1.1"
     redux "^3.x.x"
     reselect "^2.5.4"
-    swagger-client "^3.9.0"
-    swagger-ui "^3.23.0"
+    swagger-client "^3.9.2"
+    swagger-ui "^3.23.4"
     traverse "^0.6.6"
     whatwg-fetch "^2.0.3"
     yaml-js "^0.1.4"
 
-swagger-ui@^3.23.0:
-  version "3.23.0"
-  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.23.0.tgz#baf085a094616bb7ac4916ac9e8e881f15cdd0c9"
-  integrity sha512-Q88wQtCWKFtmTg0LfnobTOnvPK3fxLIouzv5iRe8GHuuFXMcy3nm9F97JC2HYjSl2cezZGInzWe8SzVc1mfrPg==
+swagger-ui@^3.23.4:
+  version "3.23.4"
+  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.23.4.tgz#b73a968281c88791745177bea0553a63cde9cca9"
+  integrity sha512-qqERF3VLDMGn7C9C/vzDVvrnxTUMKOEJD0xpiybF+60BMCFLTvCKZ/onqi/7VpxPfFaJ7Yu+CKghbESTd+CRsQ==
   dependencies:
+    "@babel/runtime-corejs2" "^7.5.5"
     "@braintree/sanitize-url" "^2.0.2"
-    "@kyleshockey/js-yaml" "^1.0.1"
     "@kyleshockey/object-assign-deep" "^0.4.2"
     "@kyleshockey/xml" "^1.0.2"
     base64-js "^1.2.0"
-    classnames "^2.2.5"
+    classnames "^2.2.6"
     core-js "^2.5.1"
     css.escape "1.5.1"
-    deep-extend "0.5.1"
-    dompurify "^1.0.4"
-    ieee754 "^1.1.8"
+    deep-extend "0.6.0"
+    dompurify "^1.0.11"
+    ieee754 "^1.1.13"
     immutable "^3.x.x"
     js-file-download "^0.4.1"
-    lodash "^4.17.11"
+    js-yaml "^3.13.1"
+    lodash "^4.17.15"
     memoizee "^0.4.12"
-    prop-types "^15.5.10"
+    prop-types "^15.7.2"
     react "^15.6.2"
     react-debounce-input "^3.2.0"
     react-dom "^15.6.2"
@@ -9770,11 +9781,11 @@ swagger-ui@^3.23.0:
     react-redux "^4.x.x"
     redux "^3.x.x"
     redux-immutable "3.0.8"
-    remarkable "^1.7.1"
+    remarkable "^1.7.4"
     reselect "^2.5.4"
     serialize-error "^2.1.0"
-    swagger-client "^3.9.0"
-    url-parse "^1.4.3"
+    swagger-client "^3.9.2"
+    url-parse "^1.4.7"
     xml-but-prettier "^1.0.1"
     zenscroll "^4.0.2"
 
@@ -10162,7 +10173,7 @@ url-loader@1.1.2:
     mime "^2.0.3"
     schema-utils "^1.0.0"
 
-url-parse@^1.4.3:
+url-parse@^1.4.3, url-parse@^1.4.7:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.7.tgz#a8a83535e8c00a316e403a5db4ac1b9b853ae278"
   dependencies:
