@@ -31,7 +31,7 @@ dependencies: docker-deps localstack-data
 
 .PHONY: api
 api: build dependencies
-	sam local start-api --template $(TEMPLATE) --region $(AWS_REGION) --parameter-overrides "ParameterKey=SecretSourceEndpoint,ParameterValue=http://host.docker.internal:4584"
+	sam local start-api --template $(TEMPLATE) --region $(AWS_REGION) --debug --parameter-overrides "ParameterKey=EnvType,ParameterValue=local ParameterKey=SecretSourceEndpoint,ParameterValue=http://host.docker.internal:4584"
 
 .PHONY: package
 package: build
