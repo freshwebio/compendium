@@ -10,17 +10,19 @@ import { RSAA } from 'redux-api-middleware'
 import { groupInputToDir, serviceInputToFile } from 'utils/files'
 // Same default spec as the swagger editor.
 import defaultSpecYaml from 'utils/defaultSpec'
+import { sanitiseStringAlphaNumeric } from 'utils/sanitisation'
 
 export const addGroup = (groupName: string): any => {
+  const sanitisedGroupName = sanitiseStringAlphaNumeric(groupName)
   return {
     [RSAA]: {
-      endpoint: `/contents/${groupInputToDir(groupName)}/.gitkeep`,
+      endpoint: `/contents/${groupInputToDir(sanitisedGroupName)}/.gitkeep`,
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: `Added new service group ${groupName}`,
+        message: `Added new service group ${sanitisedGroupName}`,
         content: '',
       }),
       types: [ADD_GROUP, ADD_GROUP_SUCCESS, ADD_GROUP_FAILURE],
@@ -29,15 +31,19 @@ export const addGroup = (groupName: string): any => {
 }
 
 export const addService = (groupPath: string, serviceName: string): any => {
+  const sanitisedGroupPath = sanitiseStringAlphaNumeric(groupPath)
+  const sanitisedServiceName = sanitiseStringAlphaNumeric(serviceName)
   return {
     [RSAA]: {
-      endpoint: `/contents/${groupPath}/${serviceInputToFile(serviceName)}`,
+      endpoint: `/contents/${sanitisedGroupPath}/${serviceInputToFile(
+        sanitisedServiceName
+      )}`,
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: `Added API definition for the ${serviceName} in ${groupPath}`,
+        message: `Added API definition for the ${sanitisedServiceName} in ${sanitisedGroupPath}`,
         content: btoa(defaultSpecYaml),
       }),
       types: [

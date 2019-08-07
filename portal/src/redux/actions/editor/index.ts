@@ -7,6 +7,7 @@ import {
   SET_CURRENT_DOCUMENT,
 } from './types'
 import { RSAA } from 'redux-api-middleware'
+import { sanitiseStringAlphaNumeric } from 'utils/sanitisation'
 
 export interface SetDocumentChangedAction {
   type: string
@@ -67,7 +68,7 @@ export const commitChanges = (
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: commitDescription,
+        message: sanitiseStringAlphaNumeric(commitDescription),
         content: btoa(spec),
         sha: currentSpecSHA,
       }),
