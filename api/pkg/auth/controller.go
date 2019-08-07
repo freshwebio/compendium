@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/freshwebio/apydox-api/pkg/core"
+	"github.com/freshwebio/apydox-api/pkg/utils"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -35,7 +36,7 @@ func (ctrl *controllerImpl) GetGitHubAccessToken(w http.ResponseWriter, r *http.
 		return
 	}
 
-	token, err := ctrl.authService.GetGitHubAccessToken(codeRequest.Code)
+	token, err := ctrl.authService.GetGitHubAccessToken(utils.SanitiseWord(codeRequest.Code))
 	if err != nil {
 		core.HTTPError(w, 500, "Unexpected server error")
 		return
@@ -59,7 +60,7 @@ func (ctrl *controllerImpl) CheckGitHubAccessToken(w http.ResponseWriter, r *htt
 		return
 	}
 
-	validToken, err := ctrl.authService.CheckGitHubAccessToken(token)
+	validToken, err := ctrl.authService.CheckGitHubAccessToken(utils.SanitiseWord(token))
 	if err != nil {
 		core.HTTPError(w, 500, "Unexpected server error")
 		return
@@ -84,7 +85,7 @@ func (ctrl *controllerImpl) RevokeGitHubAccessToken(w http.ResponseWriter, r *ht
 		return
 	}
 
-	err := ctrl.authService.RevokeAccessToken(token)
+	err := ctrl.authService.RevokeAccessToken(utils.SanitiseWord(token))
 	if err != nil {
 		core.HTTPError(w, 500, "Unexpected server error")
 		return

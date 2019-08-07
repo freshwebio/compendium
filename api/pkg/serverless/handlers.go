@@ -26,7 +26,8 @@ func CheckAccessTokenRequestHandler(services map[string]interface{}) RequestHand
 				Body:       string(errorResponse),
 			}, nil
 		}
-		validToken, err := authService.CheckGitHubAccessToken(token)
+
+		validToken, err := authService.CheckGitHubAccessToken(utils.SanitiseWord(token))
 		if err != nil {
 			log.Println(err)
 			return utils.ServerError(), nil
@@ -62,7 +63,7 @@ func RevokeAccessTokenRequestHandler(services map[string]interface{}) RequestHan
 			}, nil
 		}
 
-		err := authService.RevokeAccessToken(token)
+		err := authService.RevokeAccessToken(utils.SanitiseWord(token))
 		if err != nil {
 			log.Println(err)
 			return utils.ServerError(), nil
@@ -95,7 +96,7 @@ func RetrieveAccessTokenRequestHandler(services map[string]interface{}) RequestH
 			}, nil
 		}
 
-		token, err := authService.GetGitHubAccessToken(codeRequest.Code)
+		token, err := authService.GetGitHubAccessToken(utils.SanitiseWord(codeRequest.Code))
 		if err != nil {
 			log.Println(err)
 			return utils.ServerError(), nil
