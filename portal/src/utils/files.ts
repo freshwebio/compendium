@@ -1,3 +1,5 @@
+import { sanitiseStringAlphaNumeric } from './sanitisation'
+
 export const upperCamelCase = (input: string): string => {
   const firstChar = input.charAt(0).toUpperCase()
   const restOfInput = input.slice(1)
@@ -32,7 +34,10 @@ export const groupInputToDir = (groupName: string): string => {
 
 export const idToServiceDefinitionPath = (serviceId: string): string => {
   const parts = serviceId.split('::')
-  const serviceGroupDir = parts.length > 1 ? `${parts[0]}/` : ''
-  const servicePart = parts.length > 1 ? parts[1] : parts[0]
+  const serviceGroupDir =
+    parts.length > 1 ? `${sanitiseStringAlphaNumeric(parts[0])}/` : ''
+  const servicePart = sanitiseStringAlphaNumeric(
+    parts.length > 1 ? parts[1] : parts[0]
+  )
   return `${serviceGroupDir}${servicePart}.yaml`
 }
