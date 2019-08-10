@@ -24,9 +24,9 @@ Read our [api contribution guidelines](https://apydox.freshweb.io/contributing/c
 
 ## Running the api locally
 
-### Serverless
+### As a serverless api backed by AWS SAM local + LocalStack
 
-### Docker container
+### As a docker container
 
 ### Good First Issues
 
