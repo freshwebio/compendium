@@ -1,7 +1,7 @@
 {
   "name": "apydox",
   "version": "0.1.0",
-  "private": true,
+  "description": "The web UI for the apydox api documentation portal",
   "dependencies": {
     "@craco/craco": "^5.0.2",
     "@types/node": "11.13.0",
