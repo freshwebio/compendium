@@ -1,4 +1,8 @@
-import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from './types'
+import {
+  ADD_NOTIFICATION,
+  REMOVE_NOTIFICATION,
+  TOGGLE_DEMO_MODE,
+} from './types'
 
 export interface AddNotificationAction {
   type: string
@@ -29,5 +33,15 @@ export const removeNotification = (id: string): RemoveNotificationAction => {
   return {
     type: REMOVE_NOTIFICATION,
     id,
+  }
+}
+
+export interface ToggleDemoModeAction {
+  type: string
+}
+
+export const toggleDemoMode = (): ToggleDemoModeAction => {
+  return {
+    type: TOGGLE_DEMO_MODE,
   }
 }

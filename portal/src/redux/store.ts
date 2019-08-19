@@ -4,6 +4,7 @@ import { apiMiddleware } from 'redux-api-middleware'
 import reducer from './reducers'
 import githubApiInjector from './middleware/githubApiInjector'
 import apiNotifications from './middleware/apiNotifications'
+import demoModeInterceptor from './middleware/demoModeInterceptor'
 
 const composeEnhancers = composeWithDevTools({
   name: 'apydox portal',
@@ -11,6 +12,7 @@ const composeEnhancers = composeWithDevTools({
 
 const middleware = applyMiddleware(
   githubApiInjector,
+  demoModeInterceptor,
   apiMiddleware,
   apiNotifications
 )

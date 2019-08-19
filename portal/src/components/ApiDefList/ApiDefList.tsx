@@ -7,10 +7,12 @@ import Loader from 'assets/images/loader.svg'
 
 interface ApiDefListProps {
   finishedSaving: boolean
+  demoMode: boolean
 }
 
 const ApiDefList: React.FunctionComponent<ApiDefListProps> = ({
   finishedSaving,
+  demoMode,
 }): React.ReactElement => {
   const [apiDefinitionGroups, setApiDefinitionGroups] = useState<
     ApiDefinitionGroup[] | null
@@ -19,7 +21,7 @@ const ApiDefList: React.FunctionComponent<ApiDefListProps> = ({
   // refresh the dashboard view.
   useEffect((): void => {
     if (finishedSaving) {
-      getApiDefs()
+      getApiDefs('master', demoMode)
         .then(
           (apiDefs: ApiDefinitionGroup[]): void => {
             setApiDefinitionGroups(apiDefs)

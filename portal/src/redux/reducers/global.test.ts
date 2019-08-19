@@ -18,19 +18,21 @@ describe('Global reducer', (): void => {
           type: 'success',
         },
       ],
+      demoMode: false,
     })
   })
 
   it('should return the original state for an action that is not handled by the reducer', (): void => {
     expect(
       globalReducer(
-        { notifications: [] },
+        { notifications: [], demoMode: false },
         {
           type: 'MISSING-ACTION-TYPE',
         }
       )
     ).toEqual({
       notifications: [],
+      demoMode: false,
     })
   })
 
@@ -55,6 +57,7 @@ describe('Global reducer', (): void => {
               type: 'success',
             },
           ],
+          demoMode: false,
         },
         {
           type: types.REMOVE_NOTIFICATION,
@@ -74,6 +77,18 @@ describe('Global reducer', (): void => {
           type: 'success',
         },
       ],
+      demoMode: false,
+    })
+  })
+
+  it('should update state correctly for toggling read only mode', (): void => {
+    expect(
+      globalReducer(undefined, {
+        type: types.TOGGLE_DEMO_MODE,
+      })
+    ).toEqual({
+      notifications: [],
+      demoMode: true,
     })
   })
 })

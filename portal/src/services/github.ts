@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 import { toLabel, idToServiceDefinitionPath } from 'utils/files'
+import defaultSpec from 'utils/defaultSpec'
 
 const createGithubApi = (): AxiosInstance => {
   let token
@@ -10,7 +11,7 @@ const createGithubApi = (): AxiosInstance => {
   } catch (e) {
     console.log(e)
   }
-  return axios.create({
+  const axiosInstance: AxiosInstance = axios.create({
     baseURL: 'https://api.github.com',
     headers: {
       'Content-Type': 'application/json',
@@ -20,6 +21,8 @@ const createGithubApi = (): AxiosInstance => {
       'If-None-Match': '',
     },
   })
+
+  return axiosInstance
 }
 
 const api = createGithubApi()
@@ -94,22 +97,116 @@ const prepareApiDefGroups = (
   return accum
 }
 
+interface FlatTreeResponse {
+  data: { tree: FileEntry[] }
+}
+
+const saveDefaultDemoDefIfNeeded = (
+  owner: string,
+  repo: string,
+  prefix: string
+): void => {
+  const localContentKeys = Object.keys(localStorage).filter(
+    (key): boolean => key.startsWith(prefix)
+  )
+  if (localContentKeys.length === 0) {
+    localStorage.setItem(
+      `https://api.github.com/repos/${owner}/${repo}/contents/demo-services/User-Service.yaml`,
+      JSON.stringify({
+        content: btoa(defaultSpec),
+        sha: 'demogsdsg0sdg9839asfasdsha',
+      })
+    )
+  }
+}
+
+const getLocalApiDefs = (owner: string, repo: string): FlatTreeResponse => {
+  const prefix = `https://api.github.com/repos/${owner}/${repo}/contents/`
+
+  // First populate local storage with the new initial api definitions if we need to.
+  saveDefaultDemoDefIfNeeded(owner, repo, prefix)
+
+  return Object.keys(localStorage).reduce(
+    (accum: FlatTreeResponse, key: string): FlatTreeResponse => {
+      // Add an entry for the group directory if it does not already exist.
+      const path = key.replace(prefix, '')
+      const pathPieces = path.split('/')
+      const groupPath = pathPieces.slice(0, pathPieces.length - 1).join('/')
+      const existingGroupEntry = accum.data.tree.find(
+        (entry): boolean => entry.path === groupPath
+      )
+      const newEntries = !existingGroupEntry
+        ? [{ path: groupPath, type: 'tree' }, { path, type: 'blob' }]
+        : [{ path, type: 'blob' }]
+
+      if (key.startsWith(prefix)) {
+        return {
+          data: {
+            tree: [...accum.data.tree, ...newEntries],
+          },
+        }
+      }
+      return accum
+    },
+    {
+      data: { tree: [] },
+    }
+  )
+}
+
 export const getApiDefs = async (
-  branch: string = 'master'
+  branch: string = 'master',
+  demoMode?: boolean
 ): Promise<ApiDefinitionGroup[]> => {
   const owner = process.env.REACT_APP_API_DOCS_REPO_OWNER || ''
   const repo = process.env.REACT_APP_API_DOCS_REPO || ''
-  const treeSHA = await getSHAForBranch(branch, owner, repo)
-  const response = await api.get(
-    `/repos/${owner}/${repo}/git/trees/${treeSHA}`,
-    { params: { recursive: 1 } }
-  )
+
+  let response: FlatTreeResponse
+  if (process.env.REACT_APP_DEMO_MODE && demoMode) {
+    response = getLocalApiDefs(owner, repo)
+  } else {
+    const treeSHA = await getSHAForBranch(branch, owner, repo)
+    response = await api.get(`/repos/${owner}/${repo}/git/trees/${treeSHA}`, {
+      params: {
+        recursive: 1,
+      },
+    })
+  }
+
   const { tree: treeAsList } = response.data
   const apiDefs: ApiDefinitionGroup[] = treeAsList.reduce(
     prepareApiDefGroups,
     []
   )
   return apiDefs
+}
+
+const getLocalServiceDefinition = (
+  owner: string,
+  repo: string,
+  path: string
+): { data: { content: string; sha: string } } => {
+  const prefix = `https://api.github.com/repos/${owner}/${repo}/contents/`
+
+  // First populate local storage with the new initial api definitions if we need to.
+  saveDefaultDemoDefIfNeeded(owner, repo, prefix)
+
+  const rawData = localStorage.getItem(`https://api.github.com${path}`)
+  if (rawData) {
+    const parsedData = JSON.parse(rawData)
+    if (parsedData.content) {
+      return {
+        data: {
+          content: parsedData.content,
+          sha: parsedData.sha || 'demoshafallback',
+        },
+      }
+    }
+  }
+  // If the data is not in the correct shape or is not in local storage then throw an error.
+  throw Error(
+    'Failed to retrieve service definition from local storage for demo mode'
+  )
 }
 
 /**
@@ -121,15 +218,22 @@ export const getApiDefs = async (
  */
 export const loadServiceDefinition = async (
   service: string,
-  branch: string = 'master'
+  branch: string = 'master',
+  demoMode?: boolean
 ): Promise<{ content: string; sha: string }> => {
   try {
     const owner = process.env.REACT_APP_API_DOCS_REPO_OWNER || ''
     const repo = process.env.REACT_APP_API_DOCS_REPO || ''
     const serviceDefinitionPath = idToServiceDefinitionPath(service)
-    const response = await api.get(
-      `/repos/${owner}/${repo}/contents/${serviceDefinitionPath}?ref=${branch}`
-    )
+    const path = `/repos/${owner}/${repo}/contents/${serviceDefinitionPath}`
+
+    let response: { data: { content: string; sha: string } }
+    if (process.env.REACT_APP_DEMO_MODE && demoMode) {
+      response = getLocalServiceDefinition(owner, repo, path)
+    } else {
+      response = await api.get(path, { params: { ref: branch } })
+    }
+
     return { content: atob(response.data.content), sha: response.data.sha }
   } catch (err) {
     console.log(err)

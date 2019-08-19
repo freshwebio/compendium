@@ -1,10 +1,12 @@
 import nock from 'nock'
 import { getApiDefs, loadServiceDefinition } from './github'
+import defaultSpec from 'utils/defaultSpec'
 
 describe('github api interactions', (): void => {
   afterEach(
     (): void => {
       nock.cleanAll()
+      localStorage.clear()
     }
   )
 
@@ -76,6 +78,74 @@ describe('github api interactions', (): void => {
         },
       ])
     })
+
+    it('should load api definitions from local storage for demo mode with default demo mode data', async (): Promise<
+      void
+    > => {
+      process.env.REACT_APP_DEMO_MODE = 'true'
+      process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'
+      process.env.REACT_APP_API_DOCS_REPO = 'test-content'
+      const apiDefs = await getApiDefs('master', true)
+      expect(apiDefs).toEqual([
+        {
+          definitions: [
+            { path: 'demo-services/User-Service.yaml', type: 'blob' },
+          ],
+          id: 'demo-services',
+          name: 'Demo services',
+        },
+      ])
+      delete process.env.REACT_APP_DEMO_MODE
+    })
+
+    it('should load api definitions from local storage for demo mode with data saved by user', async (): Promise<
+      void
+    > => {
+      process.env.REACT_APP_DEMO_MODE = 'true'
+      process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'
+      process.env.REACT_APP_API_DOCS_REPO = 'test-content'
+      localStorage.setItem(
+        `https://api.github.com/repos/freshwebio/test-content/contents/demo2-services/Events.yaml`,
+        JSON.stringify({
+          content: btoa('This is spec 1 content'),
+          sha: 'sdgfsdfdfsdf',
+        })
+      )
+      localStorage.setItem(
+        `https://api.github.com/repos/freshwebio/test-content/contents/demo2-services/Order-Service.yaml`,
+        JSON.stringify({
+          content: btoa('This is spec 2 content'),
+          sha: 'sdgfsdfdfsdf',
+        })
+      )
+      localStorage.setItem(
+        `https://api.github.com/repos/freshwebio/test-content/contents/demo3-services/Shipping-Service.yaml`,
+        JSON.stringify({
+          content: btoa('This is spec 3 content'),
+          sha: 'sdgfsdfdfsdf',
+        })
+      )
+
+      const apiDefs = await getApiDefs('master', true)
+      expect(apiDefs).toEqual([
+        {
+          definitions: [
+            { path: 'demo2-services/Events.yaml', type: 'blob' },
+            { path: 'demo2-services/Order-Service.yaml', type: 'blob' },
+          ],
+          id: 'demo2-services',
+          name: 'Demo2 services',
+        },
+        {
+          definitions: [
+            { path: 'demo3-services/Shipping-Service.yaml', type: 'blob' },
+          ],
+          id: 'demo3-services',
+          name: 'Demo3 services',
+        },
+      ])
+      delete process.env.REACT_APP_DEMO_MODE
+    })
   })
 
   describe('#loadServiceDefinition()', (): void => {
@@ -135,6 +205,51 @@ describe('github api interactions', (): void => {
         'core-services::Events'
       )
       expect(serviceDefinition).toEqual({ content: '', sha: '' })
+    })
+
+    it('should load a service definition from local storage for demo mode from default data', async (): Promise<
+      void
+    > => {
+      process.env.REACT_APP_DEMO_MODE = 'true'
+      process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'
+      process.env.REACT_APP_API_DOCS_REPO = 'test-content'
+      const serviceDefinition = await loadServiceDefinition(
+        'demo-services::User-Service',
+        'master',
+        true
+      )
+      expect(serviceDefinition).toEqual({
+        content: defaultSpec,
+        sha: 'demogsdsg0sdg9839asfasdsha',
+      })
+      delete process.env.REACT_APP_DEMO_MODE
+    })
+
+    it('should load a service definition from local storage for demo mode from user-created data', async (): Promise<
+      void
+    > => {
+      process.env.REACT_APP_DEMO_MODE = 'true'
+      process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'
+      process.env.REACT_APP_API_DOCS_REPO = 'test-content'
+
+      localStorage.setItem(
+        `https://api.github.com/repos/freshwebio/test-content/contents/demo21-services/Orders.yaml`,
+        JSON.stringify({
+          content: btoa('This is a test spec'),
+          sha: 'demosha2',
+        })
+      )
+
+      const serviceDefinition = await loadServiceDefinition(
+        'demo21-services::Orders',
+        'master',
+        true
+      )
+      expect(serviceDefinition).toEqual({
+        content: 'This is a test spec',
+        sha: 'demosha2',
+      })
+      delete process.env.REACT_APP_DEMO_MODE
     })
   })
 })

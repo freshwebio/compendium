@@ -7,6 +7,7 @@ import {
   ButtonLink,
   DashboardLink,
   AddGroupWrapper,
+  ToggleWrapper,
 } from './header.styles'
 import CommitPanel from 'components/CommitPanel'
 import IconButton from 'components/IconButton'
@@ -19,17 +20,21 @@ type HeaderProps = RouteComponentProps<any> & {
   isLoading: boolean
   isLoggedIn: boolean
   entities: EntitiesState
+  demoMode: boolean
   addGroup: (groupName: string) => void
   logout: () => void
+  toggleDemoMode: () => void
 }
 
 const Header: React.FunctionComponent<HeaderProps> = ({
   isLoading,
   isLoggedIn,
   entities,
+  demoMode,
   addGroup,
   logout,
   history,
+  toggleDemoMode,
 }): React.ReactElement => {
   const { location } = history
   const editorMatch = matchPath<any>(location.pathname, {
@@ -46,9 +51,20 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           logout
         </ButtonLink>
       )}
+      {process.env.REACT_APP_DEMO_MODE && (
+        <ToggleWrapper>
+          <IconButton
+            onClick={toggleDemoMode}
+            iconClassName={`fal ${demoMode ? 'fa-toggle-on' : 'fa-toggle-off'}`}
+            colour="white"
+            iconFontSize="1.5rem"
+          />
+          <div>{'demo mode'}</div>
+        </ToggleWrapper>
+      )}
       {editorMatch && !!editorMatch.params.service && (
         <>
-          <DashboardLink to="/">
+          <DashboardLink to="/" demoToggle={process.env.REACT_APP_DEMO_MODE}>
             <IconButton
               onClick={(): void => {}}
               iconClassName="fas fa-home"

@@ -16,11 +16,13 @@ import {
 interface HomeProps {
   isLoading: boolean
   isLoggedIn: boolean
+  demoMode: boolean
 }
 
 const Home: React.FunctionComponent<HomeProps> = ({
   isLoading,
   isLoggedIn,
+  demoMode,
 }): React.ReactElement => {
   if (isLoading) {
     return <LoadingScreen />
@@ -28,8 +30,8 @@ const Home: React.FunctionComponent<HomeProps> = ({
 
   return (
     <HomeWrapper>
-      {isLoggedIn ? (
-        <ApiDefList />
+      {isLoggedIn || (process.env.REACT_APP_DEMO_MODE && demoMode) ? (
+        <ApiDefList demoMode={demoMode} />
       ) : (
         <>
           <Heading>
