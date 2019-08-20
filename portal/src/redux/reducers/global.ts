@@ -1,4 +1,8 @@
-import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from '../actions/global/types'
+import {
+  ADD_NOTIFICATION,
+  REMOVE_NOTIFICATION,
+  TOGGLE_DEMO_MODE,
+} from '../actions/global/types'
 
 export interface NotificationState {
   id: string
@@ -8,10 +12,12 @@ export interface NotificationState {
 
 export interface GlobalState {
   notifications: NotificationState[]
+  demoMode: boolean
 }
 
 const initialState: GlobalState = {
   notifications: [],
+  demoMode: !!(process.env.REACT_APP_DEMO_MODE || false),
 }
 
 const globalReducer = (state = initialState, action: any): GlobalState => {
@@ -36,6 +42,11 @@ const globalReducer = (state = initialState, action: any): GlobalState => {
             return notification.id !== action.id
           }
         ),
+      }
+    case TOGGLE_DEMO_MODE:
+      return {
+        ...state,
+        demoMode: !state.demoMode,
       }
     default:
       return state

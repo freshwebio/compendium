@@ -2,9 +2,11 @@ import { connect } from 'react-redux'
 import Editor from './Editor'
 import { setDocumentChanged, setCurrentDocument } from 'appredux/actions/editor'
 import { EditorState } from 'appredux/reducers/editor'
+import { GlobalState } from 'appredux/reducers/global'
 
 interface StateProps {
   editor: EditorState
+  demoMode: boolean
 }
 
 interface DispatchProps {
@@ -12,9 +14,13 @@ interface DispatchProps {
   setCurrentDocument: (content: string, specSHA?: string) => void
 }
 
-const mapStateToProps = (state: { editor: EditorState }): StateProps => {
+const mapStateToProps = (state: {
+  editor: EditorState
+  global: GlobalState
+}): StateProps => {
   return {
     editor: state.editor,
+    demoMode: state.global.demoMode,
   }
 }
 

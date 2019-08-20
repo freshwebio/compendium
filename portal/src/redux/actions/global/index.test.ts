@@ -1,4 +1,4 @@
-import { addNotification, removeNotification } from './'
+import { addNotification, removeNotification, toggleDemoMode } from './'
 import * as types from './types'
 
 describe('Global actions', (): void => {
@@ -24,6 +24,14 @@ describe('Global actions', (): void => {
       expect(removeNotification('XFdsfsQedasd-423-fasdas2-32asd')).toEqual({
         type: types.REMOVE_NOTIFICATION,
         id: 'XFdsfsQedasd-423-fasdas2-32asd',
+      })
+    })
+  })
+
+  describe('toggleDemoMode', (): void => {
+    it('should create a toggle read only mode action of the correct form', (): void => {
+      expect(toggleDemoMode()).toEqual({
+        type: types.TOGGLE_DEMO_MODE,
       })
     })
   })

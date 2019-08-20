@@ -35,11 +35,23 @@ const ButtonLink = styled('button')<any>`
   color: ${({ colour }): string => colour};
 `
 
-const DashboardLink = styled(Link)`
+const DashboardLink = styled(Link)<any>`
   display: block;
   position: absolute;
-  right: 108px;
+  right: ${({ demoToggle }): string => (demoToggle ? '258px' : '112px')};
   font-size: 0.88rem;
+`
+
+const ToggleWrapper = styled('div')<any>`
+  display: block;
+  position: absolute;
+  right: 112px;
+  font-size: 0.88rem;
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
 `
 
 const AddGroupWrapper = styled.div`
@@ -47,4 +59,10 @@ const AddGroupWrapper = styled.div`
   left: 25px;
 `
 
-export { StyledHeader, ButtonLink, DashboardLink, AddGroupWrapper }
+export {
+  StyledHeader,
+  ButtonLink,
+  DashboardLink,
+  AddGroupWrapper,
+  ToggleWrapper,
+}

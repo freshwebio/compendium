@@ -13,7 +13,13 @@ export const getAccessToken = async (code: string): Promise<string> => {
   return token
 }
 
-export const isLoggedIn = async (): Promise<boolean> => {
+export const isLoggedIn = async (demoMode?: boolean): Promise<boolean> => {
+  // Users will only be able to access dummy services in demo mode
+  // that will be mocked out at the "service" module and redux middleware layers.
+  if (process.env.REACT_APP_DEMO_MODE && demoMode) {
+    return true
+  }
+
   let token
   try {
     token = sessionStorage.getItem(
@@ -32,7 +38,12 @@ export const isLoggedIn = async (): Promise<boolean> => {
   }
 }
 
-export const logout = async (): Promise<boolean> => {
+export const logout = async (demoMode?: boolean): Promise<boolean> => {
+  // If the user is in demo mode, logout should do nothing but redirect them to the dashboard.
+  if (process.env.REACT_APP_DEMO_MODE && demoMode) {
+    return true
+  }
+
   let token
   try {
     const tokenName = process.env.REACT_APP_TOKEN_NAME || 'apydox-token'

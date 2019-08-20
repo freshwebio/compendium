@@ -40,7 +40,10 @@ const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
   return (
     <>
       <BackgroundLayer visible={showView && documentHasChanged} />
-      <CommitPanelWrapper ref={viewRef}>
+      <CommitPanelWrapper
+        ref={viewRef}
+        demoToggle={process.env.REACT_APP_DEMO_MODE}
+      >
         <IconButton
           onClick={showOrHideView}
           disabled={!documentHasChanged}

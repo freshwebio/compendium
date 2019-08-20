@@ -7,6 +7,7 @@ import { SidebarWrapper, ListIcon } from './sidebar.styles'
 
 const Sidebar: React.FunctionComponent<any> = ({
   match,
+  demoMode,
 }): React.ReactElement => {
   const [apiDefinitionGroups, setApiDefinitionGroups] = useState<any[]>([])
   const [showView, setShowView] = useState<boolean>(false)
@@ -14,7 +15,7 @@ const Sidebar: React.FunctionComponent<any> = ({
   useEffect((): void => {
     const loadApiDefs = async (): Promise<void> => {
       try {
-        const apiDefs = await getApiDefs()
+        const apiDefs = await getApiDefs('master', demoMode)
         setApiDefinitionGroups(apiDefs)
       } catch (err) {
         console.log(err)

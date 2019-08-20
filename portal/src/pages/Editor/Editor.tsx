@@ -22,6 +22,7 @@ export interface EditorProps {
   isLoading: boolean
   match: EditorMatch
   editor: EditorState
+  demoMode: boolean
   setCurrentDocument: (spec: string, sha?: string) => void
   setDocumentChanged: (changed: boolean) => void
 }
@@ -52,7 +53,7 @@ class Editor extends Component<EditorProps, EditorCompState> {
     } = prevProps
 
     if (params.service && params.service !== prevParams.service) {
-      loadServiceDefinition(params.service)
+      loadServiceDefinition(params.service, 'master', this.props.demoMode)
         .then(
           (result: { content: string; sha: string }): void => {
             this.setState({ originalDocument: result.content, loaded: true })
@@ -106,7 +107,11 @@ class Editor extends Component<EditorProps, EditorCompState> {
         const result: {
           content: string
           sha: string
-        } = await loadServiceDefinition(params.service)
+        } = await loadServiceDefinition(
+          params.service,
+          'master',
+          this.props.demoMode
+        )
         this.editor = SwaggerEditor({})
         this.editor.specActions.updateSpec(result.content)
         this.setState({ originalDocument: result.content, loaded: true })
@@ -127,7 +132,7 @@ class Editor extends Component<EditorProps, EditorCompState> {
         {this.props.isLoading || !this.state.loaded ? (
           <LoadingScreen />
         ) : (
-          <Sidebar />
+          <Sidebar demoMode={this.props.demoMode} />
         )}
         <div
           id="swagger-editor"
