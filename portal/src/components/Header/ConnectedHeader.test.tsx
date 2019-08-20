@@ -27,6 +27,7 @@ describe('ConnectedHeader', (): void => {
         <Provider
           store={mockStore({
             entities: { isAddingGroup: false, addingServiceStates: {} },
+            global: { demoMode: true },
           })}
         >
           <ConnectedHeader />
@@ -43,6 +44,7 @@ describe('ConnectedHeader', (): void => {
 
     const store = mockStore({
       entities: { isAddingGroup: false, addingServiceStates: {} },
+      global: { demoMode: true },
     })
     const rendered = create(
       <MemoryRouter>

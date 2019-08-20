@@ -18,6 +18,7 @@ describe('Routes', (): void => {
           <Provider
             store={mockStore({
               entities: { isAddingGroup: false, addingServiceStates: {} },
+              global: { demoMode: true },
             })}
           >
             <MemoryRouter initialEntries={['/']}>
@@ -68,7 +69,7 @@ describe('Routes', (): void => {
                 currentCommitDescription: '',
                 isCommitting: false,
               },
-              global: { notifications: [] },
+              global: { notifications: [], demoMode: true },
             })}
           >
             <MemoryRouter initialEntries={['/edit/Service32']}>

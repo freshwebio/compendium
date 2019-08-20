@@ -14,7 +14,7 @@ import defaultSpec from 'utils/defaultSpec'
 import { addService } from 'appredux/actions/entities'
 import { delay } from 'q'
 
-describe('read only mode interceptor middleware', (): void => {
+describe('demo mode interceptor middleware', (): void => {
   beforeEach(
     (): void => {
       localStorage.setItem.mockClear()

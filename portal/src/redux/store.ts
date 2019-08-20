@@ -5,6 +5,8 @@ import reducer from './reducers'
 import githubApiInjector from './middleware/githubApiInjector'
 import apiNotifications from './middleware/apiNotifications'
 import demoModeInterceptor from './middleware/demoModeInterceptor'
+import { loadState } from '../services/stateStorage'
+import persistenceAndRedirection from './middleware/persistenceAndRedirection'
 
 const composeEnhancers = composeWithDevTools({
   name: 'apydox portal',
@@ -14,12 +16,16 @@ const middleware = applyMiddleware(
   githubApiInjector,
   demoModeInterceptor,
   apiMiddleware,
-  apiNotifications
+  apiNotifications,
+  persistenceAndRedirection
 )
+
+const persistedState = loadState()
 
 const store = (): any =>
   createStore(
     reducer,
+    persistedState,
     process.env.NODE_ENV !== 'production'
       ? composeEnhancers(middleware)
       : middleware

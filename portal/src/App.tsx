@@ -8,17 +8,27 @@ import Notifications from 'components/Notifications'
 import GlobalStyle from 'styles/globalStyle'
 import Routes from './Routes'
 import { GlobalState } from 'appredux/reducers/global'
+import { toggleDemoMode } from 'appredux/actions/global'
+import { Dispatch } from 'redux'
 
-const logoutAndRedirect = (demoMode?: boolean): void => {
-  logout(demoMode).then(
-    (): void => {
-      window.location.href = '/'
-    }
-  )
+const logoutAndRedirect = (
+  demoMode?: boolean,
+  toggleDemoMode?: () => void
+): void => {
+  if (!demoMode) {
+    logout(demoMode).then(
+      (): void => {
+        window.location.href = '/'
+      }
+    )
+  } else if (toggleDemoMode) {
+    toggleDemoMode()
+  }
 }
 
 const App: React.FunctionComponent<any> = ({
   demoMode,
+  toggleDemoMode,
 }): React.ReactElement => {
   const [loadingAndAccess, setLoadingAndAccess] = useState({
     isLoggedIn: false,
@@ -41,7 +51,7 @@ const App: React.FunctionComponent<any> = ({
           <Header
             isLoading={loadingAndAccess.isLoading}
             isLoggedIn={loadingAndAccess.isLoggedIn}
-            logout={(): void => logoutAndRedirect(demoMode)}
+            logout={(): void => logoutAndRedirect(demoMode, toggleDemoMode)}
           />
           <Notifications />
           <Routes
@@ -64,4 +74,23 @@ const mapStateToProps = (state: { global: GlobalState }): StateProps => {
   }
 }
 
-export default connect(mapStateToProps)(App)
+interface DispatchProps {
+  toggleDemoMode: () => void
+}
+
+const mapDispatchToProps = (
+  dispatch: Dispatch<any>,
+  ownProps: any
+): DispatchProps => {
+  return {
+    toggleDemoMode: (): void => {
+      dispatch(toggleDemoMode())
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  // @ts-ignore
+  mapDispatchToProps
+)(App)
