@@ -9,8 +9,8 @@ const persistenceAndRedirection: Middleware = (
 ): MiddlewareFunction => (next: Dispatch<AnyAction>): DispatchFunction => (
   action: any
 ): any => {
-  const prevState = store.getState()
   if (action.type === TOGGLE_DEMO_MODE) {
+    const prevState = store.getState()
     saveState({
       global: {
         // For hydrating from local storage we need to ensure all the
