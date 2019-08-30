@@ -17,7 +17,7 @@ const ApiDefCard: React.FunctionComponent<ApiDefCardProps> = (
   const service = removeFileExt(parts[parts.length - 1])
   const serviceLabel = service.replace(/-|_/g, ' ')
   return (
-    <ApiDefCardLink to={`/edit/${groupPrefix}${service}`}>
+    <ApiDefCardLink to={`/view/${groupPrefix}${service}`}>
       <ApiDefCardText>{serviceLabel}</ApiDefCardText>
     </ApiDefCardLink>
   )

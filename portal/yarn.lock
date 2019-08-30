@@ -9373,18 +9373,10 @@ set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
 
-set-value@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/set-value/-/set-value-0.4.3.tgz#7db08f9d3d22dc7f78e53af3c3bf4666ecdfccf1"
-  dependencies:
-    extend-shallow "^2.0.1"
-    is-extendable "^0.1.1"
-    is-plain-object "^2.0.1"
-    to-object-path "^0.3.0"
-
-set-value@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/set-value/-/set-value-2.0.0.tgz#71ae4a88f0feefbbf52d1ea604f3fb315ebb6274"
+set-value@2.0.1, set-value@^0.4.3, set-value@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/set-value/-/set-value-2.0.1.tgz#a18d40530e6f07de4228c7defe4227af8cad005b"
+  integrity sha512-JxHc1weCN68wRY0fhCoXpyK55m/XPHafOmK4UWD7m2CI14GMcFypt4w/0+NV5f/ZMby2F6S2wwA7fgynh9gWSw==
   dependencies:
     extend-shallow "^2.0.1"
     is-extendable "^0.1.1"
@@ -9916,6 +9908,30 @@ swagger-client@^3.9.2:
     utf8-bytes "0.0.1"
     utfstring "^2.0.0"
 
+swagger-client@^3.9.3:
+  version "3.9.3"
+  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.9.3.tgz#47e1a32fe45529e818da9f33b70661c93b8bb3a8"
+  integrity sha512-MkSI3oi9fBdpmihgY5Eo3XFzhnE/mryYA9siIykTd1y3xtSMXTxoQjXo3hUEUjp3vtdEW/yLMexUsq7fAjrP7Q==
+  dependencies:
+    "@babel/runtime-corejs2" "^7.0.0"
+    "@kyleshockey/object-assign-deep" "^0.4.0"
+    btoa "1.1.2"
+    buffer "^5.1.0"
+    cookie "^0.3.1"
+    cross-fetch "0.0.8"
+    deep-extend "^0.5.1"
+    encode-3986 "^1.0.0"
+    fast-json-patch "~2.1.0"
+    isomorphic-form-data "0.0.1"
+    js-yaml "^3.13.1"
+    lodash "^4.17.14"
+    qs "^6.3.0"
+    querystring-browser "^1.0.4"
+    traverse "^0.6.6"
+    url "^0.11.0"
+    utf8-bytes "0.0.1"
+    utfstring "^2.0.0"
+
 swagger-editor@^3.6.32:
   version "3.6.32"
   resolved "https://registry.yarnpkg.com/swagger-editor/-/swagger-editor-3.6.32.tgz#9ea525a36bf8b9cdc54e7ba473d79bf356758f03"
@@ -9957,6 +9973,44 @@ swagger-editor@^3.6.32:
     traverse "^0.6.6"
     whatwg-fetch "^2.0.3"
     yaml-js "^0.1.4"
+
+swagger-ui-react@^3.23.5:
+  version "3.23.5"
+  resolved "https://registry.yarnpkg.com/swagger-ui-react/-/swagger-ui-react-3.23.5.tgz#43fc83d5d32b8998cfcbfcdfae33adf8521dbd46"
+  integrity sha512-rluNW1DWViCgYjJ0/vNUStIP5R9rhMGtaNNLzeDeNOvD2D4AcLQMR6f35azSEon/6aZaTxygjQAFjjk9Wsq3tQ==
+  dependencies:
+    "@babel/runtime-corejs2" "^7.5.5"
+    "@braintree/sanitize-url" "^2.0.2"
+    "@kyleshockey/object-assign-deep" "^0.4.2"
+    "@kyleshockey/xml" "^1.0.2"
+    base64-js "^1.2.0"
+    classnames "^2.2.6"
+    core-js "^2.5.1"
+    css.escape "1.5.1"
+    deep-extend "0.6.0"
+    dompurify "^1.0.11"
+    ieee754 "^1.1.13"
+    immutable "^3.x.x"
+    js-file-download "^0.4.1"
+    js-yaml "^3.13.1"
+    lodash "^4.17.15"
+    memoizee "^0.4.12"
+    prop-types "^15.7.2"
+    react-debounce-input "^3.2.0"
+    react-immutable-proptypes "2.1.0"
+    react-immutable-pure-component "^1.1.1"
+    react-inspector "^2.3.0"
+    react-motion "^0.5.2"
+    react-redux "^4.x.x"
+    redux "^3.x.x"
+    redux-immutable "3.0.8"
+    remarkable "^1.7.4"
+    reselect "^2.5.4"
+    serialize-error "^2.1.0"
+    swagger-client "^3.9.3"
+    url-parse "^1.4.7"
+    xml-but-prettier "^1.0.1"
+    zenscroll "^4.0.2"
 
 swagger-ui@^3.23.4:
   version "3.23.4"

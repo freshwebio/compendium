@@ -80,7 +80,7 @@ describe('App', (): void => {
     expect(window.location.href).toBe('/')
   })
 
-  it('should trigger the toggle demo mode action (which will go on to redirect the user)', async (): Promise<
+  it('should trigger the toggle demo mode action when logout is clicked (which will go on to redirect the user)', async (): Promise<
     void
   > => {
     const mockStoreInstance = mockStore({

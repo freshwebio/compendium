@@ -8,6 +8,7 @@ import {
   DashboardLink,
   AddGroupWrapper,
   ToggleWrapper,
+  LeftMenuWrapper,
 } from './header.styles'
 import CommitPanel from 'components/CommitPanel'
 import IconButton from 'components/IconButton'
@@ -15,6 +16,7 @@ import logo from 'assets/logo.svg'
 import content from 'content.json'
 import InlineAddField from 'components/InlineAddField'
 import { EntitiesState } from 'appredux/reducers/entities'
+import ViewModeSwitcher from 'components/ViewModeSwitcher'
 
 type HeaderProps = RouteComponentProps<any> & {
   isLoading: boolean
@@ -40,6 +42,9 @@ const Header: React.FunctionComponent<HeaderProps> = ({
   const editorMatch = matchPath<any>(location.pathname, {
     path: '/edit/:service',
   })
+  const viewMatch = matchPath<any>(location.pathname, {
+    path: '/view/:service',
+  })
 
   return (
     <StyledHeader>
@@ -62,7 +67,8 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           <div>{'demo mode'}</div>
         </ToggleWrapper>
       )}
-      {editorMatch && !!editorMatch.params.service && (
+      {((editorMatch && !!editorMatch.params.service) ||
+        (viewMatch && !!viewMatch.params.service)) && (
         <>
           <DashboardLink to="/" demoToggle={process.env.REACT_APP_DEMO_MODE}>
             <IconButton
@@ -73,19 +79,30 @@ const Header: React.FunctionComponent<HeaderProps> = ({
             />
             {'dashboard'}
           </DashboardLink>
-          <CommitPanel />
+          {editorMatch && <CommitPanel />}
         </>
       )}
-      {(!editorMatch || !editorMatch.params.service) && isLoggedIn && (
-        <AddGroupWrapper>
-          <InlineAddField
-            entityName={'group'}
-            iconColour={'white'}
-            alignment={'left'}
-            onSave={addGroup}
-            finished={!entities.isAddingGroup}
+      {(!editorMatch || !editorMatch.params.service) &&
+        (!viewMatch || !viewMatch.params.service) &&
+        isLoggedIn && (
+          <AddGroupWrapper>
+            <InlineAddField
+              entityName={'group'}
+              iconColour={'white'}
+              alignment={'left'}
+              onSave={addGroup}
+              finished={!entities.isAddingGroup}
+            />
+          </AddGroupWrapper>
+        )}
+      {(viewMatch || editorMatch) && (
+        <LeftMenuWrapper>
+          <ViewModeSwitcher
+            isLoggedIn={isLoggedIn}
+            viewMatch={viewMatch}
+            editorMatch={editorMatch}
           />
-        </AddGroupWrapper>
+        </LeftMenuWrapper>
       )}
     </StyledHeader>
   )

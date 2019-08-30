@@ -8,20 +8,20 @@ import Notifications from 'components/Notifications'
 import GlobalStyle from 'styles/globalStyle'
 import Routes from './Routes'
 import { GlobalState } from 'appredux/reducers/global'
-import { toggleDemoMode } from 'appredux/actions/global'
+import { toggleDemoMode as toggleDemoModeActionCreator } from 'appredux/actions/global'
 import { Dispatch } from 'redux'
 
 const logoutAndRedirect = (
-  demoMode?: boolean,
-  toggleDemoMode?: () => void
+  toggleDemoMode: () => void,
+  demoMode?: boolean
 ): void => {
   if (!demoMode) {
-    logout(demoMode).then(
+    logout().then(
       (): void => {
         window.location.href = '/'
       }
     )
-  } else if (toggleDemoMode) {
+  } else {
     toggleDemoMode()
   }
 }
@@ -51,7 +51,7 @@ const App: React.FunctionComponent<any> = ({
           <Header
             isLoading={loadingAndAccess.isLoading}
             isLoggedIn={loadingAndAccess.isLoggedIn}
-            logout={(): void => logoutAndRedirect(demoMode, toggleDemoMode)}
+            logout={(): void => logoutAndRedirect(toggleDemoMode, demoMode)}
           />
           <Notifications />
           <Routes
@@ -84,7 +84,7 @@ const mapDispatchToProps = (
 ): DispatchProps => {
   return {
     toggleDemoMode: (): void => {
-      dispatch(toggleDemoMode())
+      dispatch(toggleDemoModeActionCreator())
     },
   }
 }
