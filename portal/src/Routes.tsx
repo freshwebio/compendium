@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import Editor from 'pages/Editor'
+import ServiceView from 'pages/ServiceView'
 import Home from 'pages/Home'
 import LoginCallback from 'pages/LoginCallback'
 import PrivateRoute from 'components/PrivateRoute'
@@ -48,6 +49,12 @@ const Routes: React.FunctionComponent<RoutesProps> = ({
       <PrivateRoute
         path="/edit/:service"
         render={(props: any): React.ReactElement => <Editor {...props} />}
+        isLoggedIn={loadingAndAccess.isLoggedIn}
+        isLoading={loadingAndAccess.isLoading}
+      />
+      <PrivateRoute
+        path="/view/:service"
+        render={(props: any): React.ReactElement => <ServiceView {...props} />}
         isLoggedIn={loadingAndAccess.isLoggedIn}
         isLoading={loadingAndAccess.isLoading}
       />

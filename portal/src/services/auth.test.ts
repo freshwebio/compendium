@@ -46,6 +46,15 @@ describe('api auth endpoints', (): void => {
       const isValid = await isLoggedIn()
       expect(isValid).toBeFalse()
     })
+
+    it('should tell us the user is logged in when in demo mode', async (): Promise<
+      void
+    > => {
+      process.env.REACT_APP_DEMO_MODE = 'true'
+      const isValid = await isLoggedIn(true)
+      expect(isValid).toBeTrue()
+      delete process.env.REACT_APP_DEMO_MODE
+    })
   })
 
   describe('#logout()', (): void => {
@@ -77,6 +86,15 @@ describe('api auth endpoints', (): void => {
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
       const response = await logout()
       expect(response).toBeFalse()
+    })
+
+    it('should do nothing and return true when the user is in demo mode', async (): Promise<
+      void
+    > => {
+      process.env.REACT_APP_DEMO_MODE = 'true'
+      const response = await logout(true)
+      expect(response).toBeTrue()
+      delete process.env.REACT_APP_DEMO_MODE
     })
   })
 })

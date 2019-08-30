@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -35,7 +36,9 @@ const ButtonLink = styled('button')<any>`
   color: ${({ colour }): string => colour};
 `
 
-const DashboardLink = styled(Link)<any>`
+const DashboardLink = styled(
+  ({ demoToggle, ...rest }): any => <Link {...rest} />
+)<any>`
   display: block;
   position: absolute;
   right: ${({ demoToggle }): string => (demoToggle ? '258px' : '112px')};
@@ -59,10 +62,17 @@ const AddGroupWrapper = styled.div`
   left: 25px;
 `
 
+const LeftMenuWrapper = styled('div')<any>`
+  position: absolute;
+  left: 25px;
+  font-size: 0.88rem;
+`
+
 export {
   StyledHeader,
   ButtonLink,
   DashboardLink,
   AddGroupWrapper,
   ToggleWrapper,
+  LeftMenuWrapper,
 }

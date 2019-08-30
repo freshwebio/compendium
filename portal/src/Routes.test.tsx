@@ -53,7 +53,7 @@ describe('Routes', (): void => {
     )
   })
 
-  it('should render the editor view without any issues', async (): Promise<
+  it('should render the editor view (swagger editor) without any issues', async (): Promise<
     void
   > => {
     window.location.href = '/edit/Service32'
@@ -73,6 +73,37 @@ describe('Routes', (): void => {
             })}
           >
             <MemoryRouter initialEntries={['/edit/Service32']}>
+              <Routes
+                loadingAndAccess={{ isLoggedIn: true, isLoading: false }}
+                setLoadingAndAccess={jest.fn()}
+              />
+            </MemoryRouter>
+          </Provider>
+        )
+      }
+    )
+  })
+
+  it('should render the service definition (swagger UI) view without any issues', async (): Promise<
+    void
+  > => {
+    window.location.href = '/view/Service34'
+    await act(
+      async (): Promise<void> => {
+        create(
+          <Provider
+            store={mockStore({
+              editor: {
+                documentHasChanged: false,
+                spec: '',
+                currentSpecSHA: '',
+                currentCommitDescription: '',
+                isCommitting: false,
+              },
+              global: { notifications: [], demoMode: true },
+            })}
+          >
+            <MemoryRouter initialEntries={['/view/Service34']}>
               <Routes
                 loadingAndAccess={{ isLoggedIn: true, isLoading: false }}
                 setLoadingAndAccess={jest.fn()}

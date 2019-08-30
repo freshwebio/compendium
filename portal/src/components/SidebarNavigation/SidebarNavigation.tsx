@@ -41,7 +41,7 @@ const SidebarNavigation: React.FunctionComponent<any> = ({
                         key={definition.path}
                         active={serviceId === params.service}
                       >
-                        <Link to={`/edit/${serviceId}`}>
+                        <Link to={`/view/${serviceId}`}>
                           {service.replace(/-|_/g, ' ')}
                         </Link>
                       </NavItem>
