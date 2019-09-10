@@ -3,7 +3,7 @@ import React from 'react'
 import { StyledIconButton, StyledIcon } from './iconButton.styles'
 
 interface IconButtonProps {
-  onClick: (evt: any) => void
+  onClick?: (evt: any) => void
   iconClassName: string
   isTooltipContainer?: boolean
   disabled?: boolean

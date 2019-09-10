@@ -23,7 +23,6 @@ const ViewModeSwitcher: React.FunctionComponent<Props> = ({
       {viewMatch && viewMatch.params.service && isLoggedIn && (
         <Link to={`/edit/${viewMatch.params.service}`}>
           <IconButton
-            onClick={(): void => {}}
             iconClassName="fas fa-edit"
             colour="white"
             iconFontSize="13pt"
@@ -39,7 +38,6 @@ const ViewModeSwitcher: React.FunctionComponent<Props> = ({
             disabledMessage={'Commit your changes first'}
           >
             <IconButton
-              onClick={(): void => {}}
               iconClassName="fas fa-arrows-h"
               colour="white"
               iconFontSize="11pt"
