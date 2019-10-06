@@ -23,8 +23,8 @@
     "redux-api-middleware": "^3.0.1",
     "reselect": "^4.0.0",
     "styled-components": "^4.2.0",
-    "swagger-editor": "^3.6.32",
-    "swagger-ui-react": "^3.23.5",
+    "swagger-editor": "^3.6.36",
+    "swagger-ui-react": "^3.23.11",
     "typescript": "3.4.2",
     "uuid": "^3.3.2"
   },
