@@ -9,6 +9,10 @@ import (
 	"github.com/google/go-github/github"
 )
 
+// HTTPClientTimeout provides the timeout to be used
+// http clients in the apydox api.
+var HTTPClientTimeout = time.Second * 10
+
 // GithubAuthorisationsClient provides an abstraction for the set of functionality
 // used in this application for interacting with github's authorization api endpoints.
 type GithubAuthorisationsClient interface {
@@ -24,14 +28,14 @@ func SetupBasicAuthHTTPClient(config *core.Config) *http.Client {
 		Password: *config.Github.ClientSecret,
 	}
 	client := transport.Client()
-	client.Timeout = time.Second * 10
+	client.Timeout = HTTPClientTimeout
 	return client
 }
 
 // SetupHTTPClient sets up a basic http client with a 10 second timeout.
 func SetupHTTPClient() *http.Client {
 	return &http.Client{
-		Timeout: time.Second * 10,
+		Timeout: HTTPClientTimeout,
 	}
 }
 
