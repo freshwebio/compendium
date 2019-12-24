@@ -1,6 +1,22 @@
 coverage:
   status:
     patch: off
+    project:
+      target: 80%
+      threshold: null
+    portal:
+      flags: portal
+      target: 80%
+    api:
+      target: 80%
+      flags: api
 fixes:
   - "src/::portal/src/"
   - "pkg/::api/pkg/"
+flags:
+  portal:
+    paths:
+      - portal/src
+  api:
+    paths:
+      - api/pkg

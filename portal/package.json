@@ -32,7 +32,7 @@
     "start": "PORT=5401 NODE_PATH=src HTTPS=true craco start",
     "build": "NODE_PATH=src craco build",
     "test": "craco test --coverage",
-    "coverage": "codecov",
+    "coverage": "codecov -F portal",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint \"src/**\"",
     "fix-lint": "./node_modules/.bin/eslint \"src/**\" --fix"

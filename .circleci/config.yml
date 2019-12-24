@@ -28,7 +28,7 @@ jobs:
           name: Run the tests for the api and send coverage
           command: |
             ./run-tests.sh
-            bash <(curl -s https://codecov.io/bash)
+            bash <(curl -s https://codecov.io/bash) -F api
   deps_portal:
     docker:
       - image: circleci/node:10.16.0-browsers-legacy
