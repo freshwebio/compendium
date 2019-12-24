@@ -25,14 +25,14 @@
     "styled-components": "^4.2.0",
     "swagger-editor": "^3.6.36",
     "swagger-ui-react": "^3.23.11",
-    "typescript": "3.4.2",
+    "typescript": "^3.7.4",
     "uuid": "^3.3.2"
   },
   "scripts": {
     "start": "PORT=5401 NODE_PATH=src HTTPS=true craco start",
     "build": "NODE_PATH=src craco build",
     "test": "craco test --coverage",
-    "codacy-coverage": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
+    "coverage": "codecov",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint \"src/**\"",
     "fix-lint": "./node_modules/.bin/eslint \"src/**\" --fix"
@@ -82,6 +82,7 @@
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
     "codacy-coverage": "^3.4.0",
+    "codecov": "^3.6.1",
     "csp-html-webpack-plugin": "^3.0.2",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",

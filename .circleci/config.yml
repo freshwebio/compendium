@@ -27,9 +27,8 @@ jobs:
       - run:
           name: Run the tests for the api and send coverage
           command: |
-            go test -coverprofile=coverage.out -v ./... || TEST_RUNNER_EXIT_CODE=$?
-            godacov -t $CODACY_PROJECT_TOKEN -r ./coverage.out -c $CIRCLE_SHA1
-            exit $TEST_RUNNER_EXIT_CODE
+            ./run-tests.sh
+            bash <(curl -s https://codecov.io/bash)
   deps_portal:
     docker:
       - image: circleci/node:10.16.0-browsers-legacy
@@ -49,7 +48,7 @@ jobs:
     working_directory: ~/apydox/portal
     steps:
       - restore_cache:
-          keys: 
+          keys:
             - apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
             - apydox-portal-v1-{{ .Branch }}-
             - apydox-portal-v1-
@@ -63,7 +62,7 @@ jobs:
           name: Run the tests for the portal and send coverage
           command: |
             yarn test -w 1 || TEST_RUNNER_EXIT_CODE=$?
-            yarn codacy-coverage
+            yarn coverage
             exit $TEST_RUNNER_EXIT_CODE
   build_publish_api_docker:
     docker:
@@ -85,7 +84,7 @@ jobs:
             fi
             echo "export IMAGE_TAG=$IMAGE_TAG" >> $BASH_ENV
       - run:
-          name: Build api server binary and docker image 
+          name: Build api server binary and docker image
           command: make -f Makefile cibuild
       - run:
           name: Publish Docker image to Docker Hub
@@ -101,7 +100,7 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only: 
+              only:
                 - master
                 - development
       - test_api:
@@ -109,7 +108,7 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only: 
+              only:
                 - master
                 - development
           requires:
@@ -119,7 +118,7 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only: 
+              only:
                 - master
                 - development
       - test_portal:
@@ -127,7 +126,7 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only: 
+              only:
                 - master
                 - development
           requires:
