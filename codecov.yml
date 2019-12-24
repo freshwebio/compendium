@@ -1,3 +1,6 @@
+coverage:
+  status:
+    patch: off
 fixes:
   - "src/::portal/src/"
   - "pkg/::api/pkg/"
