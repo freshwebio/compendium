@@ -1,0 +1,3 @@
+fixes:
+  - "src/::portal/src/"
+  - "pkg/::api/pkg/"
