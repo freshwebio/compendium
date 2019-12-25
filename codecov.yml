@@ -16,3 +16,4 @@ flags:
   api:
     paths:
       - api/pkg/
+      - api/cmd/
