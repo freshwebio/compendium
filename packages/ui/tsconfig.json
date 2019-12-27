@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react",
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "baseUrl": "src",
+    "paths": {
+      "@atoms/*": ["components/atoms/*"],
+      "@molecules/*": ["components/molecules/*"],
+      "@organisms/*": ["components/organisms/*"],
+      "@templates/*": ["components/templates/*"],
+      "@ui/*": ["ui/*"],
+      "@utils/*": ["utils/*"],
+      "@hooks/*": ["hooks/*"],
+      "@hooks": ["hooks"],
+      "@typography/*": ["typography/*"],
+      "@test-utils/*": ["../test-utils/*"]
+    }
+  },
+  "include": ["src", "node_modules/jest-extended/types/**/*.d.ts"]
+}

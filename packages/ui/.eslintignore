@@ -1,0 +1,8 @@
+*.css
+*.svg
+*.scss
+*.json
+*.png
+.storybook/config.tsx
+dist
+rollup.config.js

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DynamicComponent should render with the correct text style theme values 1`] = `
+.c0 {
+  font-size: 14px;
+  font-family: Lato,sans-serif;
+  line-height: 16px;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+<div
+  className="c0"
+  fontFamily="Lato, sans-serif"
+  fontSize={
+    Array [
+      2,
+      2,
+      1,
+    ]
+  }
+/>
+`;

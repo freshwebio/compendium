@@ -1,0 +1,435 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Typography BodyCopy should render without any issues 1`] = `
+.c0 {
+  font-size: 15px;
+  font-family: Lato,sans-serif;
+  line-height: 20px;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+<p
+  className="c0"
+  fontFamily="Lato, sans-serif"
+  fontSize={
+    Array [
+      3,
+      4,
+      4,
+    ]
+  }
+>
+  This is some body copy text
+</p>
+`;
+
+exports[`Typography Brevier should render without any issues 1`] = `
+.c0 {
+  font-size: 14px;
+  font-family: Lato,sans-serif;
+  line-height: 16px;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+<div
+  className="c0"
+  fontFamily="Lato, sans-serif"
+  fontSize={
+    Array [
+      2,
+      2,
+      1,
+    ]
+  }
+>
+  This is some brevier text
+</div>
+`;
+
+exports[`Typography Canon should render without any issues 1`] = `
+.c0 {
+  font-size: 28px;
+  line-height: 32px;
+  font-family: Roboto Slab,serif;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 32px;
+    line-height: 36px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 44px;
+    line-height: 48px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 52px;
+    line-height: 56px;
+  }
+}
+
+<h1
+  className="c0"
+  fontFamily="Roboto Slab, serif"
+  fontSize={
+    Array [
+      11,
+      12,
+      14,
+    ]
+  }
+>
+  This is some canon text
+</h1>
+`;
+
+exports[`Typography DoublePica should render without any issues 1`] = `
+.c0 {
+  font-size: 20px;
+  font-family: Lato,sans-serif;
+  line-height: 24px;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 26px;
+    line-height: 30px;
+  }
+}
+
+<div
+  className="c0"
+  fontFamily="Lato, sans-serif"
+  fontSize={
+    Array [
+      6,
+      6,
+      9,
+    ]
+  }
+  fontWeight={400}
+>
+  This is some double pica text
+</div>
+`;
+
+exports[`Typography GreatPrimer should render without any issues 1`] = `
+.c0 {
+  font-size: 18px;
+  font-family: Roboto Slab,serif;
+  line-height: 22px;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 21px;
+    line-height: 24px;
+  }
+}
+
+<h3
+  className="c0"
+  fontFamily="Roboto Slab, serif"
+  fontSize={
+    Array [
+      5,
+      5,
+      6,
+    ]
+  }
+  fontWeight={400}
+>
+  This is some great primer text
+</h3>
+`;
+
+exports[`Typography LongPrimer should render without any issues 1`] = `
+.c0 {
+  font-size: 15px;
+  font-family: Lato,sans-serif;
+  line-height: 18px;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 15px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
+
+<div
+  className="c0"
+  fontFamily="Lato, sans-serif"
+  fontSize={
+    Array [
+      3,
+      3,
+      2,
+    ]
+  }
+>
+  This is some long primer text
+</div>
+`;
+
+exports[`Typography Minion should render without any issues 1`] = `
+.c0 {
+  font-size: 12px;
+  font-family: Lato,sans-serif;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
+
+<div
+  className="c0"
+  fontFamily="Lato, sans-serif"
+  fontSize={
+    Array [
+      0,
+      0,
+      0,
+    ]
+  }
+>
+  This is some minion text
+</div>
+`;
+
+exports[`Typography Paragon should render without any issues 1`] = `
+.c0 {
+  font-size: 20px;
+  font-family: Roboto Slab,serif;
+  line-height: 24px;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 22px;
+    line-height: 26px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 28px;
+    line-height: 32px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 28px;
+    line-height: 32px;
+  }
+}
+
+<h2
+  className="c0"
+  fontFamily="Roboto Slab, serif"
+  fontSize={
+    Array [
+      6,
+      8,
+      11,
+    ]
+  }
+  fontWeight={500}
+>
+  This is some paragon text
+</h2>
+`;
+
+exports[`Typography Pica should render without any issues 1`] = `
+.c0 {
+  font-size: 15px;
+  font-family: Lato,sans-serif;
+  line-height: 20px;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
+
+<div
+  className="c0"
+  fontFamily="Lato, sans-serif"
+  fontSize={
+    Array [
+      3,
+      4,
+      4,
+    ]
+  }
+>
+  This is some pica text
+</div>
+`;
+
+exports[`Typography Trafalgar should render without any issues 1`] = `
+.c0 {
+  font-size: 20px;
+  line-height: 24px;
+  font-family: Roboto Slab,serif;
+}
+
+@media screen and (min-width:319px) {
+  .c0 {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}
+
+@media screen and (min-width:599px) {
+  .c0 {
+    font-size: 32px;
+    line-height: 36px;
+  }
+}
+
+@media screen and (min-width:599px) and (pointer:coarse) {
+  .c0 {
+    font-size: 36px;
+    line-height: 40px;
+  }
+}
+
+<h1
+  className="c0"
+  fontFamily="Roboto Slab, serif"
+  fontSize={
+    Array [
+      6,
+      9,
+      12,
+    ]
+  }
+>
+  This is some trafalgar text
+</h1>
+`;

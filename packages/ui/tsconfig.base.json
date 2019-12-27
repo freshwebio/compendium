@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": "src",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "./dist",
+    "outDir": "./dist",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "emitDecoratorMetadata": true,
+    "jsx": "react",
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "paths": {
+      "@atoms/*": ["components/atoms/*"],
+      "@molecules/*": ["components/molecules/*"],
+      "@organisms/*": ["components/organisms/*"],
+      "@templates/*": ["components/templates/*"],
+      "@ui/*": ["ui/*"],
+      "@utils/*": ["utils/*"],
+      "@hooks/*": ["hooks/*"],
+      "@hooks": ["hooks"],
+      "@test-utils/*": ["../test-utils/*"],
+      "@typography/*": ["typography/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "node_modules"]
+}
