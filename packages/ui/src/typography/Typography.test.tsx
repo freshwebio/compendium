@@ -10,6 +10,7 @@ import {
   GreatPrimer,
   BodyCopy,
   Pica,
+  PicaSerif,
   LongPrimer,
   Brevier,
   Minion,
@@ -51,6 +52,10 @@ describe('Typography', () => {
 
   describe('Pica', () => {
     testRenders(<Pica>This is some pica text</Pica>)
+  })
+
+  describe('PicaSerif', () => {
+    testRenders(<PicaSerif>This is some pica serif text</PicaSerif>)
   })
 
   describe('LongPrimer', () => {

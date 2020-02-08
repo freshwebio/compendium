@@ -1,6 +1,6 @@
 declare namespace jest {
   interface AsymmetricMatcher {
-    $$typeof: Symbol
+    $$typeof: symbol
     sample?: string | RegExp | object | Array<any> | Function
   }
   // throws an error because the non native version has it also defined, so just comment it
@@ -8,7 +8,7 @@ declare namespace jest {
 
   interface Options {
     media?: string
-    modifier?: string
+    modifier?: string | FlattenSimpleInterpolation
     supports?: string
   }
 

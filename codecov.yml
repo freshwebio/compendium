@@ -9,10 +9,16 @@ coverage:
       api:
         target: 80%
         flags: api
+      uilib:
+        target: 80%
+        flags: uilib
 flags:
   portal:
     paths:
       - portal/src/
+  uilib:
+    paths:
+      - packages/ui/src/
   api:
     paths:
       - api/pkg/

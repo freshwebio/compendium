@@ -8,8 +8,7 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     font-size: 11px;
     line-height: 1.42857143;
-    color: ${(props): string =>
-      (props.theme as ApydoxTheme).colours.greyScale.black};
+    color: ${(props): string => (props.theme as ApydoxTheme).colours.black};
     margin: 0;
     padding: 0;
   }
@@ -19,6 +18,9 @@ const GlobalStyle = createGlobalStyle`
   }
   * {
     box-sizing: border-box;
+  }
+  p {
+    margin: 0;
   }
 `
 

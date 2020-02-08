@@ -36,6 +36,7 @@ module.exports = {
         pages: `${paths.appSrc}/pages/`,
         appredux: `${paths.appSrc}/redux/`,
         styles: `${paths.appSrc}/styles/`,
+        '@apydox/ui': `${paths.appSrc}/../../packages/ui/dist`,
       }
 
       webpackConfig.plugins = webpackConfig.plugins.map(plugin => {
@@ -96,6 +97,7 @@ module.exports = {
         '^appredux(.*)$': '<rootDir>/src/redux$1',
         '^styles(.*)$': '<rootDir>/src/styles$1',
         '^content.json$': '<rootDir>/src/content.json',
+        '^@apydox/ui$': '<rootDir>/../packages/ui/dist',
         '\\.css$': 'identity-obj-proxy',
       },
       testPathIgnorePatterns: [

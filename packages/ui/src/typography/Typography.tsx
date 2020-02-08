@@ -10,6 +10,7 @@ const {
   greatPrimer,
   bodyCopy,
   pica,
+  picaSerif,
   longPrimer,
   brevier,
   minion,
@@ -53,6 +54,12 @@ export const BodyCopy: React.FunctionComponent<any> = (props: any) => (
 
 export const Pica: React.FunctionComponent<any> = (props: any) => (
   <DynamicComponent styleName={'pica'} {...pica} {...props}>
+    {props.children}
+  </DynamicComponent>
+)
+
+export const PicaSerif: React.FunctionComponent<any> = (props: any) => (
+  <DynamicComponent styleName={'picaSerif'} {...picaSerif} {...props}>
     {props.children}
   </DynamicComponent>
 )

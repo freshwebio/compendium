@@ -1,26 +1,26 @@
-import typescript from "rollup-plugin-typescript2";
-import transformPaths from "@zerollup/ts-transform-paths";
+import typescript from 'rollup-plugin-typescript2'
+import transformPaths from '@zerollup/ts-transform-paths'
 
-import pkg from "./package.json";
+import pkg from './package.json'
 
 export default {
-  input: "src/index.ts",
+  input: 'src/index.ts',
   external: Object.keys(pkg.peerDependencies || {}),
   plugins: [
     typescript({
-      tsconfig: "./tsconfig.dist.json",
+      tsconfig: './tsconfig.dist.json',
       transformers: [service => transformPaths(service.getProgram())],
-      typescript: require("typescript")
-    })
+      typescript: require('typescript'),
+    }),
   ],
   output: [
     {
       file: pkg.main,
-      format: "cjs"
+      format: 'cjs',
     },
     {
       file: pkg.module,
-      format: "es"
-    }
-  ]
-};
+      format: 'es',
+    },
+  ],
+}

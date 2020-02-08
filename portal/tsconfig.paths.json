@@ -11,6 +11,7 @@
       "pages/*": ["src/pages/*"],
       "appredux/*": ["src/redux/*"],
       "styles/*": ["src/styles/*"],
+      "@apydox/ui": ["../packages/ui/dist"],
       "*": ["src/*"]
     }
   }

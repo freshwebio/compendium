@@ -8,6 +8,7 @@ import {
   GreatPrimer,
   BodyCopy,
   Pica,
+  PicaSerif,
   LongPrimer,
   Brevier,
   Minion,
@@ -32,6 +33,8 @@ stories.add('Great Primer', () => (
 stories.add('Body Copy', () => <BodyCopy>Body Copy Text Style</BodyCopy>)
 
 stories.add('Pica', () => <Pica>Pica Text Style</Pica>)
+
+stories.add('Pica Serif', () => <PicaSerif>Pica Text Style</PicaSerif>)
 
 stories.add('Long Primer', () => (
   <LongPrimer>Long Primer Text Style</LongPrimer>

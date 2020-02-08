@@ -1,10 +1,14 @@
-import styled from 'styled-components'
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 
 import { system } from 'styled-system'
 
-import { touchTextSystem } from '@utils/touchTextSystem'
+import { touchTextSystem, TouchTextSystemProps } from '@utils/touchTextSystem'
 
-export default styled.div`
+export interface DynamicComponentProps {
+  ellipsis?: boolean
+}
+
+export default styled('div')<TouchTextSystemProps & DynamicComponentProps>`
   ${system({
     textTransform: true,
     fontFamily: true,
@@ -27,4 +31,12 @@ export default styled.div`
       property: 'lineHeight',
     },
   })}
+  ${({ ellipsis }): FlattenSimpleInterpolation | string =>
+    ellipsis
+      ? css`
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        `
+      : ''}
 `

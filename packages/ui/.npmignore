@@ -1,0 +1,16 @@
+coverage
+.vscode
+.storybook
+src
+test-utils
+typings
+.eslintignore
+.eslintrc.js
+.gitignore
+.prettierrc
+rollup.config.js
+setupTests.ts
+tsconfig.base.json
+tsconfig.dist.json
+tsconfig.json
+yarn.lock
