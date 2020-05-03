@@ -8,14 +8,16 @@ import App from './App'
 import { ButtonLink } from 'components/Header/header.styles'
 import { TOGGLE_DEMO_MODE } from 'appredux/actions/global/types'
 
+jest.mock('services/github')
+jest.mock('services/auth')
+jest.mock('services/stateStorage')
+
 const mockStore = configureMockStore([])
 
 describe('App', (): void => {
-  beforeEach(
-    (): void => {
-      window.location.href = 'http://localhost/'
-    }
-  )
+  beforeEach((): void => {
+    window.location.href = 'http://localhost/'
+  })
 
   it('renders without crashing', async (): Promise<void> => {
     await act(

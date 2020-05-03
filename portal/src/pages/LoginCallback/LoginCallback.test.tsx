@@ -5,6 +5,8 @@ import LoginCallback from './LoginCallback'
 import { MemoryRouter } from 'react-router'
 import delay from 'utils/delay'
 
+jest.mock('services/auth')
+
 describe('LoginCallback', (): void => {
   it('should render without crashing', (): void => {
     const wrapper = mount(

@@ -3,12 +3,10 @@ import { getApiDefs, loadServiceDefinition } from './github'
 import defaultSpec from 'utils/defaultSpec'
 
 describe('github api interactions', (): void => {
-  afterEach(
-    (): void => {
-      nock.cleanAll()
-      localStorage.clear()
-    }
-  )
+  afterEach((): void => {
+    nock.cleanAll()
+    localStorage.clear()
+  })
 
   describe('#getApiDefs()', (): void => {
     it('should load api definitions and provide a list of empty defintions for directories without any api definition documents', async (): Promise<

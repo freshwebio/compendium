@@ -2,12 +2,12 @@ import persistenceAndRedirection from './persistenceAndRedirection'
 import { TOGGLE_DEMO_MODE } from 'appredux/actions/global/types'
 import { saveState } from 'services/stateStorage'
 
+jest.mock('services/stateStorage')
+
 describe('middleware to persist state to local storage and carry out redirects where necessary', (): void => {
-  beforeEach(
-    (): void => {
-      ;(saveState as jest.Mock).mockReset()
-    }
-  )
+  beforeEach((): void => {
+    ;(saveState as jest.Mock).mockReset()
+  })
 
   it('should save the state and redirect when the demo mode is toggled off', (): void => {
     window.location.href = 'http://localhost'

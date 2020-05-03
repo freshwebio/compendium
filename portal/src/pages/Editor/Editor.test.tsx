@@ -6,6 +6,8 @@ import { MemoryRouter, withRouter, Route } from 'react-router'
 import LoadingScreen from 'components/LoadingScreen'
 import delay from 'utils/delay'
 
+jest.mock('services/github')
+
 describe('Editor', (): void => {
   it('should render without any issues', async (): Promise<void> => {
     let rendered: TestRenderer.ReactTestRenderer
@@ -18,6 +20,7 @@ describe('Editor', (): void => {
               setDocumentChanged={jest.fn()}
               isLoggedIn={true}
               isLoading={false}
+              demoMode={false}
               match={{ params: { service: 'Service1' } }}
               editor={{
                 documentHasChanged: false,
@@ -45,6 +48,7 @@ describe('Editor', (): void => {
           setDocumentChanged={jest.fn()}
           isLoggedIn={true}
           isLoading={true}
+          demoMode={false}
           match={{ params: { service: 'Service1' } }}
           editor={{
             documentHasChanged: false,
@@ -68,6 +72,7 @@ describe('Editor', (): void => {
           setCurrentDocument={jest.fn()}
           setDocumentChanged={jest.fn()}
           isLoggedIn={true}
+          demoMode={false}
           isLoading={true}
           match={{ params: { service: 'Service1' } }}
           editor={{
@@ -109,6 +114,7 @@ describe('Editor', (): void => {
             setDocumentChanged={setDocumentChanged}
             isLoggedIn={true}
             isLoading={true}
+            demoMode={false}
             match={{ params: { service: 'Service1' } }}
             editor={{
               documentHasChanged: false,

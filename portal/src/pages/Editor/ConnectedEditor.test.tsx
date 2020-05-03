@@ -13,6 +13,8 @@ import {
 import delay from 'utils/delay'
 import Editor from './Editor'
 
+jest.mock('services/github')
+
 const mockStore = configureMockStore([])
 
 describe('ConnectedEditor', (): void => {
@@ -93,6 +95,7 @@ describe('ConnectedEditor', (): void => {
       async (): Promise<void> => {
         // We need to access the swagger editor instance on the inner component.
         const innerEditor = wrapper.root.findByType(Editor).instance
+        console.log(innerEditor)
         innerEditor.editor.specActions.updateSpec(
           'This is a modified example specification'
         )
