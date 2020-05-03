@@ -1,9 +1,8 @@
 import React from 'react'
 import { match } from 'react-router'
-import { Link } from 'react-router-dom'
 import IconButton from 'components/IconButton'
 import DisableableLink from 'components/DisableableLink'
-import { ExpandLinkWrapper } from './viewModeSwitcher.styles'
+import { ExpandLinkWrapper, EditLink } from './viewModeSwitcher.styles'
 
 interface Props {
   isLoggedIn: boolean
@@ -21,14 +20,14 @@ const ViewModeSwitcher: React.FunctionComponent<Props> = ({
   return (
     <>
       {viewMatch && viewMatch.params.service && isLoggedIn && (
-        <Link to={`/edit/${viewMatch.params.service}`}>
+        <EditLink to={`/edit/${viewMatch.params.service}`}>
           <IconButton
-            iconClassName="fas fa-edit"
+            iconClassName="fas fa-pen"
             colour="white"
             iconFontSize="13pt"
           />
-          {'edit'}
-        </Link>
+          <div>{'edit'}</div>
+        </EditLink>
       )}
       {editorMatch && editorMatch.params.service && isLoggedIn && (
         <ExpandLinkWrapper disabled={documentHasChanged}>
@@ -42,7 +41,7 @@ const ViewModeSwitcher: React.FunctionComponent<Props> = ({
               colour="white"
               iconFontSize="11pt"
             />
-            {'expand docs view'}
+            <div className="text">{'expand docs view'}</div>
           </DisableableLink>
         </ExpandLinkWrapper>
       )}

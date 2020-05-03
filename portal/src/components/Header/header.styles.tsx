@@ -36,19 +36,30 @@ const ButtonLink = styled('button')<any>`
   color: ${({ colour }): string => colour};
 `
 
-const DashboardLink = styled(
-  ({ demoToggle, ...rest }): any => <Link {...rest} />
-)<any>`
+const DashboardLink = styled(({ demoToggle, ...rest }): any => (
+  <Link {...rest} />
+))<any>`
   display: block;
   position: absolute;
-  right: ${({ demoToggle }): string => (demoToggle ? '258px' : '112px')};
+  right: ${({ demoToggle }): string => (demoToggle ? '183px' : '94px')};
   font-size: 0.88rem;
+
+  > div {
+    display: none;
+  }
+
+  @media screen and (min-width: 1024px) {
+    right: ${({ demoToggle }): string => (demoToggle ? '190px' : '104px')};
+    > div {
+      display: inline-block;
+    }
+  }
 `
 
 const ToggleWrapper = styled('div')<any>`
   display: block;
   position: absolute;
-  right: 112px;
+  right: 97px;
   font-size: 0.88rem;
 
   > * {

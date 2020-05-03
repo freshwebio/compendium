@@ -3,18 +3,17 @@ import { act, create, ReactTestRenderer } from 'react-test-renderer'
 import { MemoryRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import createMockStore from 'redux-mock-store'
+import { ThemeProvider } from 'styled-components'
 
+import theme from 'styles/themes/apydoxv1'
 import { getApiDefs, ApiDefinitionGroup } from 'services/github'
 import ApiDefList from './ApiDefList'
 import StandaloneApiDefGroup from 'components/ApiDefGroup/ApiDefGroup'
 import delay from 'utils/delay'
 
-jest.mock(
-  'services/github',
-  (): any => ({
-    getApiDefs: jest.fn(),
-  })
-)
+jest.mock('services/github', (): any => ({
+  getApiDefs: jest.fn(),
+}))
 
 const mockStore = createMockStore()
 
@@ -64,7 +63,9 @@ describe('ApiDefList', (): void => {
             })}
           >
             <MemoryRouter>
-              <ApiDefList finishedSaving={true} />
+              <ThemeProvider theme={theme}>
+                <ApiDefList finishedSaving={true} demoMode={false} />
+              </ThemeProvider>
             </MemoryRouter>
           </Provider>
         )
@@ -93,7 +94,9 @@ describe('ApiDefList', (): void => {
             })}
           >
             <MemoryRouter>
-              <ApiDefList finishedSaving={true} />
+              <ThemeProvider theme={theme}>
+                <ApiDefList finishedSaving={true} demoMode={false} />
+              </ThemeProvider>
             </MemoryRouter>
           </Provider>
         )

@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { StyledIcon } from 'components/IconButton/iconButton.styles'
+import { Link } from 'react-router-dom'
 
 const ExpandLinkWrapper = styled('div')<{ disabled: boolean }>`
   ${({ disabled }): any =>
@@ -16,6 +17,36 @@ const ExpandLinkWrapper = styled('div')<{ disabled: boolean }>`
           }
         `
       : ''}
+
+  * {
+    display: inline-block;
+  }
+
+  div.text {
+    display: none;
+  }
+
+  @media screen and (min-width: 1024px) {
+    div.text {
+      display: inline-block;
+    }
+  }
 `
 
-export { ExpandLinkWrapper }
+const EditLink = styled(Link)`
+  > * {
+    display: inline-block;
+  }
+
+  > div {
+    display: none;
+  }
+
+  @media screen and (min-width: 1024px) {
+    > div {
+      display: inline-block;
+    }
+  }
+`
+
+export { ExpandLinkWrapper, EditLink }

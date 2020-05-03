@@ -6,7 +6,9 @@ import nock from 'nock'
 
 import { MemoryRouter } from 'react-router'
 import { act, create } from 'react-test-renderer'
+import { ThemeProvider } from 'styled-components'
 
+import theme from 'styles/themes/apydoxv1'
 import ConnectedApiDefGroup from './ConnectedApiDefGroup'
 import StandaloneApiDefGroup from './ApiDefGroup'
 import githubApiInjector from 'appredux/middleware/githubApiInjector'
@@ -16,11 +18,9 @@ import { ADD_SERVICE } from 'appredux/actions/entities/types'
 const mockStore = configureMockStore([githubApiInjector, apiMiddleware])
 
 describe('ConnectedApiDefGroup', (): void => {
-  afterEach(
-    (): void => {
-      nock.cleanAll()
-    }
-  )
+  afterEach((): void => {
+    nock.cleanAll()
+  })
 
   it('should render without any issues and expose entities to the ApiDefGroup', (): void => {
     const store = mockStore({
@@ -29,7 +29,9 @@ describe('ConnectedApiDefGroup', (): void => {
     const rendered = create(
       <MemoryRouter>
         <Provider store={store}>
-          <ConnectedApiDefGroup definitions={[]} groupId="test-group-1" />
+          <ThemeProvider theme={theme}>
+            <ConnectedApiDefGroup definitions={[]} groupId="test-group-1" />
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     )
@@ -53,16 +55,16 @@ describe('ConnectedApiDefGroup', (): void => {
     const rendered = create(
       <MemoryRouter>
         <Provider store={store}>
-          <ConnectedApiDefGroup definitions={[]} groupId="test-group-1" />
+          <ThemeProvider theme={theme}>
+            <ConnectedApiDefGroup definitions={[]} groupId="test-group-1" />
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     )
 
-    act(
-      (): void => {
-        rendered.root.findByType(InlineAddField).props.onSave('test-service-1')
-      }
-    )
+    act((): void => {
+      rendered.root.findByType(InlineAddField).props.onSave('test-service-1')
+    })
 
     expect(store.getActions()).toEqual([
       { meta: { groupId: 'test-group-1' }, type: ADD_SERVICE },

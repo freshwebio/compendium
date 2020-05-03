@@ -2,11 +2,13 @@ import React from 'react'
 import { create, act, ReactTestRenderer } from 'react-test-renderer'
 import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import { ThemeProvider } from 'styled-components'
 
 import StandaloneHeader from 'components/Header/Header'
 import App from './App'
 import { ButtonLink } from 'components/Header/header.styles'
 import { TOGGLE_DEMO_MODE } from 'appredux/actions/global/types'
+import theme from 'styles/themes/apydoxv1'
 
 jest.mock('services/github')
 jest.mock('services/auth')
@@ -36,7 +38,9 @@ describe('App', (): void => {
               entities: { isAddingGroup: false, addingServiceStates: {} },
             })}
           >
-            <App />
+            <ThemeProvider theme={theme}>
+              <App />
+            </ThemeProvider>
           </Provider>
         )
       }
@@ -63,7 +67,9 @@ describe('App', (): void => {
               entities: { isAddingGroup: false, addingServiceStates: {} },
             })}
           >
-            <App />
+            <ThemeProvider theme={theme}>
+              <App />
+            </ThemeProvider>
           </Provider>
         )
       }
@@ -102,7 +108,9 @@ describe('App', (): void => {
       async (): Promise<void> => {
         rendered = create(
           <Provider store={mockStoreInstance}>
-            <App />
+            <ThemeProvider theme={theme}>
+              <App />
+            </ThemeProvider>
           </Provider>
         )
       }

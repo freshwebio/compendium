@@ -64,7 +64,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
             colour="white"
             iconFontSize="1.5rem"
           />
-          <div>{'demo mode'}</div>
+          <div>{'demo'}</div>
         </ToggleWrapper>
       )}
       {((editorMatch && !!editorMatch.params.service) ||
@@ -77,7 +77,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
               colour="white"
               iconFontSize="13pt"
             />
-            {'dashboard'}
+            <div>{'dashboard'}</div>
           </DashboardLink>
           {editorMatch && <CommitPanel />}
         </>
