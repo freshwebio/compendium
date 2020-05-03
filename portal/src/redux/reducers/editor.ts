@@ -15,7 +15,7 @@ export interface EditorState {
   isCommitting: boolean
 }
 
-const initialState = {
+export const initialState = {
   documentHasChanged: false,
   spec: '',
   currentSpecSHA: '',

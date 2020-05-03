@@ -15,7 +15,7 @@ export interface GlobalState {
   demoMode: boolean
 }
 
-const initialState: GlobalState = {
+export const initialState: GlobalState = {
   notifications: [],
   demoMode: !!(process.env.REACT_APP_DEMO_MODE || false),
 }

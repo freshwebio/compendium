@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { apiMiddleware } from 'redux-api-middleware'
-import reducer from './reducers'
+import reducer, { initialState } from './reducers'
 import githubApiInjector from './middleware/githubApiInjector'
 import apiNotifications from './middleware/apiNotifications'
 import demoModeInterceptor from './middleware/demoModeInterceptor'
@@ -25,7 +25,7 @@ const persistedState = loadState()
 const store = (): any =>
   createStore(
     reducer,
-    persistedState,
+    { ...initialState, ...persistedState },
     process.env.NODE_ENV !== 'production'
       ? composeEnhancers(middleware)
       : middleware

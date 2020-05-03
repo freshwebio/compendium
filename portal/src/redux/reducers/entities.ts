@@ -12,7 +12,7 @@ export interface EntitiesState {
   addingServiceStates: { [groupId: string]: boolean }
 }
 
-const initialState = {
+export const initialState = {
   isAddingGroup: false,
   addingServiceStates: {},
 }

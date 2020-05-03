@@ -1,7 +1,9 @@
+import { GlobalState } from 'appredux/reducers/global'
+
 /**
  * Loads a portion of persisted redux state from local storage.
  */
-export const loadState = (): { global: { demoMode: boolean } } | undefined => {
+export const loadState = (): GlobalState | undefined => {
   try {
     const serialisedState = localStorage.getItem('apydoxState')
     if (!serialisedState) {
