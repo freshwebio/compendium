@@ -24,7 +24,7 @@
     "reselect": "^4.0.0",
     "styled-components": "^4.2.0",
     "swagger-editor": "^3.6.36",
-    "swagger-ui-react": "^3.23.11",
+    "swagger-ui-react": "3.23.11",
     "typescript": "^3.7.4",
     "uuid": "^3.3.2"
   },
