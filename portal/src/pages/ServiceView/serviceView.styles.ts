@@ -15,6 +15,11 @@ body {
   background-color: white;
   font-size: 1.3em;
   overflow: hidden;
+  padding-left: 50px;
+
+  @media screen and (min-width: 1560px) {
+    padding-left: 0;
+  }
 }`
 
 export const SwaggerUIWrapper = styled.div`
