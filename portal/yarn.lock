@@ -1043,11 +1043,6 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@braintree/sanitize-url@^2.0.2":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@braintree/sanitize-url/-/sanitize-url-2.1.0.tgz#549a9d1f923c9bc7953a585d3e9aa9429be8fe28"
-  integrity sha1-VJqdH5I8m8eVOlhdPpqpQpvo/ig=
-
 "@braintree/sanitize-url@^4.0.0":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@braintree/sanitize-url/-/sanitize-url-4.0.1.tgz#16e719eba72693f95989c05f2b3b424f2aabc5b0"
@@ -4256,11 +4251,6 @@ domkit@^0.0.1:
   resolved "https://registry.yarnpkg.com/domkit/-/domkit-0.0.1.tgz#88399d586794efc1154fec6c22cfe50f19bd4dbb"
   integrity sha1-iDmdWGeU78EVT+xsIs/lDxm9Tbs=
 
-dompurify@^1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-1.0.11.tgz#fe0f4a40d147f7cebbe31a50a1357539cfc1eb4d"
-  integrity sha512-XywCTXZtc/qCX3iprD1pIklRVk/uhl8BKpkTxr+ZyMVUzSUg7wkQXRBp/euJ5J5moa1QvfpvaPQVP71z1O59dQ==
-
 dompurify@^2.0.7:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.0.11.tgz#cd47935774230c5e478b183a572e726300b3891d"
@@ -6006,9 +5996,9 @@ http-proxy-middleware@0.19.1:
     micromatch "^3.1.10"
 
 http-proxy@^1.17.0:
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.0.tgz#dbe55f63e75a347db7f3d99974f2692a314a6a3a"
-  integrity sha512-84I2iJM/n1d4Hdgc6y2+qY5mDaz2PUVjlg9znE9byl+q0uC3DeByqBGReQu5tpLK0TAqTIXScRUV+dg7+bUPpQ==
+  version "1.18.1"
+  resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.1.tgz#401541f0534884bbf95260334e72f88ee3976549"
+  integrity sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
   dependencies:
     eventemitter3 "^4.0.0"
     follow-redirects "^1.0.0"
@@ -10183,7 +10173,7 @@ react-dom@^15.6.2:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-dom@^16.9.0-alpha.0:
+react-dom@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
   integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
@@ -10386,7 +10376,7 @@ react-style-proptype@^3.2.2:
   dependencies:
     prop-types "^15.5.4"
 
-react-test-renderer@^16.0.0-0, react-test-renderer@^16.9.0-alpha.0:
+react-test-renderer@^16.0.0-0, react-test-renderer@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.13.1.tgz#de25ea358d9012606de51e012d9742e7f0deabc1"
   integrity sha512-Sn2VRyOK2YJJldOqoh8Tn/lWQ+ZiKhyZTPtaO0Q6yNj+QDbmRkVFap6pZPy3YQk8DScRDfyqm/KxKYP9gCMRiQ==
@@ -10418,7 +10408,7 @@ react@^15.6.2:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react@^16.9.0-alpha.0:
+react@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
@@ -11861,7 +11851,7 @@ svgo@^1.0.0, svgo@^1.2.2:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swagger-client@^3.10.3, swagger-client@^3.9.4:
+swagger-client@^3.10.3:
   version "3.10.3"
   resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.10.3.tgz#0735762a8940506c742502b01423f18b74b90c64"
   integrity sha512-mv/mVh+DEAh5o2qykTB7SK7a/ViuwWaKozHHzqOZpxkHJq4UIpiTA6jQpk+mYjdwYPISGwOVt/bd7J8OTleMjQ==
@@ -11927,13 +11917,13 @@ swagger-editor@^3.6.36:
     whatwg-fetch "^2.0.3"
     yaml-js "^0.2.3"
 
-swagger-ui-react@3.23.11:
-  version "3.23.11"
-  resolved "https://registry.yarnpkg.com/swagger-ui-react/-/swagger-ui-react-3.23.11.tgz#96f68c467cc2a8b4ade9f0c9c158cd8c83f39eff"
-  integrity sha512-Wbh6W4eoippqVgWvyyzWGnCJZrXR6Jc/htz6zfroG7I8OHpBcrh5Hc6DybGBje+2rHi92zvyxak/C/IQ4ZK5EQ==
+swagger-ui-react@^3.25.3:
+  version "3.25.3"
+  resolved "https://registry.yarnpkg.com/swagger-ui-react/-/swagger-ui-react-3.25.3.tgz#64a3ff2ec3a27385668503dfd670f7a1448ade2b"
+  integrity sha512-WC5zZAYUQML05f0YWCDJUh91jgN4PUa0tagd0kN2iCMcUnZ0JitOB3ArKFnEUGLVCZOfIctygdQPHs39r5S4vg==
   dependencies:
     "@babel/runtime-corejs2" "^7.5.5"
-    "@braintree/sanitize-url" "^2.0.2"
+    "@braintree/sanitize-url" "^4.0.0"
     "@kyleshockey/object-assign-deep" "^0.4.2"
     "@kyleshockey/xml" "^1.0.2"
     base64-js "^1.2.0"
@@ -11941,7 +11931,7 @@ swagger-ui-react@3.23.11:
     core-js "^2.5.1"
     css.escape "1.5.1"
     deep-extend "0.6.0"
-    dompurify "^1.0.11"
+    dompurify "^2.0.7"
     ieee754 "^1.1.13"
     immutable "^3.x.x"
     js-file-download "^0.4.1"
@@ -11949,6 +11939,7 @@ swagger-ui-react@3.23.11:
     lodash "^4.17.15"
     memoizee "^0.4.12"
     prop-types "^15.7.2"
+    randombytes "^2.1.0"
     react-debounce-input "^3.2.0"
     react-immutable-proptypes "2.1.0"
     react-immutable-pure-component "^1.1.1"
@@ -11958,9 +11949,10 @@ swagger-ui-react@3.23.11:
     redux "^3.x.x"
     redux-immutable "3.1.0"
     remarkable "^1.7.4"
-    reselect "^2.5.4"
+    reselect "^4.0.0"
     serialize-error "^2.1.0"
-    swagger-client "^3.9.4"
+    sha.js "^2.4.11"
+    swagger-client "^3.10.3"
     url-parse "^1.4.7"
     xml-but-prettier "^1.0.1"
     zenscroll "^4.0.2"

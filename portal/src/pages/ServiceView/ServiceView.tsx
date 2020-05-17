@@ -37,7 +37,20 @@ const ServiceView: FunctionComponent<Props> = ({
       {isLoading || !spec ? <LoadingScreen /> : <Sidebar demoMode={demoMode} />}
       <ServiceViewStyles />
       <SwaggerUIWrapper>
-        <SwaggerUI spec={spec} docExpansion="list" />
+        <SwaggerUI
+          spec={spec}
+          docExpansion="list"
+          supportedSubmitMethods={[
+            'get',
+            'put',
+            'post',
+            'delete',
+            'options',
+            'head',
+            'patch',
+            'trace',
+          ]}
+        />
       </SwaggerUIWrapper>
     </>
   )
