@@ -1,4 +1,5 @@
-import styled from 'styled-components'
+import styled, { ThemedStyledProps } from 'styled-components'
+import { ApydoxTheme } from 'styles/themes/apydoxv1'
 
 const CardsWrapper = styled.div`
   display: flex;
@@ -31,6 +32,26 @@ const ApiDefGroupWrapper = styled.div`
   }
 `
 
+const GroupActionsWrapper = styled.div`
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 10px;
+  font-size: 1rem;
+  color: white;
+  z-index: 300;
+`
+
+type GroupTextProps = ThemedStyledProps<{ editGroupMode: boolean }, ApydoxTheme>
+
+const GroupText = styled.div<GroupTextProps>`
+  display: inline-block;
+  vertical-align: middle;
+  outline: none;
+  border-bottom: ${({ editGroupMode }) =>
+    editGroupMode ? '1px solid #c5c5c5' : '1px solid transparent'};
+  transition: border 500ms ease-in-out;
+`
+
 const AddServiceWrapper = styled.div`
   position: absolute;
   top: 50%;
@@ -54,4 +75,6 @@ export {
   Heading,
   AddServiceWrapper,
   TextWrapper,
+  GroupActionsWrapper,
+  GroupText,
 }

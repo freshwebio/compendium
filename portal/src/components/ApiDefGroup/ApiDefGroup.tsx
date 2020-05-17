@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
+import { ThemeContext } from 'styled-components'
 
 import ApiDefCard from '../ApiDefCard'
 import { FileEntry } from 'services/github'
@@ -8,11 +9,15 @@ import {
   Heading,
   AddServiceWrapper,
   TextWrapper,
+  GroupActionsWrapper,
+  GroupText,
 } from './apiDefGroup.styles'
 import InlineAddField from 'components/InlineAddField'
 import { EntitiesState } from 'appredux/reducers/entities'
 
 import content from 'content.json'
+import IconButton from 'components/IconButton'
+import { ApydoxTheme } from 'styles/themes/apydoxv1'
 
 interface ApiDefGroupProps {
   group: string
@@ -25,10 +30,63 @@ interface ApiDefGroupProps {
 const ApiDefGroup: React.FunctionComponent<ApiDefGroupProps> = (
   props
 ): React.ReactElement => {
+  const theme: ApydoxTheme = useContext(ThemeContext)
+  const [editGroupMode, setEditGroupMode] = useState(false)
+  const groupTextRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (editGroupMode && groupTextRef.current) {
+      groupTextRef.current.focus()
+    }
+  }, [editGroupMode])
+
+  const editGroup = () => {
+    setEditGroupMode(true)
+  }
+
+  const renderEditGroupActions = () => {
+    return (
+      <>
+        <IconButton
+          colour={'#67c200'}
+          iconClassName="fas fa-check"
+          iconFontSize={'11pt'}
+        />
+        <IconButton
+          colour={'#ff3333'}
+          iconClassName="fas fa-times"
+          iconFontSize={'11pt'}
+        />
+      </>
+    )
+  }
+
+  const renderViewGroupActions = () => {
+    return (
+      <>
+        <IconButton
+          iconClassName={'fas fa-pen'}
+          colour={'white'}
+          onClick={editGroup}
+        />
+        <IconButton iconClassName={'fas fa-trash'} colour={theme.colours.red} />
+      </>
+    )
+  }
+
   return (
     <ApiDefGroupWrapper>
       <Heading>
-        {props.group}
+        <GroupText
+          editGroupMode={editGroupMode}
+          contentEditable={editGroupMode}
+          ref={groupTextRef}
+        >
+          {props.group}
+        </GroupText>
+        <GroupActionsWrapper>
+          {editGroupMode ? renderEditGroupActions() : renderViewGroupActions()}
+        </GroupActionsWrapper>
         <AddServiceWrapper>
           <InlineAddField
             entityName={'service'}
