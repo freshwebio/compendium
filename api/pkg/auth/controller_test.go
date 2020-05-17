@@ -79,7 +79,7 @@ func Test_retrieving_github_access_token_failing_with_server_error_produces_500_
 func Test_checking_valid_github_access_token_produces_response_specifying_it_is_valid(t *testing.T) {
 	ctrl := NewController(&mockAuthService{})
 	recorder := httptest.NewRecorder()
-	request := httptest.NewRequest("GET", "https://test.test?token=validToken", nil)
+	request := httptest.NewRequest("POST", "https://test.test", strings.NewReader("{\"access_token\":\"validToken\"}"))
 	ctrl.CheckGitHubAccessToken(recorder, request, httprouter.Params{})
 	res := recorder.Result()
 	if res.StatusCode != 200 {
@@ -94,7 +94,7 @@ func Test_checking_valid_github_access_token_produces_response_specifying_it_is_
 func Test_checking_empty_github_access_token_produces_a_401_unauthenticated_response(t *testing.T) {
 	ctrl := NewController(&mockAuthService{})
 	recorder := httptest.NewRecorder()
-	request := httptest.NewRequest("GET", "https://test.test", nil)
+	request := httptest.NewRequest("POST", "https://test.test", strings.NewReader("{\"access_token\":\"\"}"))
 	ctrl.CheckGitHubAccessToken(recorder, request, httprouter.Params{})
 	res := recorder.Result()
 	if res.StatusCode != 401 {
@@ -105,7 +105,7 @@ func Test_checking_empty_github_access_token_produces_a_401_unauthenticated_resp
 func Test_checking_github_access_token_failing_with_server_error_produces_a_500_response(t *testing.T) {
 	ctrl := NewController(&mockAuthService{})
 	recorder := httptest.NewRecorder()
-	request := httptest.NewRequest("GET", "https://test.test?token=serverError", nil)
+	request := httptest.NewRequest("POST", "https://test.test", strings.NewReader("{\"access_token\":\"serverError\"}"))
 	ctrl.CheckGitHubAccessToken(recorder, request, httprouter.Params{})
 	res := recorder.Result()
 	if res.StatusCode != 500 {
@@ -116,10 +116,8 @@ func Test_checking_github_access_token_failing_with_server_error_produces_a_500_
 func Test_revoking_valid_github_access_token_is_successful(t *testing.T) {
 	ctrl := NewController(&mockAuthService{})
 	recorder := httptest.NewRecorder()
-	request := httptest.NewRequest("DELETE", "https://test.test", nil)
-	ctrl.RevokeGitHubAccessToken(recorder, request, httprouter.Params{
-		httprouter.Param{Key: "access_token", Value: "validToken"},
-	})
+	request := httptest.NewRequest("DELETE", "https://test.test", strings.NewReader("{\"access_token\":\"validToken\"}"))
+	ctrl.RevokeGitHubAccessToken(recorder, request, httprouter.Params{})
 	res := recorder.Result()
 	if res.StatusCode != 200 {
 		t.Errorf("Expected response code to be status 200 but received %d", res.StatusCode)
@@ -133,10 +131,8 @@ func Test_revoking_valid_github_access_token_is_successful(t *testing.T) {
 func Test_revoking_empty_github_access_token_fails_with_400_response(t *testing.T) {
 	ctrl := NewController(&mockAuthService{})
 	recorder := httptest.NewRecorder()
-	request := httptest.NewRequest("DELETE", "https://test.test", nil)
-	ctrl.RevokeGitHubAccessToken(recorder, request, httprouter.Params{
-		httprouter.Param{Key: "access_token", Value: ""},
-	})
+	request := httptest.NewRequest("DELETE", "https://test.test", strings.NewReader("{\"access_token\":\"\"}"))
+	ctrl.RevokeGitHubAccessToken(recorder, request, httprouter.Params{})
 	res := recorder.Result()
 	if res.StatusCode != 400 {
 		t.Errorf("Expected response code to be status 400 but received %d", res.StatusCode)
@@ -146,10 +142,8 @@ func Test_revoking_empty_github_access_token_fails_with_400_response(t *testing.
 func Test_revoking_github_access_token_failure_with_server_error_produces_500_response(t *testing.T) {
 	ctrl := NewController(&mockAuthService{})
 	recorder := httptest.NewRecorder()
-	request := httptest.NewRequest("DELETE", "https://test.test", nil)
-	ctrl.RevokeGitHubAccessToken(recorder, request, httprouter.Params{
-		httprouter.Param{Key: "access_token", Value: "serverError"},
-	})
+	request := httptest.NewRequest("DELETE", "https://test.test", strings.NewReader("{\"access_token\":\"serverError\"}"))
+	ctrl.RevokeGitHubAccessToken(recorder, request, httprouter.Params{})
 	res := recorder.Result()
 	if res.StatusCode != 500 {
 		t.Errorf("Expected response code to be status 500 for a server error but received %d", res.StatusCode)

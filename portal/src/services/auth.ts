@@ -30,7 +30,9 @@ export const isLoggedIn = async (demoMode?: boolean): Promise<boolean> => {
   }
 
   try {
-    const response = await api.get('/auth/github/check', { params: { token } })
+    const response = await api.post('/auth/github/check', {
+      access_token: token,
+    })
     const { validToken } = response.data
     return validToken
   } catch (err) {
@@ -54,7 +56,9 @@ export const logout = async (demoMode?: boolean): Promise<boolean> => {
   }
 
   try {
-    const response = await api.delete(`/auth/github/revoke/${token}`)
+    const response = await api.delete(`/auth/github/revoke`, {
+      data: { access_token: token },
+    })
     return response.data
   } catch (err) {
     return false

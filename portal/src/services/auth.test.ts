@@ -22,9 +22,9 @@ describe('api auth endpoints', (): void => {
     > => {
       nock('https://api.apydox.com')
         .defaultReplyHeaders({ 'access-control-allow-origin': '*' })
-        .get('/auth/github/check?token=4230vsdfasdfsdf')
+        .post('/auth/github/check', { access_token: '4230vsdfasdfsdf' })
         .reply(200, { validToken: true })
-        .options('/auth/github/check?token=4230vsdfasdfsdf')
+        .options('/auth/github/check')
         .reply(200, null)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
@@ -37,9 +37,9 @@ describe('api auth endpoints', (): void => {
     > => {
       nock('https://api.apydox.com')
         .defaultReplyHeaders({ 'access-control-allow-origin': '*' })
-        .get('/auth/github/check?token=4230vsdfasdfsdf')
+        .post('/auth/github/check', { access_token: '4230vsdfasdfsdf' })
         .reply(400, { message: 'Bad request' })
-        .options('/auth/github/check?token=4230vsdfasdfsdf')
+        .options('/auth/github/check')
         .reply(200, null)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
@@ -63,9 +63,9 @@ describe('api auth endpoints', (): void => {
     > => {
       nock('https://api.apydox.com')
         .defaultReplyHeaders({ 'access-control-allow-origin': '*' })
-        .delete('/auth/github/revoke/4230vsdfasdfsdf')
+        .delete('/auth/github/revoke', { access_token: '4230vsdfasdfsdf' })
         .reply(200, { message: 'token revoked' })
-        .options('/auth/github/revoke/4230vsdfasdfsdf')
+        .options('/auth/github/revoke')
         .reply(200, null)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
@@ -78,9 +78,9 @@ describe('api auth endpoints', (): void => {
     > => {
       nock('https://api.apydox.com')
         .defaultReplyHeaders({ 'access-control-allow-origin': '*' })
-        .delete('/auth/github/revoke/4230vsdfasdfsdf')
+        .delete('/auth/github/revoke', { access_token: '4230vsdfasdfsdf' })
         .reply(400, { message: 'Bad request' })
-        .options('/auth/github/revoke/4230vsdfasdfsdf')
+        .options('/auth/github/revoke')
         .reply(200, null)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')

@@ -1,5 +1,5 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Transform: 'AWS::Serverless-2016-10-31'
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
 
 Description: Serverless API resources for the apydox api
 
@@ -22,15 +22,15 @@ Parameters:
     Description: The subnet the lambda functions in the apydox api belong to
   SecretResourceARN:
     Type: String
-    Description: 'The exact ARN of the secret or with wildcards as per the format here: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html'
+    Description: "The exact ARN of the secret or with wildcards as per the format here: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html"
   EnvType:
     Type: String
     Description: The environment the API is running in.
 
 Conditions:
-  LocalEnvOnly: !Equals [ !Ref EnvType, local ]
-  HasSubnetID: !Not [ !Equals [ !Ref SubnetID, "" ] ]
-  HasSecurityGroupID: !Not [ !Equals [ !Ref SecurityGroupID, "" ] ]
+  LocalEnvOnly: !Equals [!Ref EnvType, local]
+  HasSubnetID: !Not [!Equals [!Ref SubnetID, ""]]
+  HasSecurityGroupID: !Not [!Equals [!Ref SecurityGroupID, ""]]
 
 Globals:
   Function:
@@ -55,10 +55,10 @@ Globals:
 
 Resources:
   ApydoxApi:
-    Type: 'AWS::Serverless::Api'
+    Type: "AWS::Serverless::Api"
     Name: ApydoxApi
     Properties:
-      StageName: 'v1'
+      StageName: "v1"
   OptionsFunction:
     Type: AWS::Serverless::Function
     Condition: LocalEnvOnly
@@ -74,7 +74,7 @@ Resources:
             Path: /{cors+}
             Method: options
   CheckAccessTokenFunction:
-    Type: 'AWS::Serverless::Function'
+    Type: "AWS::Serverless::Function"
     Properties:
       FunctionName: ApyDox-CheckAccessTokenFunction
       CodeUri: ./cmd/handlers/check_access_token
@@ -92,15 +92,15 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref ApydoxApi
-            Path: '/auth/github/check'
-            Method: get
+            Path: "/auth/github/check"
+            Method: post
         CheckAccessTokenPing:
-            Type: Schedule
-            Properties:
-              Schedule: rate(5 minutes)
-              Input: '{"ping":true}'
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{"ping":true}'
   RetrieveAccessTokenFunction:
-    Type: 'AWS::Serverless::Function'
+    Type: "AWS::Serverless::Function"
     Properties:
       FunctionName: ApyDox-RetrieveAccessTokenFunction
       CodeUri: ./cmd/handlers/retrieve_access_token
@@ -118,7 +118,7 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref ApydoxApi
-            Path: '/auth/github/oauth/access-token'
+            Path: "/auth/github/oauth/access-token"
             Method: post
         RetrieveAccessTokenPing:
           Type: Schedule
@@ -126,7 +126,7 @@ Resources:
             Schedule: rate(5 minutes)
             Input: '{"ping":true}'
   RevokeAccessTokenFunction:
-    Type: 'AWS::Serverless::Function'
+    Type: "AWS::Serverless::Function"
     Properties:
       FunctionName: ApyDox-RevokeAccessTokenFunction
       CodeUri: ./cmd/handlers/revoke_access_token
@@ -144,7 +144,7 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref ApydoxApi
-            Path: '/auth/github/revoke/{access_token}'
+            Path: "/auth/github/revoke"
             Method: delete
         RevokeAccessTokenPing:
           Type: Schedule

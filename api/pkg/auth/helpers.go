@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/freshwebio/apydox-api/pkg/core"
-	"github.com/google/go-github/github"
+	"github.com/google/go-github/v31/github"
 )
 
 // HTTPClientTimeout provides the timeout to be used

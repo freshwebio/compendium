@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/freshwebio/apydox-api/pkg/core"
-	"github.com/google/go-github/github"
+	"github.com/google/go-github/v31/github"
 )
 
 type mockHTTPClient struct{}

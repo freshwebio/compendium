@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/freshwebio/apydox-api/pkg/core"
-	"github.com/google/go-github/github"
+	"github.com/google/go-github/v31/github"
 )
 
 // Service provides the functionality that interacts with

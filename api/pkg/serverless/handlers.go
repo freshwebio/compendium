@@ -15,8 +15,13 @@ import (
 func CheckAccessTokenRequestHandler(services map[string]interface{}) RequestHandler {
 	return func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 		authService := services["auth.auth"].(auth.Service)
-		token := request.QueryStringParameters["token"]
-		if token == "" {
+		accessTokenRequest := &utils.AccessTokenRequestBody{}
+		err := json.Unmarshal([]byte(request.Body), &accessTokenRequest)
+		if err != nil {
+			return utils.BadRequestError("Please provide a correctly formatted access token in a JSON object"), nil
+		}
+
+		if accessTokenRequest.AccessToken == "" {
 			errorResponse, _ := json.Marshal(struct {
 				ValidToken bool `json:"validToken"`
 			}{ValidToken: false})
@@ -27,7 +32,7 @@ func CheckAccessTokenRequestHandler(services map[string]interface{}) RequestHand
 			}, nil
 		}
 
-		validToken, err := authService.CheckGitHubAccessToken(utils.SanitiseWord(token))
+		validToken, err := authService.CheckGitHubAccessToken(utils.SanitiseWord(accessTokenRequest.AccessToken))
 		if err != nil {
 			log.Println(err)
 			return utils.ServerError(), nil
@@ -54,8 +59,13 @@ func RevokeAccessTokenRequestHandler(services map[string]interface{}) RequestHan
 	return func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 		authService := services["auth.auth"].(auth.Service)
 
-		token := request.PathParameters["access_token"]
-		if token == "" {
+		accessTokenRequest := &utils.AccessTokenRequestBody{}
+		err := json.Unmarshal([]byte(request.Body), &accessTokenRequest)
+		if err != nil {
+			return utils.BadRequestError("Please provide a correctly formatted access token in a JSON object"), nil
+		}
+
+		if accessTokenRequest.AccessToken == "" {
 			return events.APIGatewayProxyResponse{
 				StatusCode: 400,
 				Headers:    utils.SetHeaders(nil, false),
@@ -63,7 +73,7 @@ func RevokeAccessTokenRequestHandler(services map[string]interface{}) RequestHan
 			}, nil
 		}
 
-		err := authService.RevokeAccessToken(utils.SanitiseWord(token))
+		err = authService.RevokeAccessToken(utils.SanitiseWord(accessTokenRequest.AccessToken))
 		if err != nil {
 			log.Println(err)
 			return utils.ServerError(), nil

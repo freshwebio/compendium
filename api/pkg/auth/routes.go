@@ -15,13 +15,13 @@ func RegisterRoutes(router *httprouter.Router, services map[string]interface{}) 
 		w.WriteHeader(200)
 	})
 
-	router.GET("/auth/github/check", ctrl.CheckGitHubAccessToken)
+	router.POST("/auth/github/check", ctrl.CheckGitHubAccessToken)
 	router.OPTIONS("/auth/github/check", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		w.WriteHeader(200)
 	})
 
-	router.DELETE("/auth/github/revoke/:access_token", ctrl.RevokeGitHubAccessToken)
-	router.OPTIONS("/auth/github/revoke/:access_token", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	router.DELETE("/auth/github/revoke", ctrl.RevokeGitHubAccessToken)
+	router.OPTIONS("/auth/github/revoke", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		w.WriteHeader(200)
 	})
 }

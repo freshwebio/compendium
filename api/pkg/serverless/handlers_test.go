@@ -36,9 +36,7 @@ func Test_checking_valid_access_token_produces_a_response_specifying_it_is_valid
 	services["auth.auth"] = &mockAuthService{}
 	requestHandler := CheckAccessTokenRequestHandler(services)
 	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
-		QueryStringParameters: map[string]string{
-			"token": "test-valid-access-token",
-		},
+		Body: "{\"access_token\":\"test-valid-access-token\"}",
 	})
 	if err != nil {
 		t.Errorf("Expected error to be nil for a valid access token but got %s", err)
@@ -56,9 +54,7 @@ func Test_checking_access_token_for_invalid_token_produces_a_response_with_a_401
 	services["auth.auth"] = &mockAuthService{}
 	requestHandler := CheckAccessTokenRequestHandler(services)
 	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
-		QueryStringParameters: map[string]string{
-			"token": "test-invvalid-access-token",
-		},
+		Body: "{\"access_token\":\"test-invvalid-access-token\"}",
 	})
 	if err != nil {
 		t.Errorf("Expected error to be nil for an invalid access token but got %s", err)
@@ -76,9 +72,7 @@ func Test_revoking_valid_access_token_is_successful(t *testing.T) {
 	services["auth.auth"] = &mockAuthService{}
 	requestHandler := RevokeAccessTokenRequestHandler(services)
 	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
-		PathParameters: map[string]string{
-			"access_token": "test-valid-access-token",
-		},
+		Body: "{\"access_token\":\"test-valid-access-token\"}",
 	})
 
 	if err != nil {
@@ -99,9 +93,7 @@ func Test_revoking_empty_access_token_fails_with_400_response(t *testing.T) {
 	services["auth.auth"] = &mockAuthService{}
 	requestHandler := RevokeAccessTokenRequestHandler(services)
 	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
-		PathParameters: map[string]string{
-			"access_token": "",
-		},
+		Body: "{\"access_token\":\"\"}",
 	})
 
 	if err != nil {
@@ -118,9 +110,7 @@ func Test_revoking_access_token_with_server_error_fails_with_500_response(t *tes
 	services["auth.auth"] = &mockAuthService{}
 	requestHandler := RevokeAccessTokenRequestHandler(services)
 	response, err := requestHandler(context.Background(), events.APIGatewayProxyRequest{
-		PathParameters: map[string]string{
-			"access_token": "dasdasdAsdasddXCCXc",
-		},
+		Body: "{\"access_token\":\"dasdasdAsdasddXCCXc\"}",
 	})
 
 	if err != nil {

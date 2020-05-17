@@ -50,8 +50,14 @@ func (ctrl *controllerImpl) GetGitHubAccessToken(w http.ResponseWriter, r *http.
 }
 
 func (ctrl *controllerImpl) CheckGitHubAccessToken(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	token := r.URL.Query().Get("token")
-	if token == "" {
+	checkTokenRequest := &utils.AccessTokenRequestBody{}
+	err := json.NewDecoder(r.Body).Decode(&checkTokenRequest)
+	if err != nil {
+		core.HTTPError(w, 400, "Please provide a correctly formatted access token in a JSON object")
+		return
+	}
+
+	if checkTokenRequest.AccessToken == "" {
 		w.WriteHeader(401)
 		errorResponse, _ := json.Marshal(struct {
 			ValidToken bool `json:"validToken"`
@@ -60,7 +66,7 @@ func (ctrl *controllerImpl) CheckGitHubAccessToken(w http.ResponseWriter, r *htt
 		return
 	}
 
-	validToken, err := ctrl.authService.CheckGitHubAccessToken(utils.SanitiseWord(token))
+	validToken, err := ctrl.authService.CheckGitHubAccessToken(utils.SanitiseWord(checkTokenRequest.AccessToken))
 	if err != nil {
 		core.HTTPError(w, 500, "Unexpected server error")
 		return
@@ -78,14 +84,20 @@ func (ctrl *controllerImpl) CheckGitHubAccessToken(w http.ResponseWriter, r *htt
 }
 
 func (ctrl *controllerImpl) RevokeGitHubAccessToken(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	token := ps.ByName("access_token")
-	if token == "" {
+	revokeTokenRequest := &utils.AccessTokenRequestBody{}
+	err := json.NewDecoder(r.Body).Decode(&revokeTokenRequest)
+	if err != nil {
+		core.HTTPError(w, 400, "Please provide a correctly formatted access token in a JSON object")
+		return
+	}
+
+	if revokeTokenRequest.AccessToken == "" {
 		w.WriteHeader(400)
 		w.Write([]byte("{\"message\":\"Please provide a valid access token\"}"))
 		return
 	}
 
-	err := ctrl.authService.RevokeAccessToken(utils.SanitiseWord(token))
+	err = ctrl.authService.RevokeAccessToken(utils.SanitiseWord(revokeTokenRequest.AccessToken))
 	if err != nil {
 		core.HTTPError(w, 500, "Unexpected server error")
 		return
