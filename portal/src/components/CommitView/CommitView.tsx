@@ -16,8 +16,8 @@ interface CommitViewProps {
   currentSpecSHA: string
   show: boolean
   isCommitting: boolean
-  setCurrentCommitDescription: (description: string) => void
-  commitChanges: (
+  setCurrentCommitDescription?: (description: string) => void
+  commitChanges?: (
     commitDescription: string,
     spec: string,
     currentSpecSHA: string

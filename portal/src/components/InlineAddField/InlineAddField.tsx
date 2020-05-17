@@ -17,7 +17,7 @@ interface InlineAddFieldProps {
   iconColour: string
   alignment: string
   finished: boolean
-  onSave: (_: string) => void
+  onSave?: (_: string) => void
 }
 
 const InlineAddField: React.FunctionComponent<InlineAddFieldProps> = ({
@@ -75,11 +75,7 @@ const InlineAddField: React.FunctionComponent<InlineAddFieldProps> = ({
           }
         }}
       >
-        <IconButton
-          onClick={(): void => {}}
-          colour={iconColour}
-          iconClassName={'fas fa-plus'}
-        />
+        <IconButton colour={iconColour} iconClassName={'fas fa-plus'} />
         {entityName}
       </AddCTAWrapper>
       <AddInputWrapper alignment={alignment} visible={showView} ref={viewRef}>
@@ -95,7 +91,7 @@ const InlineAddField: React.FunctionComponent<InlineAddFieldProps> = ({
           <>
             <IconButton
               onClick={(): void => {
-                if (text !== '') {
+                if (text !== '' && onSave) {
                   onSave(text)
                   setSaving(true)
                 }

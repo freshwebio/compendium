@@ -1,5 +1,6 @@
 import React from 'react'
-import TestRenderer, { act } from 'react-test-renderer'
+import TestRenderer, { act, ReactTestRenderer } from 'react-test-renderer'
+import { createMemoryHistory, createLocation } from 'history'
 
 import Editor from './Editor'
 import { MemoryRouter, withRouter, Route } from 'react-router'
@@ -8,9 +9,16 @@ import delay from 'utils/delay'
 
 jest.mock('services/github')
 
+const testMatch = {
+  params: {},
+  isExact: false,
+  path: '',
+  url: '',
+}
+
 describe('Editor', (): void => {
   it('should render without any issues', async (): Promise<void> => {
-    let rendered: TestRenderer.ReactTestRenderer
+    let rendered: TestRenderer.ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         rendered = TestRenderer.create(
@@ -21,7 +29,9 @@ describe('Editor', (): void => {
               isLoggedIn={true}
               isLoading={false}
               demoMode={false}
-              match={{ params: { service: 'Service1' } }}
+              match={{ ...testMatch, params: { service: 'Service1' } }}
+              history={createMemoryHistory()}
+              location={createLocation('')}
               editor={{
                 documentHasChanged: false,
                 spec: '',
@@ -34,10 +44,15 @@ describe('Editor', (): void => {
         )
       }
     )
-    expect(rendered.root.findAllByType('div').length).toBeGreaterThan(0)
-    expect(rendered.root.findAllByProps({ id: 'swagger-editor' }).length).toBe(
-      1
-    )
+    expect(
+      ((rendered as unknown) as ReactTestRenderer).root.findAllByType('div')
+        .length
+    ).toBeGreaterThan(0)
+    expect(
+      ((rendered as unknown) as ReactTestRenderer).root.findAllByProps({
+        id: 'swagger-editor',
+      }).length
+    ).toBe(1)
   })
 
   it('should contain the loading screen when in a loading state', (): void => {
@@ -49,7 +64,9 @@ describe('Editor', (): void => {
           isLoggedIn={true}
           isLoading={true}
           demoMode={false}
-          match={{ params: { service: 'Service1' } }}
+          match={{ ...testMatch, params: { service: 'Service1' } }}
+          history={createMemoryHistory()}
+          location={createLocation('')}
           editor={{
             documentHasChanged: false,
             spec: '',
@@ -74,7 +91,9 @@ describe('Editor', (): void => {
           isLoggedIn={true}
           demoMode={false}
           isLoading={true}
-          match={{ params: { service: 'Service1' } }}
+          history={createMemoryHistory()}
+          location={createLocation('')}
+          match={{ ...testMatch, params: { service: 'Service1' } }}
           editor={{
             documentHasChanged: false,
             spec: '',
@@ -115,7 +134,9 @@ describe('Editor', (): void => {
             isLoggedIn={true}
             isLoading={true}
             demoMode={false}
-            match={{ params: { service: 'Service1' } }}
+            match={{ ...testMatch, params: { service: 'Service1' } }}
+            history={createMemoryHistory()}
+            location={createLocation('')}
             editor={{
               documentHasChanged: false,
               spec: '',
@@ -161,7 +182,6 @@ describe('Editor', (): void => {
     async (): Promise<void> => {
       const setCurrentDocument = jest.fn()
       const setDocumentChanged = jest.fn()
-      // @ts-ignore
       const EnhancedEditor = withRouter(Editor)
       const rendered = TestRenderer.create(
         <MemoryRouter initialEntries={['/edit/Service1', '/edit/Service2']}>
@@ -173,6 +193,7 @@ describe('Editor', (): void => {
                 setDocumentChanged={setDocumentChanged}
                 isLoggedIn={true}
                 isLoading={true}
+                demoMode={false}
                 editor={{
                   documentHasChanged: false,
                   spec: '',

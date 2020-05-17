@@ -23,11 +23,9 @@ import {
 const mockStore = configureMockStore([githubApiInjector, apiMiddleware])
 
 describe('ConnectedCommitPanel', (): void => {
-  afterEach(
-    (): void => {
-      nock.cleanAll()
-    }
-  )
+  afterEach((): void => {
+    nock.cleanAll()
+  })
 
   it('should render without any issues', (): void => {
     const wrapper = mount(
@@ -73,11 +71,9 @@ describe('ConnectedCommitPanel', (): void => {
         </Provider>
       </MemoryRouter>
     )
-    act(
-      (): void => {
-        enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
-      }
-    )
+    act((): void => {
+      enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
+    })
     expect(store.getActions()).toEqual([{ type: COMMIT_CHANGES }])
   })
 
@@ -99,13 +95,11 @@ describe('ConnectedCommitPanel', (): void => {
         </Provider>
       </MemoryRouter>
     )
-    act(
-      (): void => {
-        enzymeFind(wrapper, CommitViewTextArea).simulate('change', {
-          target: { value: 'This is the new description' },
-        })
-      }
-    )
+    act((): void => {
+      enzymeFind(wrapper, CommitViewTextArea).simulate('change', {
+        target: { value: 'This is the new description' },
+      })
+    })
     expect(store.getActions()).toEqual([
       {
         type: SET_CURRENT_COMMIT_DESCRIPTION,
@@ -136,11 +130,9 @@ describe('ConnectedCommitPanel', (): void => {
         </Provider>
       </MemoryRouter>
     )
-    act(
-      (): void => {
-        enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
-      }
-    )
+    act((): void => {
+      enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
+    })
     expect(store.getActions()).toEqual([])
   })
 })

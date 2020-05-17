@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
+import { Dispatch, AnyAction } from 'redux'
 import ApiDefGroup from './ApiDefGroup'
 import { EntitiesState } from '../../redux/reducers/entities'
 import { addService } from '../../redux/actions/entities'
@@ -22,7 +22,7 @@ const mapStateToProps = (
 }
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<any>,
+  dispatch: Dispatch<AnyAction>,
   ownProps: any
 ): DispatchProps => {
   return {
@@ -32,9 +32,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(
-  mapStateToProps,
-  // @see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31363#issuecomment-448013978
-  // @ts-ignore
-  mapDispatchToProps
-)(ApiDefGroup)
+export default connect(mapStateToProps, mapDispatchToProps)(ApiDefGroup)

@@ -9,18 +9,16 @@ import GlobalStyle from 'styles/globalStyle'
 import Routes from './Routes'
 import { GlobalState } from 'appredux/reducers/global'
 import { toggleDemoMode as toggleDemoModeActionCreator } from 'appredux/actions/global'
-import { Dispatch } from 'redux'
+import { Dispatch, AnyAction } from 'redux'
 
 const logoutAndRedirect = (
   toggleDemoMode: () => void,
   demoMode?: boolean
 ): void => {
   if (!demoMode) {
-    logout().then(
-      (): void => {
-        window.location.href = '/'
-      }
-    )
+    logout().then((): void => {
+      window.location.href = '/'
+    })
   } else {
     toggleDemoMode()
   }
@@ -79,7 +77,7 @@ interface DispatchProps {
 }
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<any>,
+  dispatch: Dispatch<AnyAction>,
   ownProps: any
 ): DispatchProps => {
   return {
@@ -89,8 +87,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(
-  mapStateToProps,
-  // @ts-ignore
-  mapDispatchToProps
-)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

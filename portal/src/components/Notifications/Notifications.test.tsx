@@ -20,7 +20,6 @@ describe('Notifications', (): void => {
             type: 'error',
           },
         ]}
-        removeNotification={(id: string): void => {}}
       />,
       mockTheme
     )
@@ -44,11 +43,9 @@ describe('Notifications', (): void => {
       />,
       mockTheme
     )
-    act(
-      (): void => {
-        wrapper.find(NotificationClose).simulate('click', {})
-      }
-    )
+    act((): void => {
+      wrapper.find(NotificationClose).simulate('click', {})
+    })
 
     // removeNotification won't get triggered until the timeout is complete
     // to allow for the slide out transition for notifications.

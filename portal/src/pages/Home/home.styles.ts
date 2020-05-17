@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import icon from 'assets/images/GitHub-Mark-Light-64px.png'
 
 const HomeWrapper = styled.div`

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
+import { Dispatch, AnyAction } from 'redux'
 import Notifications from './Notifications'
 import { GlobalState, NotificationState } from '../../redux/reducers/global'
 
@@ -23,7 +23,7 @@ const mapStateToProps = (
 }
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<any>,
+  dispatch: Dispatch<AnyAction>,
   ownProps: any
 ): DispatchProps => {
   return {
@@ -33,8 +33,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(
-  mapStateToProps,
-  // @ts-ignore
-  mapDispatchToProps
-)(Notifications)
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications)

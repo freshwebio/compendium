@@ -106,8 +106,8 @@ const saveDefaultDemoDefIfNeeded = (
   repo: string,
   prefix: string
 ): void => {
-  const localContentKeys = Object.keys(localStorage).filter(
-    (key): boolean => key.startsWith(prefix)
+  const localContentKeys = Object.keys(localStorage).filter((key): boolean =>
+    key.startsWith(prefix)
   )
   if (localContentKeys.length === 0) {
     localStorage.setItem(
@@ -136,7 +136,10 @@ const getLocalApiDefs = (owner: string, repo: string): FlatTreeResponse => {
         (entry): boolean => entry.path === groupPath
       )
       const newEntries = !existingGroupEntry
-        ? [{ path: groupPath, type: 'tree' }, { path, type: 'blob' }]
+        ? [
+            { path: groupPath, type: 'tree' },
+            { path, type: 'blob' },
+          ]
         : [{ path, type: 'blob' }]
 
       if (key.startsWith(prefix)) {
@@ -155,7 +158,7 @@ const getLocalApiDefs = (owner: string, repo: string): FlatTreeResponse => {
 }
 
 export const getApiDefs = async (
-  branch: string = 'master',
+  branch = 'master',
   demoMode?: boolean
 ): Promise<ApiDefinitionGroup[]> => {
   const owner = process.env.REACT_APP_API_DOCS_REPO_OWNER || ''
@@ -218,7 +221,7 @@ const getLocalServiceDefinition = (
  */
 export const loadServiceDefinition = async (
   service: string,
-  branch: string = 'master',
+  branch = 'master',
   demoMode?: boolean
 ): Promise<{ content: string; sha: string }> => {
   try {

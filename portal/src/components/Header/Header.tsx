@@ -23,9 +23,9 @@ type HeaderProps = RouteComponentProps<any> & {
   isLoggedIn: boolean
   entities: EntitiesState
   demoMode: boolean
-  addGroup: (groupName: string) => void
-  logout: () => void
-  toggleDemoMode: () => void
+  addGroup?: (groupName: string) => void
+  logout?: () => void
+  toggleDemoMode?: () => void
 }
 
 const Header: React.FunctionComponent<HeaderProps> = ({
@@ -72,7 +72,6 @@ const Header: React.FunctionComponent<HeaderProps> = ({
         <>
           <DashboardLink to="/" demoToggle={process.env.REACT_APP_DEMO_MODE}>
             <IconButton
-              onClick={(): void => {}}
               iconClassName="fas fa-home"
               colour="white"
               iconFontSize="13pt"
@@ -90,7 +89,11 @@ const Header: React.FunctionComponent<HeaderProps> = ({
               entityName={'group'}
               iconColour={'white'}
               alignment={'left'}
-              onSave={addGroup}
+              onSave={(name: string): void => {
+                if (addGroup) {
+                  addGroup(name)
+                }
+              }}
               finished={!entities.isAddingGroup}
             />
           </AddGroupWrapper>

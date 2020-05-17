@@ -7,7 +7,7 @@ import { NotificationsWrapper } from './notifications.styles'
 
 export interface NotificationsProps {
   notifications: NotificationState[]
-  removeNotification: (id: string) => void
+  removeNotification?: (id: string) => void
 }
 
 const Notifications: React.FunctionComponent<NotificationsProps> = ({
@@ -23,7 +23,9 @@ const Notifications: React.FunctionComponent<NotificationsProps> = ({
             message={notification.message}
             type={notification.type}
             onClose={(): void => {
-              removeNotification(notification.id)
+              if (removeNotification) {
+                removeNotification(notification.id)
+              }
             }}
           />
         )

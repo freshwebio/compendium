@@ -11,7 +11,7 @@ describe('LoginCallback', (): void => {
   it('should render without crashing', (): void => {
     const wrapper = mount(
       <MemoryRouter>
-        <LoginCallback setIsLoggedIn={(): void => {}} />
+        <LoginCallback />
       </MemoryRouter>
     )
     expect(wrapper.find(LoginCallback).length).toBe(1)
@@ -24,7 +24,7 @@ describe('LoginCallback', (): void => {
       'https://localhost:4302/login-test?code=rfsdfg3231344Dw'
     const wrapper = mount(
       <MemoryRouter>
-        <LoginCallback setIsLoggedIn={(): void => {}} />
+        <LoginCallback />
       </MemoryRouter>
     )
     expect(wrapper.find(LoginCallback).length).toBe(1)
@@ -39,7 +39,7 @@ describe('LoginCallback', (): void => {
     window.location.href = 'https://localhost:4302/login-test?code=fail'
     const wrapper = mount(
       <MemoryRouter>
-        <LoginCallback setIsLoggedIn={(): void => {}} />
+        <LoginCallback />
       </MemoryRouter>
     )
     expect(wrapper.find(LoginCallback).length).toBe(1)

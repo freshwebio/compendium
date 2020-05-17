@@ -13,7 +13,6 @@ describe('InlineAddField', (): void => {
       <InlineAddField
         entityName="group"
         iconColour="white"
-        onSave={(): void => {}}
         alignment="left"
         finished={false}
       />,
@@ -29,7 +28,6 @@ describe('InlineAddField', (): void => {
       <InlineAddField
         entityName="group"
         iconColour="white"
-        onSave={(): void => {}}
         alignment="left"
         finished={false}
       />,
@@ -56,7 +54,6 @@ describe('InlineAddField', (): void => {
       <InlineAddField
         entityName="group"
         iconColour="white"
-        onSave={(): void => {}}
         alignment="left"
         finished={false}
       />,
@@ -117,7 +114,6 @@ describe('InlineAddField', (): void => {
       <InlineAddField
         entityName="group"
         iconColour="white"
-        onSave={(): void => {}}
         alignment="left"
         finished={false}
       />,
@@ -153,7 +149,6 @@ describe('InlineAddField', (): void => {
           <InlineAddField
             entityName="group"
             iconColour="white"
-            onSave={(): void => {}}
             alignment="right"
             finished={finished}
           />
@@ -162,7 +157,7 @@ describe('InlineAddField', (): void => {
     }
 
     // Use act to let react stabilise and have an input ref ready to be focused.
-    let rendered: ReactTestRenderer
+    let rendered: ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         rendered = create(<TestComp />, {
@@ -173,7 +168,9 @@ describe('InlineAddField', (): void => {
               // mock a focus function, doesn't need to do anything,
               // just allows us to reach a code path of focusing an input in the component.
               return {
-                focus: (): void => {},
+                focus: (): void => {
+                  console.log('focused!')
+                },
               }
             }
             return null
@@ -182,16 +179,18 @@ describe('InlineAddField', (): void => {
       }
     )
 
+    const renderedWrapper = (rendered as unknown) as ReactTestRenderer
+
     await act(
       async (): Promise<void> => {
-        rendered.root.findByType(AddCTAWrapper).props.onClick()
+        renderedWrapper.root.findByType(AddCTAWrapper).props.onClick()
       }
     )
 
     await act(
       async (): Promise<void> => {
         // The cancel button is the third icon button in the component.
-        rendered.root
+        renderedWrapper.root
           .findByType('input')
           .props.onChange({ target: { value: 'test service 2' } })
       }
@@ -200,19 +199,25 @@ describe('InlineAddField', (): void => {
     await act(
       async (): Promise<void> => {
         // The save/check button is the second icon button in the component.
-        rendered.root.findAllByType(IconButton)[1].props.onClick()
+        renderedWrapper.root.findAllByType(IconButton)[1].props.onClick()
       }
     )
 
-    expect(rendered.root.findByType(AddInputWrapper).props.visible).toBeTrue()
+    expect(
+      renderedWrapper.root.findByType(AddInputWrapper).props.visible
+    ).toBeTrue()
 
     await act(
       async (): Promise<void> => {
         // The save/check button is the second icon button in the component.
-        rendered.root.findByProps({ className: 'test-div-1' }).props.onClick()
+        renderedWrapper.root
+          .findByProps({ className: 'test-div-1' })
+          .props.onClick()
       }
     )
 
-    expect(rendered.root.findByType(AddInputWrapper).props.visible).toBeFalse()
+    expect(
+      renderedWrapper.root.findByType(AddInputWrapper).props.visible
+    ).toBeFalse()
   })
 })

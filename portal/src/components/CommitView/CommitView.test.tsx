@@ -19,8 +19,6 @@ describe('CommitView', (): void => {
         currentSpecSHA=""
         show
         isCommitting={false}
-        setCurrentCommitDescription={(): void => {}}
-        commitChanges={(): void => {}}
       />
     )
     expect(wrapper.find('div').length).toBeGreaterThan(0)
@@ -36,16 +34,13 @@ describe('CommitView', (): void => {
         show={false}
         isCommitting={false}
         setCurrentCommitDescription={setCurrentCommitDescription}
-        commitChanges={(): void => {}}
       />
     )
-    act(
-      (): void => {
-        enzymeFind(wrapper, CommitViewTextArea).simulate('change', {
-          target: { value: 'This is a commit description' },
-        })
-      }
-    )
+    act((): void => {
+      enzymeFind(wrapper, CommitViewTextArea).simulate('change', {
+        target: { value: 'This is a commit description' },
+      })
+    })
     expect(setCurrentCommitDescription).toHaveBeenCalledWith(
       'This is a commit description'
     )
@@ -60,15 +55,12 @@ describe('CommitView', (): void => {
         currentSpecSHA="dasd32130sasd"
         show
         isCommitting={false}
-        setCurrentCommitDescription={(): void => {}}
         commitChanges={commitChanges}
       />
     )
-    act(
-      (): void => {
-        enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
-      }
-    )
+    act((): void => {
+      enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
+    })
     expect(commitChanges).toHaveBeenCalledWith(
       'This is the commit description',
       'This is the specification of complete and utter madness',
@@ -84,8 +76,6 @@ describe('CommitView', (): void => {
         currentSpecSHA="dasd32130sasd"
         show
         isCommitting={true}
-        setCurrentCommitDescription={(): void => {}}
-        commitChanges={(): void => {}}
       />
     )
     expect(enzymeFind(wrapper, CentredImage).length).toBe(1)

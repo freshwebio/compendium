@@ -22,11 +22,9 @@ const ApiDefList: React.FunctionComponent<ApiDefListProps> = ({
   useEffect((): void => {
     if (finishedSaving) {
       getApiDefs('master', demoMode)
-        .then(
-          (apiDefs: ApiDefinitionGroup[]): void => {
-            setApiDefinitionGroups(apiDefs)
-          }
-        )
+        .then((apiDefs: ApiDefinitionGroup[]): void => {
+          setApiDefinitionGroups(apiDefs)
+        })
         .catch((err: any): void => console.log(err))
     }
   }, [finishedSaving])

@@ -7,6 +7,7 @@ import { loadServiceDefinition } from 'services/github'
 import LoadingScreen from 'components/LoadingScreen'
 import EditorStyles from './editor.styles'
 import { EditorState } from 'appredux/reducers/editor'
+import { RouteComponentProps } from 'react-router-dom'
 
 export interface EditorCompState {
   originalDocument: string
@@ -27,7 +28,10 @@ export interface EditorProps {
   setDocumentChanged: (changed: boolean) => void
 }
 
-class Editor extends Component<EditorProps, EditorCompState> {
+class Editor extends Component<
+  EditorProps & RouteComponentProps,
+  EditorCompState
+> {
   editor: any
   unsubscribe: any
 
@@ -54,15 +58,13 @@ class Editor extends Component<EditorProps, EditorCompState> {
 
     if (params.service && params.service !== prevParams.service) {
       loadServiceDefinition(params.service, 'master', this.props.demoMode)
-        .then(
-          (result: { content: string; sha: string }): void => {
-            this.setState({ originalDocument: result.content, loaded: true })
-            this.editor.specActions.updateSpec(result.content)
-            if (this.props.setCurrentDocument) {
-              this.props.setCurrentDocument(result.content, result.sha)
-            }
+        .then((result: { content: string; sha: string }): void => {
+          this.setState({ originalDocument: result.content, loaded: true })
+          this.editor.specActions.updateSpec(result.content)
+          if (this.props.setCurrentDocument) {
+            this.props.setCurrentDocument(result.content, result.sha)
           }
-        )
+        })
         .catch((err): void => console.log(err))
     }
 

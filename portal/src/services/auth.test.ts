@@ -9,7 +9,7 @@ describe('api auth endpoints', (): void => {
         .post('/auth/github/oauth/access-token', { code: 'fsdfi303d9adasd' })
         .reply(200, { token: 'Fasd1230casd9Qeow92' })
         .options('/auth/github/oauth/access-token')
-        .reply(200, null)
+        .reply(200)
 
       const token = await getAccessToken('fsdfi303d9adasd')
       expect(token).toBe('Fasd1230casd9Qeow92')
@@ -25,7 +25,7 @@ describe('api auth endpoints', (): void => {
         .post('/auth/github/check', { access_token: '4230vsdfasdfsdf' })
         .reply(200, { validToken: true })
         .options('/auth/github/check')
-        .reply(200, null)
+        .reply(200)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
       const isValid = await isLoggedIn()
@@ -40,7 +40,7 @@ describe('api auth endpoints', (): void => {
         .post('/auth/github/check', { access_token: '4230vsdfasdfsdf' })
         .reply(400, { message: 'Bad request' })
         .options('/auth/github/check')
-        .reply(200, null)
+        .reply(200)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
       const isValid = await isLoggedIn()
@@ -66,7 +66,7 @@ describe('api auth endpoints', (): void => {
         .delete('/auth/github/revoke', { access_token: '4230vsdfasdfsdf' })
         .reply(200, { message: 'token revoked' })
         .options('/auth/github/revoke')
-        .reply(200, null)
+        .reply(200)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
       const response = await logout()
@@ -81,7 +81,7 @@ describe('api auth endpoints', (): void => {
         .delete('/auth/github/revoke', { access_token: '4230vsdfasdfsdf' })
         .reply(400, { message: 'Bad request' })
         .options('/auth/github/revoke')
-        .reply(200, null)
+        .reply(200)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
       const response = await logout()

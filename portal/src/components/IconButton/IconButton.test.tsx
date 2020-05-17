@@ -12,7 +12,6 @@ describe('IconButton', (): void => {
       <IconButton
         iconClassName=""
         isTooltipContainer={true}
-        onClick={(): void => {}}
         disabled={false}
         colour=""
         iconFontSize="14pt"
@@ -26,7 +25,6 @@ describe('IconButton', (): void => {
       <IconButton
         iconClassName=""
         isTooltipContainer={true}
-        onClick={(): void => {}}
         disabled={true}
         colour=""
         iconFontSize="14pt"
@@ -42,7 +40,6 @@ describe('IconButton', (): void => {
       <IconButton
         iconClassName=""
         isTooltipContainer={true}
-        onClick={(): void => {}}
         disabled={true}
         colour=""
         iconFontSize="14pt"
@@ -59,7 +56,6 @@ describe('IconButton', (): void => {
       <IconButton
         iconClassName=""
         isTooltipContainer={false}
-        onClick={(): void => {}}
         disabled={true}
         colour=""
         iconFontSize="14pt"

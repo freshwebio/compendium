@@ -47,7 +47,7 @@ const GroupText = styled.div<GroupTextProps>`
   display: inline-block;
   vertical-align: middle;
   outline: none;
-  border-bottom: ${({ editGroupMode }) =>
+  border-bottom: ${({ editGroupMode }): string =>
     editGroupMode ? '1px solid #c5c5c5' : '1px solid transparent'};
   transition: border 500ms ease-in-out;
 `

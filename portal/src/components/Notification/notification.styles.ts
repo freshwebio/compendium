@@ -1,5 +1,10 @@
-import styled, { css } from 'styled-components'
+import styled, {
+  css,
+  FlattenSimpleInterpolation,
+  ThemedStyledProps,
+} from 'styled-components'
 import { darken, lighten } from 'polished'
+import { ApydoxTheme } from 'styles/themes/apydoxv1'
 
 const NotificationIcon = styled.i`
   font-size: 20pt;
@@ -25,7 +30,15 @@ const NotificationWrapper = styled.div`
   overflow: hidden;
 `
 
-const NotificationInsideWrapper = styled('div')<any>`
+export type NotificationInsideWrapperProps = ThemedStyledProps<
+  {
+    type: string
+    loaded: boolean
+  },
+  ApydoxTheme
+>
+
+const NotificationInsideWrapper = styled('div')<NotificationInsideWrapperProps>`
   position: absolute;
   top: 0;
   left: 0;
@@ -38,7 +51,7 @@ const NotificationInsideWrapper = styled('div')<any>`
   transition: transform 300ms ease-in-out;
   transform: ${({ loaded }): string =>
     loaded ? 'translateX(0)' : 'translateX(+100%)'};
-  ${({ type, theme }): any =>
+  ${({ type, theme }): FlattenSimpleInterpolation =>
     type === 'success'
       ? css`
           background: ${theme.colours.green};

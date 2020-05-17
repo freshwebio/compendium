@@ -2,11 +2,9 @@ import { loadState, saveState } from './stateStorage'
 
 describe('state storage', (): void => {
   describe('#loadState()', (): void => {
-    beforeEach(
-      (): void => {
-        localStorage.clear()
-      }
-    )
+    beforeEach((): void => {
+      localStorage.clear()
+    })
 
     it('should load the persisted portion of state from local storage', (): void => {
       localStorage.setItem('apydoxState', '{"global":{"demoMode":true}}')

@@ -36,7 +36,7 @@ describe('ConnectedApiDefList', (): void => {
       },
     })
 
-    let rendered: ReactTestRenderer
+    let rendered: ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         rendered = create(
@@ -50,7 +50,9 @@ describe('ConnectedApiDefList', (): void => {
     )
 
     expect(
-      rendered.root.findByType(StandaloneApiDefList).props.finishedSaving
+      ((rendered as unknown) as ReactTestRenderer).root.findByType(
+        StandaloneApiDefList
+      ).props.finishedSaving
     ).toBeFalse()
   })
 
@@ -64,7 +66,7 @@ describe('ConnectedApiDefList', (): void => {
       },
     })
 
-    let rendered: ReactTestRenderer
+    let rendered: ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         rendered = create(
@@ -78,7 +80,9 @@ describe('ConnectedApiDefList', (): void => {
     )
 
     expect(
-      rendered.root.findByType(StandaloneApiDefList).props.finishedSaving
+      ((rendered as unknown) as ReactTestRenderer).root.findByType(
+        StandaloneApiDefList
+      ).props.finishedSaving
     ).toBeFalse()
   })
 
@@ -92,7 +96,7 @@ describe('ConnectedApiDefList', (): void => {
       },
     })
 
-    let rendered: ReactTestRenderer
+    let rendered: ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         rendered = create(
@@ -106,7 +110,9 @@ describe('ConnectedApiDefList', (): void => {
     )
 
     expect(
-      rendered.root.findByType(StandaloneApiDefList).props.finishedSaving
+      ((rendered as unknown) as ReactTestRenderer).root.findByType(
+        StandaloneApiDefList
+      ).props.finishedSaving
     ).toBeTrue()
   })
 })

@@ -19,7 +19,7 @@ const mockStore = configureMockStore([])
 
 describe('ConnectedEditor', (): void => {
   it('should render without any issues', async (): Promise<void> => {
-    let wrapper: ReactTestRenderer
+    let wrapper: ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         wrapper = create(
@@ -52,7 +52,10 @@ describe('ConnectedEditor', (): void => {
         )
       }
     )
-    expect(wrapper.root.findAllByType('div').length).toBeGreaterThan(0)
+    expect(
+      ((wrapper as unknown) as ReactTestRenderer).root.findAllByType('div')
+        .length
+    ).toBeGreaterThan(0)
   })
 
   it("should dispatch action for when the document has changed from it's original state when loaded in", async (): Promise<

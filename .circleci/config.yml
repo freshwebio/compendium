@@ -37,11 +37,27 @@ jobs:
       - checkout:
           path: ~/apydox
       - run: yarn
+      - run:
+          name: Check for vulnerable dependencies
+          command: yarn audit --level high
       - run: cp src/content.example.json src/content.json
       - save_cache:
           key: apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - ~/apydox/portal
+  lint_portal:
+    docker:
+      - image: circleci/node:10.16.0-browsers-legacy
+    working_directory: ~/apydox/portal
+    steps:
+      - restore_cache:
+          keys:
+            - apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
+            - apydox-portal-v1-{{ .Branch }}-
+            - apydox-portal-v1-
+      - run:
+          name: Check for errors and code style issues
+          command: yarn lint
   test_portal:
     docker:
       - image: circleci/node:10.16.0-browsers-legacy
@@ -102,7 +118,6 @@ workflows:
             branches:
               only:
                 - master
-                - development
       - test_api:
           filters:
             tags:
@@ -110,7 +125,6 @@ workflows:
             branches:
               only:
                 - master
-                - development
           requires:
             - deps_api
       - deps_portal:
@@ -120,7 +134,15 @@ workflows:
             branches:
               only:
                 - master
-                - development
+      - lint_portal:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only:
+                - master
+          requires:
+            - deps_portal
       - test_portal:
           filters:
             tags:
@@ -128,9 +150,8 @@ workflows:
             branches:
               only:
                 - master
-                - development
           requires:
-            - deps_portal
+            - lint_portal
       - build_publish_api_docker:
           filters:
             tags:

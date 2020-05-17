@@ -15,11 +15,9 @@ import { ADD_GROUP } from 'appredux/actions/entities/types'
 const mockStore = configureMockStore([githubApiInjector, apiMiddleware])
 
 describe('ConnectedHeader', (): void => {
-  afterEach(
-    (): void => {
-      nock.cleanAll()
-    }
-  )
+  afterEach((): void => {
+    nock.cleanAll()
+  })
 
   it('should render without any issues', (): void => {
     const rendered = create(
@@ -54,11 +52,9 @@ describe('ConnectedHeader', (): void => {
       </MemoryRouter>
     )
 
-    act(
-      (): void => {
-        rendered.root.findByType(InlineAddField).props.onSave('test-group-1')
-      }
-    )
+    act((): void => {
+      rendered.root.findByType(InlineAddField).props.onSave('test-group-1')
+    })
 
     expect(store.getActions()).toEqual([{ type: ADD_GROUP }])
   })

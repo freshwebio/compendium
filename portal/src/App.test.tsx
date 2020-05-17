@@ -50,7 +50,7 @@ describe('App', (): void => {
   it('logs the user out when they click the logout button in the header', async (): Promise<
     void
   > => {
-    let rendered: ReactTestRenderer
+    let rendered: ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         rendered = create(
@@ -75,7 +75,10 @@ describe('App', (): void => {
       }
     )
 
-    const header = rendered.root.findByType(StandaloneHeader)
+    // We have assurances from React that TypeScript is unaware of here.
+    const header = ((rendered as unknown) as ReactTestRenderer).root.findByType(
+      StandaloneHeader
+    )
     const logoutButton = header.findByType(ButtonLink)
 
     expect(window.location.href).toBe('http://localhost/')
@@ -103,7 +106,7 @@ describe('App', (): void => {
       entities: { isAddingGroup: false, addingServiceStates: {} },
     })
 
-    let rendered: ReactTestRenderer
+    let rendered: ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         rendered = create(
@@ -116,7 +119,9 @@ describe('App', (): void => {
       }
     )
 
-    const header = rendered.root.findByType(StandaloneHeader)
+    const header = ((rendered as unknown) as ReactTestRenderer).root.findByType(
+      StandaloneHeader
+    )
     const logoutButton = header.findByType(ButtonLink)
 
     expect(window.location.href).toBe('http://localhost/')

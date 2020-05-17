@@ -19,9 +19,9 @@ export interface CollapsibleViewElements<T extends HTMLElement> {
  * Thirdly, a mechanism is provided to allow blocking users from collapsing a view for components like inline
  * editing fields that show their own loading indicator while data is being saved or something is happening.
  */
-const useCollapsibleView = <T extends HTMLElement>(): CollapsibleViewElements<
-  T
-> => {
+const useCollapsibleView = <
+  T extends HTMLElement
+>(): CollapsibleViewElements<T> => {
   const viewRef = useRef<T>(null)
   const [showView, setShowView] = useState<boolean>(false)
   // Provides an optional extra to allow components to provide a state that indicates

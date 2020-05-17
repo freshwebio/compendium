@@ -23,7 +23,7 @@ interface ApiDefGroupProps {
   group: string
   groupId: string
   entities: EntitiesState
-  addService: (groupPath: string, serviceNameInput: string) => void
+  addService?: (groupPath: string, serviceNameInput: string) => void
   definitions: FileEntry[]
 }
 
@@ -40,11 +40,11 @@ const ApiDefGroup: React.FunctionComponent<ApiDefGroupProps> = (
     }
   }, [editGroupMode])
 
-  const editGroup = () => {
+  const editGroup = (): void => {
     setEditGroupMode(true)
   }
 
-  const renderEditGroupActions = () => {
+  const renderEditGroupActions = (): React.ReactElement => {
     return (
       <>
         <IconButton
@@ -61,7 +61,7 @@ const ApiDefGroup: React.FunctionComponent<ApiDefGroupProps> = (
     )
   }
 
-  const renderViewGroupActions = () => {
+  const renderViewGroupActions = (): React.ReactElement => {
     return (
       <>
         <IconButton
@@ -92,7 +92,9 @@ const ApiDefGroup: React.FunctionComponent<ApiDefGroupProps> = (
             entityName={'service'}
             alignment={'right'}
             onSave={(serviceInput: string): void => {
-              props.addService(props.groupId, serviceInput)
+              if (props.addService) {
+                props.addService(props.groupId, serviceInput)
+              }
             }}
             iconColour={'white'}
             finished={!props.entities.addingServiceStates[props.groupId]}

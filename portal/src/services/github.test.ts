@@ -16,7 +16,7 @@ describe('github api interactions', (): void => {
         .get('/repos/freshwebio/test-content/branches/master')
         .reply(200, { commit: { sha: 'fsdf2403fsdf3493ds' } })
         .options('/repos/freshwebio/test-content/branches/master')
-        .reply(200, null, {
+        .reply(200, undefined, {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
         })
@@ -39,7 +39,7 @@ describe('github api interactions', (): void => {
         .options(
           '/repos/freshwebio/test-content/git/trees/fsdf2403fsdf3493ds?recursive=1'
         )
-        .reply(200, null, {
+        .reply(200, undefined, {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
         })
@@ -161,7 +161,7 @@ describe('github api interactions', (): void => {
         .options(
           '/repos/freshwebio/test-content/contents/core-services/Events.yaml?ref=master'
         )
-        .reply(200, null, {
+        .reply(200, undefined, {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
         })
@@ -191,7 +191,7 @@ describe('github api interactions', (): void => {
         .options(
           '/repos/freshwebio/test-content/contents/core-services/Events.yaml?ref=master'
         )
-        .reply(200, null, {
+        .reply(200, undefined, {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
         })

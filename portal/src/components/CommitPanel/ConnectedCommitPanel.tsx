@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
+import { Dispatch, AnyAction } from 'redux'
 import CommitPanel from './CommitPanel'
 import { EditorState } from '../../redux/reducers/editor'
 import {
@@ -32,7 +32,7 @@ const mapStateToProps = (
 }
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<any>,
+  dispatch: Dispatch<AnyAction>,
   ownProps: any
 ): DispatchProps => {
   return {
@@ -69,10 +69,5 @@ const mapDispatchToProps = (
 }
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    // @see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31363#issuecomment-448013978
-    // @ts-ignore
-    mapDispatchToProps
-  )(CommitPanel)
+  connect(mapStateToProps, mapDispatchToProps)(CommitPanel)
 )

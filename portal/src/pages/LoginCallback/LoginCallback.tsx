@@ -5,7 +5,7 @@ import { getAccessToken } from 'services/auth'
 import LoadingScreen from 'components/LoadingScreen'
 
 interface LoginCallbackOwnProps {
-  setIsLoggedIn: (isLoggedIn: boolean) => void
+  setIsLoggedIn?: (isLoggedIn: boolean) => void
 }
 
 type LoginCallbackProps = RouteComponentProps<any> & LoginCallbackOwnProps

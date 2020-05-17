@@ -10,8 +10,12 @@ import BackgroundLayer from 'components/BackgroundLayer'
 
 export interface CommitPanelProps {
   editor: EditorState
-  commitChanges: () => void
-  setCurrentCommitDescription: () => void
+  commitChanges?: (
+    commitDescription: string,
+    spec: string,
+    currentSpecSHA: string
+  ) => void
+  setCurrentCommitDescription?: (description: string) => void
 }
 
 const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
@@ -56,12 +60,24 @@ const CommitPanel: React.FunctionComponent<CommitPanelProps> = (
         </IconButton>
         <CommitView
           show={showView && documentHasChanged}
-          commitChanges={props.commitChanges}
+          commitChanges={(
+            commitDescription: string,
+            spec: string,
+            currentSpecSHA: string
+          ): void => {
+            if (props.commitChanges) {
+              props.commitChanges(commitDescription, spec, currentSpecSHA)
+            }
+          }}
           commitDescription={commitDescription}
           spec={spec}
           currentSpecSHA={currentSpecSHA}
           isCommitting={isCommitting}
-          setCurrentCommitDescription={props.setCurrentCommitDescription}
+          setCurrentCommitDescription={(description: string): void => {
+            if (props.setCurrentCommitDescription) {
+              props.setCurrentCommitDescription(description)
+            }
+          }}
         />
       </CommitPanelWrapper>
     </>

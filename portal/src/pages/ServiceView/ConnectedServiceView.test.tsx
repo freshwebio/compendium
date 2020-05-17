@@ -11,7 +11,7 @@ const mockStore = configureMockStore([])
 
 describe('ConnectedServiceView', (): void => {
   it('should render without any issues', async (): Promise<void> => {
-    let wrapper: ReactTestRenderer
+    let wrapper: ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         wrapper = create(
@@ -40,6 +40,9 @@ describe('ConnectedServiceView', (): void => {
         )
       }
     )
-    expect(wrapper.root.findAllByType('div').length).toBeGreaterThan(0)
+    expect(
+      ((wrapper as unknown) as ReactTestRenderer).root.findAllByType('div')
+        .length
+    ).toBeGreaterThan(0)
   })
 })

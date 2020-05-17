@@ -17,7 +17,7 @@ describe('Home', (): void => {
   it('should render an api definition list component when the user is logged in', async (): Promise<
     void
   > => {
-    let rendered: ReactTestRenderer
+    let rendered: ReactTestRenderer | null = null
     await act(
       async (): Promise<void> => {
         rendered = createWithTheme(
@@ -27,7 +27,7 @@ describe('Home', (): void => {
             })}
           >
             <MemoryRouter>
-              <Home isLoading={false} isLoggedIn={true} />
+              <Home demoMode={false} isLoading={false} isLoggedIn={true} />
             </MemoryRouter>
           </Provider>,
           mockTheme
@@ -35,7 +35,11 @@ describe('Home', (): void => {
       }
     )
 
-    expect(rendered.root.findAllByType(StandaloneApiDefList).length).toBe(1)
+    expect(
+      ((rendered as unknown) as ReactTestRenderer).root.findAllByType(
+        StandaloneApiDefList
+      ).length
+    ).toBe(1)
   })
 
   it('should render a loading screen when login is still being attempted', (): void => {
@@ -46,7 +50,7 @@ describe('Home', (): void => {
         })}
       >
         <MemoryRouter>
-          <Home isLoading={true} isLoggedIn={false} />
+          <Home demoMode={false} isLoading={true} isLoggedIn={false} />
         </MemoryRouter>
       </Provider>,
       mockTheme
@@ -64,7 +68,7 @@ describe('Home', (): void => {
         })}
       >
         <MemoryRouter>
-          <Home isLoading={false} isLoggedIn={false} />
+          <Home demoMode={false} isLoading={false} isLoggedIn={false} />
         </MemoryRouter>
       </Provider>,
       mockTheme

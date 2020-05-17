@@ -13,7 +13,6 @@ describe('ApiDefGroup', (): void => {
       <ThemeProvider theme={theme}>
         <ApiDefGroup
           groupId="core-services"
-          addService={(): void => {}}
           entities={{ isAddingGroup: false, addingServiceStates: {} }}
           group=""
           definitions={[]}
@@ -30,7 +29,6 @@ describe('ApiDefGroup', (): void => {
           <ApiDefGroup
             group="Core services"
             groupId="core-services"
-            addService={(): void => {}}
             entities={{ isAddingGroup: false, addingServiceStates: {} }}
             definitions={[
               { type: 'blob', path: 'core-services/Service1.yaml' },

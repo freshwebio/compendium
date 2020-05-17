@@ -15,11 +15,9 @@ import { addService } from 'appredux/actions/entities'
 import { delay } from 'q'
 
 describe('demo mode interceptor middleware', (): void => {
-  beforeEach(
-    (): void => {
-      localStorage.setItem.mockClear()
-    }
-  )
+  beforeEach((): void => {
+    ;(localStorage as jest.Mocked<typeof localStorage>).setItem.mockClear()
+  })
 
   it('should save to local storage and dispatch a successful request when demo mode is turned on', async (): Promise<
     void
@@ -104,11 +102,11 @@ describe('demo mode interceptor middleware', (): void => {
   it('should dispatch a request failure action when there is a failure in saving to local storage when demo mode is turned on', async (): Promise<
     void
   > => {
-    localStorage.setItem.mockImplementationOnce(
-      (): void => {
-        throw new Error('Something went wrong with saving data')
-      }
-    )
+    ;(localStorage as jest.Mocked<
+      typeof localStorage
+    >).setItem.mockImplementationOnce((): void => {
+      throw new Error('Something went wrong with saving data')
+    })
 
     const action = commitChanges(
       'group2/service34.yaml',
@@ -152,11 +150,11 @@ describe('demo mode interceptor middleware', (): void => {
     'should dispatch a request failure action with extra metadata when there is a ' +
       'failure in saving to local storage when demo mode is turned on',
     async (): Promise<void> => {
-      localStorage.setItem.mockImplementationOnce(
-        (): void => {
-          throw new Error('Something went wrong with saving data')
-        }
-      )
+      ;(localStorage as jest.Mocked<
+        typeof localStorage
+      >).setItem.mockImplementationOnce((): void => {
+        throw new Error('Something went wrong with saving data')
+      })
 
       const action = addService('group23', 'Accounts Service')
       const next = jest.fn()

@@ -17,9 +17,8 @@ describe('Header', (): void => {
         <Header
           isLoading={false}
           entities={{ isAddingGroup: false, addingServiceStates: {} }}
-          addGroup={(): void => {}}
           isLoggedIn={true}
-          logout={(): void => {}}
+          demoMode={false}
         />
       </MemoryRouter>
     )
@@ -32,9 +31,8 @@ describe('Header', (): void => {
         <Header
           isLoading={false}
           entities={{ isAddingGroup: false, addingServiceStates: {} }}
-          addGroup={(): void => {}}
           isLoggedIn={true}
-          logout={(): void => {}}
+          demoMode={false}
         />
       </MemoryRouter>
     )
@@ -49,9 +47,8 @@ describe('Header', (): void => {
         <Header
           isLoading={true}
           entities={{ isAddingGroup: false, addingServiceStates: {} }}
-          addGroup={(): void => {}}
           isLoggedIn={false}
-          logout={(): void => {}}
+          demoMode={false}
         />
       </MemoryRouter>
     )
@@ -65,9 +62,8 @@ describe('Header', (): void => {
         <Header
           isLoading={false}
           entities={{ isAddingGroup: false, addingServiceStates: {} }}
-          addGroup={(): void => {}}
           isLoggedIn={false}
-          logout={(): void => {}}
+          demoMode={false}
         />
       </MemoryRouter>
     )
@@ -81,9 +77,8 @@ describe('Header', (): void => {
         <Header
           isLoading={false}
           entities={{ isAddingGroup: false, addingServiceStates: {} }}
-          addGroup={(): void => {}}
           isLoggedIn={true}
-          logout={(): void => {}}
+          demoMode={false}
         />
       </MemoryRouter>
     )
@@ -109,9 +104,8 @@ describe('Header', (): void => {
           <Header
             isLoading={false}
             entities={{ isAddingGroup: false, addingServiceStates: {} }}
-            addGroup={(): void => {}}
             isLoggedIn={true}
-            logout={(): void => {}}
+            demoMode={false}
           />
         </MemoryRouter>
       </Provider>
