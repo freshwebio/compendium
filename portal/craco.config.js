@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const cspHtmlWebpackPlugin = require('csp-html-webpack-plugin')
 const config = require('./config.json')
+const projectEslintConfig = require('./.eslintrc.js')
 
 const templateParametersGenerator = existingGenerator => (
   compilation,
@@ -81,6 +82,9 @@ module.exports = {
 
       return webpackConfig
     },
+  },
+  eslint: {
+    configure: projectEslintConfig,
   },
   jest: {
     configure: {
