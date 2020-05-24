@@ -1,16 +1,14 @@
-# build environment
-FROM node:12.2.0-alpine as build
+FROM node:12.16.3-alpine
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
 RUN yarn --silent
 COPY . /app
-RUN yarn build
-
-# production environment
-FROM nginx:1.16.0-alpine
-COPY --from=build /app/build /usr/share/nginx/html
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx/nginx.conf /etc/nginx/conf.d
+RUN chmod +x /app/scripts/start.sh
+RUN apk update
+RUN apk add nginx
+RUN adduser -D -g 'www' www
+RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/bin/sh", "-c", "/app/scripts/start.sh"]

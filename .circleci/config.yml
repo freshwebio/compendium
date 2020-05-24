@@ -108,6 +108,33 @@ jobs:
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:$IMAGE_TAG
+  build_publish_portal_docker:
+    docker:
+      - image: circleci/node:12.16.3
+    environment:
+      IMAGE_NAME: freshwebio/apydox-portal
+    working_directory: ~/apydox/portal
+    steps:
+      - checkout:
+          path: ~/apydox
+      - setup_remote_docker
+      - run:
+          name: Setup docker image tag environment variable
+          command: |
+            if [ "$CIRCLE_BRANCH" = "master" ]; then
+              IMAGE_TAG="dev"
+            else
+              IMAGE_TAG=${CIRCLE_TAG//v/version-}
+            fi
+            echo "export IMAGE_TAG=$IMAGE_TAG" >> $BASH_ENV
+      - run:
+          name: Build docker image
+          command: docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
+      - run:
+          name: Publish Docker image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:$IMAGE_TAG
 workflows:
   version: 2
   deps_and_test:
@@ -161,3 +188,11 @@ workflows:
               only: master
           requires:
             - test_api
+      - build_publish_portal_docker:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master
+          requires:
+            - test_portal
