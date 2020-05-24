@@ -32,17 +32,15 @@ func CheckAccessTokenRequestHandler(services map[string]interface{}) RequestHand
 			}, nil
 		}
 
-		validToken, err := authService.CheckGitHubAccessToken(utils.SanitiseWord(accessTokenRequest.AccessToken))
+		checkResp, err := authService.CheckGitHubAccessToken(utils.SanitiseWord(accessTokenRequest.AccessToken))
 		if err != nil {
 			log.Println(err)
 			return utils.ServerError(), nil
 		}
 
-		responseData, _ := json.Marshal(struct {
-			ValidToken bool `json:"validToken"`
-		}{ValidToken: validToken})
+		responseData, _ := json.Marshal(checkResp)
 		statusCode := 200
-		if !validToken {
+		if !checkResp.ValidToken {
 			statusCode = 401
 		}
 		return events.APIGatewayProxyResponse{

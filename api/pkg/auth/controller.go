@@ -66,17 +66,15 @@ func (ctrl *controllerImpl) CheckGitHubAccessToken(w http.ResponseWriter, r *htt
 		return
 	}
 
-	validToken, err := ctrl.authService.CheckGitHubAccessToken(utils.SanitiseWord(checkTokenRequest.AccessToken))
+	checkResp, err := ctrl.authService.CheckGitHubAccessToken(utils.SanitiseWord(checkTokenRequest.AccessToken))
 	if err != nil {
 		core.HTTPError(w, 500, "Unexpected server error")
 		return
 	}
 
-	responseData, _ := json.Marshal(struct {
-		ValidToken bool `json:"validToken"`
-	}{ValidToken: validToken})
+	responseData, _ := json.Marshal(checkResp)
 	statusCode := 200
-	if !validToken {
+	if !checkResp.ValidToken {
 		statusCode = 401
 	}
 	w.WriteHeader(statusCode)

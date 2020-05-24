@@ -65,15 +65,20 @@ type mockAuthorisationsClient struct{}
 
 func (c *mockAuthorisationsClient) Check(ctx context.Context, clientID string, token string) (*github.Authorization, *github.Response, error) {
 	if token == "validToken" {
-		return nil, &github.Response{
-			Response: &http.Response{
-				StatusCode: 200,
-			},
-			NextPage:  0,
-			PrevPage:  0,
-			FirstPage: 0,
-			LastPage:  0,
-		}, nil
+		testUserLogin := "test-user"
+		return &github.Authorization{
+				User: &github.User{
+					Login: &testUserLogin,
+				},
+			}, &github.Response{
+				Response: &http.Response{
+					StatusCode: 200,
+				},
+				NextPage:  0,
+				PrevPage:  0,
+				FirstPage: 0,
+				LastPage:  0,
+			}, nil
 	} else if token == "invalidToken" {
 		return nil, &github.Response{
 			Response: &http.Response{
@@ -168,8 +173,8 @@ func Test_github_access_token_is_valid(t *testing.T) {
 		},
 	}
 	client := NewService(config, &mockHTTPClient{}, &mockAuthorisationsClient{})
-	isValid, err := client.CheckGitHubAccessToken("validToken")
-	if !isValid {
+	checkResp, err := client.CheckGitHubAccessToken("validToken")
+	if !checkResp.ValidToken {
 		t.Errorf("Expected the token to be valid")
 	}
 	if err != nil {
@@ -187,8 +192,8 @@ func Test_github_access_token_is_not_valid(t *testing.T) {
 		},
 	}
 	client := NewService(config, &mockHTTPClient{}, &mockAuthorisationsClient{})
-	isValid, _ := client.CheckGitHubAccessToken("invalidToken")
-	if isValid {
+	checkResp, _ := client.CheckGitHubAccessToken("invalidToken")
+	if checkResp.ValidToken {
 		t.Errorf("Expected the token to be invalid")
 	}
 }

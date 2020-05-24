@@ -15,7 +15,7 @@ import (
 // github for authorisation.
 type Service interface {
 	GetGitHubAccessToken(code string) (string, error)
-	CheckGitHubAccessToken(token string) (bool, error)
+	CheckGitHubAccessToken(token string) (ValidTokenResponse, error)
 	RevokeAccessToken(token string) error
 }
 
@@ -23,6 +23,13 @@ type serviceImpl struct {
 	config               *core.Config
 	client               core.HTTPClient
 	authorisationsClient GithubAuthorisationsClient
+}
+
+// ValidTokenResponse provides information on whether or not
+// an access token is valid along with a username
+type ValidTokenResponse struct {
+	ValidToken bool   `json:"validToken"`
+	Username   string `json:"username"`
 }
 
 func (s *serviceImpl) GetGitHubAccessToken(code string) (token string, err error) {
@@ -46,9 +53,9 @@ func (s *serviceImpl) GetGitHubAccessToken(code string) (token string, err error
 	return
 }
 
-func (s *serviceImpl) CheckGitHubAccessToken(token string) (validToken bool, err error) {
+func (s *serviceImpl) CheckGitHubAccessToken(token string) (validToken ValidTokenResponse, err error) {
 	ctx := context.Background()
-	_, resp, err := s.authorisationsClient.Check(ctx, *s.config.Github.ClientID, token)
+	authorisation, resp, err := s.authorisationsClient.Check(ctx, *s.config.Github.ClientID, token)
 	if err != nil && resp.StatusCode >= 500 {
 		return
 	}
@@ -56,7 +63,14 @@ func (s *serviceImpl) CheckGitHubAccessToken(token string) (validToken bool, err
 	// 200 is the only success case, so ensure the error is reset to nil.
 	err = nil
 	if resp.StatusCode == 200 {
-		validToken = true
+		if err != nil {
+			return
+		}
+
+		validToken = ValidTokenResponse{
+			ValidToken: true,
+			Username:   *authorisation.User.Login,
+		}
 	}
 	return
 }

@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/freshwebio/apydox-api/pkg/auth"
 )
 
 type mockAuthService struct{}
@@ -17,11 +18,13 @@ func (s *mockAuthService) GetGitHubAccessToken(code string) (string, error) {
 	return "", errors.New("Invalid code")
 }
 
-func (s *mockAuthService) CheckGitHubAccessToken(accessToken string) (bool, error) {
+func (s *mockAuthService) CheckGitHubAccessToken(accessToken string) (auth.ValidTokenResponse, error) {
 	if accessToken == "test-valid-access-token" {
-		return true, nil
+		return auth.ValidTokenResponse{
+			ValidToken: true,
+		}, nil
 	}
-	return false, nil
+	return auth.ValidTokenResponse{}, nil
 }
 
 func (s *mockAuthService) RevokeAccessToken(accessToken string) error {
@@ -44,7 +47,7 @@ func Test_checking_valid_access_token_produces_a_response_specifying_it_is_valid
 	if response.StatusCode != 200 {
 		t.Errorf("Expected a 200 response but got %d", response.StatusCode)
 	}
-	if response.Body != "{\"validToken\":true}" {
+	if response.Body != "{\"validToken\":true,\"username\":\"\"}" {
 		t.Errorf("Expected response body to be an object with validToken set to true but got %s", response.Body)
 	}
 }
@@ -62,7 +65,7 @@ func Test_checking_access_token_for_invalid_token_produces_a_response_with_a_401
 	if response.StatusCode != 401 {
 		t.Errorf("Expected response status code for an invalid token to be a 401 but got %d", response.StatusCode)
 	}
-	if response.Body != "{\"validToken\":false}" {
+	if response.Body != "{\"validToken\":false,\"username\":\"\"}" {
 		t.Errorf("Expected response body to be an object with validToken set to false but got %s", response.Body)
 	}
 }

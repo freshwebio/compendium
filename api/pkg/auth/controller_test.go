@@ -21,13 +21,16 @@ func (s *mockAuthService) GetGitHubAccessToken(code string) (string, error) {
 	return "", nil
 }
 
-func (s *mockAuthService) CheckGitHubAccessToken(token string) (bool, error) {
+func (s *mockAuthService) CheckGitHubAccessToken(token string) (ValidTokenResponse, error) {
 	if token == "validToken" {
-		return true, nil
+		return ValidTokenResponse{
+			ValidToken: true,
+			Username:   "test-user",
+		}, nil
 	} else if token == "serverError" {
-		return false, errors.New("Unexpected error occurred")
+		return ValidTokenResponse{}, errors.New("Unexpected error occurred")
 	}
-	return false, nil
+	return ValidTokenResponse{}, nil
 }
 
 func (s *mockAuthService) RevokeAccessToken(token string) error {
@@ -86,7 +89,7 @@ func Test_checking_valid_github_access_token_produces_response_specifying_it_is_
 		t.Errorf("Expected response code to be status 200 but received %d", res.StatusCode)
 	}
 	bodyBytes, _ := ioutil.ReadAll(res.Body)
-	if string(bodyBytes) != "{\"validToken\":true}" {
+	if string(bodyBytes) != "{\"validToken\":true,\"username\":\"test-user\"}" {
 		t.Errorf("Expected token response body to be a JSON object with the true for the validToken property but received %s", string(bodyBytes))
 	}
 }
