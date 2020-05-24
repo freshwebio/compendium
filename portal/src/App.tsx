@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
+import { Dispatch, AnyAction } from 'redux'
 
 import { isLoggedIn, logout } from 'services/auth'
 import Header from 'components/Header'
 import Notifications from 'components/Notifications'
 import GlobalStyle from 'styles/globalStyle'
-import Routes from './Routes'
+import Routes, { LoadingAndAccess } from './Routes'
 import { GlobalState } from 'appredux/reducers/global'
-import { toggleDemoMode as toggleDemoModeActionCreator } from 'appredux/actions/global'
-import { Dispatch, AnyAction } from 'redux'
+import {
+  toggleDemoMode as toggleDemoModeActionCreator,
+  loginAccessCheck,
+} from 'appredux/actions/global'
+import { getPermissionLevel } from 'services/github'
+import { ApydoxAppState } from 'appredux/reducers'
 
 const logoutAndRedirect = (
   toggleDemoMode: () => void,
@@ -28,15 +33,26 @@ const App: React.FunctionComponent<any> = ({
   demoMode,
   toggleDemoMode,
 }): React.ReactElement => {
-  const [loadingAndAccess, setLoadingAndAccess] = useState({
-    isLoggedIn: false,
-    isLoading: true,
-  })
+  const loadingAndAccess = useSelector(
+    (state: ApydoxAppState) => state.global.loadingAndAccess
+  )
+
+  const dispatch = useDispatch()
+
+  const setLoadingAndAccess = (loadingAndAccessRes: LoadingAndAccess): void => {
+    dispatch(loginAccessCheck(loadingAndAccessRes))
+  }
 
   useEffect((): void => {
     const checkLoggedIn = async (): Promise<void> => {
-      const loggedIn = await isLoggedIn(demoMode)
-      setLoadingAndAccess({ isLoggedIn: loggedIn, isLoading: false })
+      const result = await isLoggedIn(demoMode)
+      const permission = await getPermissionLevel(result.username, demoMode)
+      setLoadingAndAccess({
+        isLoggedIn: result.loggedIn,
+        username: result.username,
+        isLoading: false,
+        permission,
+      })
     }
     checkLoggedIn()
   }, [])

@@ -13,11 +13,18 @@ export const getAccessToken = async (code: string): Promise<string> => {
   return token
 }
 
-export const isLoggedIn = async (demoMode?: boolean): Promise<boolean> => {
+export type LoggedInCheckResult = {
+  loggedIn: boolean
+  username: string
+}
+
+export const isLoggedIn = async (
+  demoMode?: boolean
+): Promise<LoggedInCheckResult> => {
   // Users will only be able to access dummy services in demo mode
   // that will be mocked out at the "service" module and redux middleware layers.
   if (process.env.REACT_APP_DEMO_MODE && demoMode) {
-    return true
+    return { loggedIn: true, username: '' }
   }
 
   let token
@@ -26,17 +33,17 @@ export const isLoggedIn = async (demoMode?: boolean): Promise<boolean> => {
       process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
     )
   } catch (err) {
-    return false
+    return { loggedIn: false, username: '' }
   }
 
   try {
     const response = await api.post('/auth/github/check', {
       access_token: token,
     })
-    const { validToken } = response.data
-    return validToken
+    const { validToken, username } = response.data
+    return { loggedIn: validToken, username }
   } catch (err) {
-    return false
+    return { loggedIn: false, username: '' }
   }
 }
 

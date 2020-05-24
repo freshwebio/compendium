@@ -225,8 +225,8 @@ export const loadServiceDefinition = async (
   demoMode?: boolean
 ): Promise<{ content: string; sha: string }> => {
   try {
-    const owner = process.env.REACT_APP_API_DOCS_REPO_OWNER || ''
-    const repo = process.env.REACT_APP_API_DOCS_REPO || ''
+    const owner = process.env.REACT_APP_API_DOCS_REPO_OWNER ?? ''
+    const repo = process.env.REACT_APP_API_DOCS_REPO ?? ''
     const serviceDefinitionPath = idToServiceDefinitionPath(service)
     const path = `/repos/${owner}/${repo}/contents/${serviceDefinitionPath}`
 
@@ -242,4 +242,27 @@ export const loadServiceDefinition = async (
     console.log(err)
   }
   return { content: '', sha: '' }
+}
+
+export type RepoPermissionLevel = 'admin' | 'write' | 'read' | 'none'
+
+export const getPermissionLevel = async (
+  username: string,
+  demoMode?: boolean
+): Promise<RepoPermissionLevel> => {
+  if (process.env.REACT_APP_DEMO_MODE && demoMode) {
+    return 'admin'
+  }
+
+  try {
+    const owner = process.env.REACT_APP_API_DOCS_REPO_OWNER ?? ''
+    const repo = process.env.REACT_APP_API_DOCS_REPO ?? ''
+    const path = `/repos/${owner}/${repo}/collaborators/${username}/permission`
+    const response: { data: { permission: string } } = await api.get(path)
+    return response.data.permission as RepoPermissionLevel
+  } catch (err) {
+    console.log(err)
+  }
+
+  return 'none'
 }

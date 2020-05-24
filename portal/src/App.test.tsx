@@ -9,6 +9,7 @@ import App from './App'
 import { ButtonLink } from 'components/Header/header.styles'
 import { TOGGLE_DEMO_MODE } from 'appredux/actions/global/types'
 import theme from 'styles/themes/apydoxv1'
+import { initialState as globalInitialState } from 'appredux/reducers/global'
 
 jest.mock('services/github')
 jest.mock('services/auth')
@@ -34,7 +35,10 @@ describe('App', (): void => {
                 currentCommitDescription: '',
                 isCommitting: false,
               },
-              global: { notifications: [] },
+              global: {
+                notifications: [],
+                loadingAndAccess: globalInitialState.loadingAndAccess,
+              },
               entities: { isAddingGroup: false, addingServiceStates: {} },
             })}
           >
@@ -63,7 +67,15 @@ describe('App', (): void => {
                 currentCommitDescription: '',
                 isCommitting: false,
               },
-              global: { notifications: [] },
+              global: {
+                notifications: [],
+                loadingAndAccess: {
+                  isLoggedIn: true,
+                  isLoading: false,
+                  username: 'test-user',
+                  permission: 'admin',
+                },
+              },
               entities: { isAddingGroup: false, addingServiceStates: {} },
             })}
           >
@@ -102,7 +114,16 @@ describe('App', (): void => {
         currentCommitDescription: '',
         isCommitting: false,
       },
-      global: { notifications: [], demoMode: true },
+      global: {
+        notifications: [],
+        demoMode: true,
+        loadingAndAccess: {
+          isLoggedIn: true,
+          isLoading: false,
+          username: 'test-user',
+          permission: 'admin',
+        },
+      },
       entities: { isAddingGroup: false, addingServiceStates: {} },
     })
 
@@ -131,6 +152,9 @@ describe('App', (): void => {
       }
     )
 
-    expect(mockStoreInstance.getActions()).toEqual([{ type: TOGGLE_DEMO_MODE }])
+    const toggleDemoAction = mockStoreInstance
+      .getActions()
+      .find(action => action.type === TOGGLE_DEMO_MODE)
+    expect(toggleDemoAction).toBeDefined()
   })
 })

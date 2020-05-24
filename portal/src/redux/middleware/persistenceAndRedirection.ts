@@ -11,11 +11,13 @@ const persistenceAndRedirection: Middleware = (
 ): any => {
   if (action.type === TOGGLE_DEMO_MODE) {
     const prevState = store.getState()
+    const { loadingAndAccess, ...restPrevGlobalState } = prevState.global
     saveState({
       global: {
         // For hydrating from local storage we need to ensure all the
-        // other things in global redux state are included.
-        ...prevState.global,
+        // other things in global redux state are included except from specific
+        // parts like loading and access states that are temporary in nature.
+        ...restPrevGlobalState,
         demoMode: !prevState.global.demoMode,
       },
     })

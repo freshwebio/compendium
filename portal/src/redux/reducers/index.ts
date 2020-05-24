@@ -1,9 +1,24 @@
 import { combineReducers } from 'redux'
-import editor, { initialState as editorInitialState } from './editor'
-import global, { initialState as globalInitialState } from './global'
-import entities, { initialState as entitiesInitialState } from './entities'
+import editor, {
+  initialState as editorInitialState,
+  EditorState,
+} from './editor'
+import global, {
+  initialState as globalInitialState,
+  GlobalState,
+} from './global'
+import entities, {
+  initialState as entitiesInitialState,
+  EntitiesState,
+} from './entities'
 
-export const initialState = {
+export type ApydoxAppState = {
+  editor: EditorState
+  global: GlobalState
+  entities: EntitiesState
+}
+
+export const initialState: ApydoxAppState = {
   editor: editorInitialState,
   global: globalInitialState,
   entities: entitiesInitialState,

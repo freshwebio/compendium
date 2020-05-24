@@ -1,5 +1,6 @@
-import globalReducer from './global'
+import globalReducer, { initialState } from './global'
 import * as types from 'appredux/actions/global/types'
+import { LoadingAndAccess } from 'Routes'
 
 describe('Global reducer', (): void => {
   it('should update state correctly for when a new notification has been added', (): void => {
@@ -19,13 +20,18 @@ describe('Global reducer', (): void => {
         },
       ],
       demoMode: false,
+      loadingAndAccess: initialState.loadingAndAccess,
     })
   })
 
   it('should return the original state for an action that is not handled by the reducer', (): void => {
     expect(
       globalReducer(
-        { notifications: [], demoMode: false },
+        {
+          notifications: [],
+          demoMode: false,
+          loadingAndAccess: initialState.loadingAndAccess,
+        },
         {
           type: 'MISSING-ACTION-TYPE',
         }
@@ -33,6 +39,7 @@ describe('Global reducer', (): void => {
     ).toEqual({
       notifications: [],
       demoMode: false,
+      loadingAndAccess: initialState.loadingAndAccess,
     })
   })
 
@@ -58,6 +65,7 @@ describe('Global reducer', (): void => {
             },
           ],
           demoMode: false,
+          loadingAndAccess: initialState.loadingAndAccess,
         },
         {
           type: types.REMOVE_NOTIFICATION,
@@ -78,6 +86,7 @@ describe('Global reducer', (): void => {
         },
       ],
       demoMode: false,
+      loadingAndAccess: initialState.loadingAndAccess,
     })
   })
 
@@ -89,6 +98,26 @@ describe('Global reducer', (): void => {
     ).toEqual({
       notifications: [],
       demoMode: true,
+      loadingAndAccess: initialState.loadingAndAccess,
+    })
+  })
+
+  it('should update state correctly for completing a access check', (): void => {
+    const payload: LoadingAndAccess = {
+      isLoading: false,
+      isLoggedIn: true,
+      username: 'test-user',
+      permission: 'admin',
+    }
+    expect(
+      globalReducer(undefined, {
+        type: types.LOGIN_ACCESS_CHECK,
+        payload,
+      })
+    ).toEqual({
+      notifications: [],
+      demoMode: false,
+      loadingAndAccess: payload,
     })
   })
 })

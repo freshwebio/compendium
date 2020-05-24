@@ -25,7 +25,13 @@ const persistedState = loadState()
 const store = (): any =>
   createStore(
     reducer,
-    { ...initialState, ...persistedState },
+    {
+      ...initialState,
+      global: {
+        ...initialState.global,
+        ...persistedState?.global,
+      },
+    },
     process.env.NODE_ENV !== 'production'
       ? composeEnhancers(middleware)
       : middleware

@@ -6,10 +6,13 @@ import ServiceView from 'pages/ServiceView'
 import Home from 'pages/Home'
 import LoginCallback from 'pages/LoginCallback'
 import PrivateRoute from 'components/PrivateRoute'
+import { RepoPermissionLevel } from 'services/github'
 
-interface LoadingAndAccess {
+export interface LoadingAndAccess {
   isLoggedIn: boolean
   isLoading: boolean
+  username: string
+  permission: string
 }
 
 interface RoutesProps {
@@ -41,7 +44,14 @@ const Routes: React.FunctionComponent<RoutesProps> = ({
           <LoginCallback
             {...props}
             setIsLoggedIn={(isLoggedIn: boolean): void => {
-              setLoadingAndAccess({ isLoggedIn, isLoading: false })
+              setLoadingAndAccess({
+                isLoggedIn,
+                isLoading: false,
+                // No need for username and permissions
+                // as we are going to be redirected straight after this.
+                username: '',
+                permission: 'none',
+              })
             }}
           />
         )}
@@ -51,12 +61,16 @@ const Routes: React.FunctionComponent<RoutesProps> = ({
         render={(props: any): React.ReactElement => <Editor {...props} />}
         isLoggedIn={loadingAndAccess.isLoggedIn}
         isLoading={loadingAndAccess.isLoading}
+        username={loadingAndAccess.username}
+        permission={loadingAndAccess.permission}
       />
       <PrivateRoute
         path="/view/:service"
         render={(props: any): React.ReactElement => <ServiceView {...props} />}
         isLoggedIn={loadingAndAccess.isLoggedIn}
         isLoading={loadingAndAccess.isLoading}
+        username={loadingAndAccess.username}
+        permission={loadingAndAccess.permission}
       />
     </Switch>
   )

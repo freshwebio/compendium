@@ -23,7 +23,12 @@ describe('Routes', (): void => {
           >
             <MemoryRouter initialEntries={['/']}>
               <Routes
-                loadingAndAccess={{ isLoggedIn: true, isLoading: false }}
+                loadingAndAccess={{
+                  isLoggedIn: true,
+                  isLoading: false,
+                  username: '',
+                  permission: 'none',
+                }}
                 setLoadingAndAccess={jest.fn()}
               />
             </MemoryRouter>
@@ -44,7 +49,12 @@ describe('Routes', (): void => {
             initialEntries={['/login/oauth/callback?code=DrewqqeoeWQ']}
           >
             <Routes
-              loadingAndAccess={{ isLoggedIn: false, isLoading: true }}
+              loadingAndAccess={{
+                isLoggedIn: false,
+                isLoading: true,
+                username: '',
+                permission: 'none',
+              }}
               setLoadingAndAccess={jest.fn()}
             />
           </MemoryRouter>
@@ -74,7 +84,12 @@ describe('Routes', (): void => {
           >
             <MemoryRouter initialEntries={['/edit/Service32']}>
               <Routes
-                loadingAndAccess={{ isLoggedIn: true, isLoading: false }}
+                loadingAndAccess={{
+                  isLoggedIn: true,
+                  isLoading: false,
+                  username: '',
+                  permission: 'none',
+                }}
                 setLoadingAndAccess={jest.fn()}
               />
             </MemoryRouter>
@@ -105,7 +120,12 @@ describe('Routes', (): void => {
           >
             <MemoryRouter initialEntries={['/view/Service34']}>
               <Routes
-                loadingAndAccess={{ isLoggedIn: true, isLoading: false }}
+                loadingAndAccess={{
+                  isLoggedIn: true,
+                  isLoading: false,
+                  username: '',
+                  permission: 'none',
+                }}
                 setLoadingAndAccess={jest.fn()}
               />
             </MemoryRouter>

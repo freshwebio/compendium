@@ -1,4 +1,9 @@
-import { addNotification, removeNotification, toggleDemoMode } from './'
+import {
+  addNotification,
+  removeNotification,
+  toggleDemoMode,
+  loginAccessCheck,
+} from './'
 import * as types from './types'
 
 describe('Global actions', (): void => {
@@ -32,6 +37,21 @@ describe('Global actions', (): void => {
     it('should create a toggle read only mode action of the correct form', (): void => {
       expect(toggleDemoMode()).toEqual({
         type: types.TOGGLE_DEMO_MODE,
+      })
+    })
+  })
+
+  describe('loginAccessCheck', (): void => {
+    it('should create a correctly formed action for a login access check', (): void => {
+      const payload = {
+        isLoading: false,
+        isLoggedIn: true,
+        username: 'test-user',
+        permission: 'admin',
+      }
+      expect(loginAccessCheck(payload)).toEqual({
+        type: types.LOGIN_ACCESS_CHECK,
+        payload,
       })
     })
   })

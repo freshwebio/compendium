@@ -1,3 +1,5 @@
+import { RepoPermissionLevel } from 'services/github'
+
 export const loadServiceDefinition = jest.fn(
   (service): Promise<any> => {
     if (service === 'Service2') {
@@ -43,4 +45,8 @@ export const getApiDefs = jest.fn(
         ],
       },
     ])
+)
+
+export const getPermissionLevel = jest.fn(
+  (): Promise<RepoPermissionLevel> => Promise.resolve('admin')
 )

@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { getApiDefs, loadServiceDefinition } from './github'
+import { getApiDefs, loadServiceDefinition, getPermissionLevel } from './github'
 import defaultSpec from 'utils/defaultSpec'
 
 describe('github api interactions', (): void => {
@@ -247,6 +247,61 @@ describe('github api interactions', (): void => {
         content: 'This is a test spec',
         sha: 'demosha2',
       })
+      delete process.env.REACT_APP_DEMO_MODE
+    })
+  })
+
+  describe('#getPermissionLevel()', (): void => {
+    it('should correctly produce the correct permission level for the current user', async (): Promise<
+      void
+    > => {
+      nock('https://api.github.com')
+        .get(
+          '/repos/freshwebio/test-content/collaborators/test-user/permission'
+        )
+        .reply(200, {
+          permission: 'write',
+        })
+        .options(
+          '/repos/freshwebio/test-content/collaborators/test-user/permission'
+        )
+        .reply(200, undefined, {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
+        })
+
+      process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'
+      process.env.REACT_APP_API_DOCS_REPO = 'test-content'
+
+      const permission = await getPermissionLevel('test-user')
+      expect(permission).toBe('write')
+    })
+
+    it('should return full access for a user in demo mode', async (): Promise<
+      void
+    > => {
+      nock('https://api.github.com')
+        .get(
+          '/repos/freshwebio/test-content/collaborators/test-user/permission'
+        )
+        .reply(200, {
+          permission: 'none',
+        })
+        .options(
+          '/repos/freshwebio/test-content/contents/core-services/Events.yaml?ref=master'
+        )
+        .reply(200, undefined, {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Authorization,If-None-Match',
+        })
+
+      process.env.REACT_APP_DEMO_MODE = 'true'
+      process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'
+      process.env.REACT_APP_API_DOCS_REPO = 'test-content'
+
+      const permission = await getPermissionLevel('test-user', true)
+      expect(permission).toBe('admin')
+
       delete process.env.REACT_APP_DEMO_MODE
     })
   })

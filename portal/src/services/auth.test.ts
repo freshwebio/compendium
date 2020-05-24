@@ -28,8 +28,8 @@ describe('api auth endpoints', (): void => {
         .reply(200)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
-      const isValid = await isLoggedIn()
-      expect(isValid).toBeTrue()
+      const result = await isLoggedIn()
+      expect(result.loggedIn).toBeTrue()
     })
 
     it('should tell us the user is not logged in the case of an error', async (): Promise<
@@ -43,16 +43,16 @@ describe('api auth endpoints', (): void => {
         .reply(200)
 
       sessionStorage.setItem('apydox-token', '4230vsdfasdfsdf')
-      const isValid = await isLoggedIn()
-      expect(isValid).toBeFalse()
+      const result = await isLoggedIn()
+      expect(result.loggedIn).toBeFalse()
     })
 
     it('should tell us the user is logged in when in demo mode', async (): Promise<
       void
     > => {
       process.env.REACT_APP_DEMO_MODE = 'true'
-      const isValid = await isLoggedIn(true)
-      expect(isValid).toBeTrue()
+      const result = await isLoggedIn(true)
+      expect(result.loggedIn).toBeTrue()
       delete process.env.REACT_APP_DEMO_MODE
     })
   })

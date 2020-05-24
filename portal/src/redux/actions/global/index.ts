@@ -2,7 +2,9 @@ import {
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
   TOGGLE_DEMO_MODE,
+  LOGIN_ACCESS_CHECK,
 } from './types'
+import { LoadingAndAccess } from 'Routes'
 
 export interface AddNotificationAction {
   type: string
@@ -43,5 +45,19 @@ export interface ToggleDemoModeAction {
 export const toggleDemoMode = (): ToggleDemoModeAction => {
   return {
     type: TOGGLE_DEMO_MODE,
+  }
+}
+
+export interface LoginAccessCheckAction {
+  type: string
+  payload: LoadingAndAccess
+}
+
+export const loginAccessCheck = (
+  payload: LoadingAndAccess
+): LoginAccessCheckAction => {
+  return {
+    type: LOGIN_ACCESS_CHECK,
+    payload,
   }
 }
