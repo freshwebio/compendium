@@ -12,7 +12,6 @@ import {
 } from './header.styles'
 import CommitPanel from 'components/CommitPanel'
 import IconButton from 'components/IconButton'
-import logo from 'assets/logo.svg'
 import content from 'content.json'
 import InlineAddField from 'components/InlineAddField'
 import { EntitiesState } from 'appredux/reducers/entities'
@@ -49,7 +48,11 @@ const Header: React.FunctionComponent<HeaderProps> = ({
   return (
     <StyledHeader>
       <Link to="/">
-        <img src={content.global.logo || logo} height="40" alt="Logo" />
+        {content.global.logo ? (
+          <img src={content.global.logo} height="40" alt="Logo" />
+        ) : (
+          'Compendium'
+        )}
       </Link>
       {!isLoading && isLoggedIn && (
         <ButtonLink colour="white" onClick={logout}>
