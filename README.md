@@ -1,8 +1,8 @@
-<img alt="apydox" src="https://apydox-assets.s3.eu-west-2.amazonaws.com/LogoDark-02.svg" width="300" />
+# compendium
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0de42b2e1a894b07be195a07fff028ae)](https://app.codacy.com/app/freshwebio/apydox?utm_source=github.com&utm_medium=referral&utm_content=freshwebio/apydox&utm_campaign=Badge_Grade_Dashboard) [![codecov](https://codecov.io/gh/freshwebio/apydox/branch/master/graph/badge.svg)](https://codecov.io/gh/freshwebio/apydox) [![CircleCI](https://circleci.com/gh/freshwebio/apydox.svg?style=svg)](https://circleci.com/gh/freshwebio/apydox)
 
-apydox is a happy, light-weight API documentation portal for your team
+compendium is a light-weight API documentation portal based on the openapi spec and swagger tools for your team.
 
 ## Installation
 
