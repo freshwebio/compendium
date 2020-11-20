@@ -3,26 +3,26 @@ jobs:
   deps_api:
     docker:
       - image: circleci/golang:1.12
-    working_directory: ~/apydox/api
+    working_directory: ~/compendium/api
     steps:
       - checkout:
-          path: ~/apydox
+          path: ~/compendium
       - run: go get -v -t -d ./...
       - save_cache:
-          key: apydox-api-v1-{{ .Branch }}-{{ .Revision }}
+          key: compendium-api-v1-{{ .Branch }}-{{ .Revision }}
           paths:
-            - ~/apydox/api
+            - ~/compendium/api
             - "/go/pkg"
   test_api:
     docker:
       - image: circleci/golang:1.12
-    working_directory: ~/apydox/api
+    working_directory: ~/compendium/api
     steps:
       - restore_cache:
           keys:
-            - apydox-api-v1-{{ .Branch }}-{{ .Revision }}
-            - apydox-api-v1-{{ .Branch }}-
-            - apydox-api-v1-
+            - compendium-api-v1-{{ .Branch }}-{{ .Revision }}
+            - compendium-api-v1-{{ .Branch }}-
+            - compendium-api-v1-
       - run: go get github.com/schrej/godacov
       - run:
           name: Run the tests for the api and send coverage
@@ -32,26 +32,26 @@ jobs:
   deps_portal:
     docker:
       - image: circleci/node:10.16.0-browsers-legacy
-    working_directory: ~/apydox/portal
+    working_directory: ~/compendium/portal
     steps:
       - checkout:
-          path: ~/apydox
+          path: ~/compendium
       - run: yarn
       - run: cp src/content.example.json src/content.json
       - save_cache:
-          key: apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
+          key: compendium-portal-v1-{{ .Branch }}-{{ .Revision }}
           paths:
-            - ~/apydox/portal
+            - ~/compendium/portal
   test_portal:
     docker:
       - image: circleci/node:10.16.0-browsers-legacy
-    working_directory: ~/apydox/portal
+    working_directory: ~/compendium/portal
     steps:
       - restore_cache:
           keys:
-            - apydox-portal-v1-{{ .Branch }}-{{ .Revision }}
-            - apydox-portal-v1-{{ .Branch }}-
-            - apydox-portal-v1-
+            - compendium-portal-v1-{{ .Branch }}-{{ .Revision }}
+            - compendium-portal-v1-{{ .Branch }}-
+            - compendium-portal-v1-
       - run:
           name: Copy config.example.json to config.json
           command: cp config.example.json config.json
@@ -68,11 +68,11 @@ jobs:
     docker:
       - image: circleci/golang:1.12
     environment:
-      IMAGE_NAME: freshwebio/apydox-api
-    working_directory: ~/apydox/api
+      IMAGE_NAME: freshwebio/compendium-api
+    working_directory: ~/compendium/api
     steps:
       - checkout:
-          path: ~/apydox
+          path: ~/compendium
       - setup_remote_docker
       - run:
           name: Setup docker image tag environment variable

@@ -35,7 +35,7 @@ const Home: React.FunctionComponent<HomeProps> = ({
       ) : (
         <>
           <Heading>
-            {content.login.title || 'Welcome to the apydox portal'}
+            {content.login.title || 'Welcome to the compendium portal'}
           </Heading>
           {content.login.summary && content.login.summary.length > 0
             ? content.login.summary.map(

@@ -23,14 +23,12 @@ const githubApiInjector: Middleware = (): MiddlewareFunction => (
 
   // Check if this action is a redux-api-middleware action.
   if (rsaa && isGithubAPICall(rsaa)) {
-    rsaa.endpoint = `https://api.github.com/repos/${
-      process.env.REACT_APP_API_DOCS_REPO_OWNER
-    }/${process.env.REACT_APP_API_DOCS_REPO}${rsaa.endpoint}`
+    rsaa.endpoint = `https://api.github.com/repos/${process.env.REACT_APP_API_DOCS_REPO_OWNER}/${process.env.REACT_APP_API_DOCS_REPO}${rsaa.endpoint}`
     // Inject the Authorization header from sessionStorage.
 
     rsaa.headers = Object.assign({}, rsaa.headers, {
       Authorization: `Bearer ${sessionStorage.getItem(
-        process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
+        process.env.REACT_APP_TOKEN_NAME || 'compendium-token'
       ) || ''}`,
     })
   }

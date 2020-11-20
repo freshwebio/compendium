@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/freshwebio/apydox-api/pkg/core"
-	"github.com/freshwebio/apydox-api/pkg/utils"
+	"github.com/freshwebio/compendium-api/pkg/core"
+	"github.com/freshwebio/compendium-api/pkg/utils"
 	"github.com/julienschmidt/httprouter"
 )
 

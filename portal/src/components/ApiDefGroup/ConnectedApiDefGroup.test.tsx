@@ -8,7 +8,7 @@ import { MemoryRouter } from 'react-router'
 import { act, create } from 'react-test-renderer'
 import { ThemeProvider } from 'styled-components'
 
-import theme from 'styles/themes/apydoxv1'
+import theme from 'styles/themes/compendiumv1'
 import ConnectedApiDefGroup from './ConnectedApiDefGroup'
 import StandaloneApiDefGroup from './ApiDefGroup'
 import githubApiInjector from 'appredux/middleware/githubApiInjector'

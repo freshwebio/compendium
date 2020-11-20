@@ -6,7 +6,7 @@ const createGithubApi = (): AxiosInstance => {
   let token
   try {
     token = sessionStorage.getItem(
-      process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
+      process.env.REACT_APP_TOKEN_NAME || 'compendium-token'
     )
   } catch (e) {
     console.log(e)
@@ -106,8 +106,8 @@ const saveDefaultDemoDefIfNeeded = (
   repo: string,
   prefix: string
 ): void => {
-  const localContentKeys = Object.keys(localStorage).filter(
-    (key): boolean => key.startsWith(prefix)
+  const localContentKeys = Object.keys(localStorage).filter((key): boolean =>
+    key.startsWith(prefix)
   )
   if (localContentKeys.length === 0) {
     localStorage.setItem(
@@ -136,7 +136,10 @@ const getLocalApiDefs = (owner: string, repo: string): FlatTreeResponse => {
         (entry): boolean => entry.path === groupPath
       )
       const newEntries = !existingGroupEntry
-        ? [{ path: groupPath, type: 'tree' }, { path, type: 'blob' }]
+        ? [
+            { path: groupPath, type: 'tree' },
+            { path, type: 'blob' },
+          ]
         : [{ path, type: 'blob' }]
 
       if (key.startsWith(prefix)) {

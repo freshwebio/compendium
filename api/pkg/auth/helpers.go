@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/freshwebio/apydox-api/pkg/core"
+	"github.com/freshwebio/compendium-api/pkg/core"
 	"github.com/google/go-github/v31/github"
 )
 
 // HTTPClientTimeout provides the timeout to be used
-// http clients in the apydox api.
+// http clients in the  api.
 var HTTPClientTimeout = time.Second * 10
 
 // GithubAuthorisationsClient provides an abstraction for the set of functionality

@@ -5,8 +5,8 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 
-	"github.com/freshwebio/apydox-api/pkg/bootstrap"
-	"github.com/freshwebio/apydox-api/pkg/middleware"
+	"github.com/freshwebio/compendium-api/pkg/bootstrap"
+	"github.com/freshwebio/compendium-api/pkg/middleware"
 	"github.com/freshwebio/entre"
 )
 

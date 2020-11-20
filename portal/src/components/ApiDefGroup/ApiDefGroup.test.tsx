@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import { MemoryRouter } from 'react-router'
 import { ThemeProvider } from 'styled-components'
 
-import theme from 'styles/themes/apydoxv1'
+import theme from 'styles/themes/compendiumv1'
 import ApiDefGroup from './ApiDefGroup'
 import ApiDefCard from 'components/ApiDefCard'
 

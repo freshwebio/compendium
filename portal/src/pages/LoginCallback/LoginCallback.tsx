@@ -25,7 +25,7 @@ const LoginCallback: React.FunctionComponent<LoginCallbackProps> = (
             props.setIsLoggedIn(true)
           }
           sessionStorage.setItem(
-            process.env.REACT_APP_TOKEN_NAME || 'apydox-token',
+            process.env.REACT_APP_TOKEN_NAME || 'compendium-token',
             token
           )
           window.location.href = '/'

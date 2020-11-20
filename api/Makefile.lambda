@@ -18,7 +18,7 @@ build: clean lambda
 
 .PHONY: docker-deps
 docker-deps:
-	docker-compose -p apydox_lambda_deps -f docker-compose.deps.yml up -d
+	docker-compose -p compendium_lambda_deps -f docker-compose.deps.yml up -d
 	echo "Waiting for docker depedency services to be ready"
 	sleep 20s
 

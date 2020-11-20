@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 
-	"github.com/freshwebio/apydox-api/pkg/utils"
+	"github.com/freshwebio/compendium-api/pkg/utils"
 )
 
 // Simply returns a 200 response for options requests for local environments running SAM local.

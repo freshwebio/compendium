@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/freshwebio/apydox-api/pkg/core"
+	"github.com/freshwebio/compendium-api/pkg/core"
 )
 
 func Test_produces_correct_oauth_request_body_for_github_authentication(t *testing.T) {

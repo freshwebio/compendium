@@ -1,4 +1,4 @@
-module github.com/freshwebio/apydox-api
+module github.com/freshwebio/compendium-api
 
 go 1.12
 

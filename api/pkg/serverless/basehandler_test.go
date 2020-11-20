@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/freshwebio/apydox-api/pkg/utils"
+	"github.com/freshwebio/compendium-api/pkg/utils"
 )
 
 func testResponse(resp events.APIGatewayProxyResponse, expectedStatusCode int, expectedBody string, t *testing.T) {

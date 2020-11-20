@@ -5,7 +5,7 @@ import { GlobalState } from 'appredux/reducers/global'
  */
 export const loadState = (): GlobalState | undefined => {
   try {
-    const serialisedState = localStorage.getItem('apydoxState')
+    const serialisedState = localStorage.getItem('compendiumState')
     if (!serialisedState) {
       return
     }
@@ -23,7 +23,7 @@ export const saveState = (stateToBePersisted: {
 }): void => {
   try {
     const serialisedState = JSON.stringify(stateToBePersisted)
-    localStorage.setItem('apydoxState', serialisedState)
+    localStorage.setItem('compendiumState', serialisedState)
   } catch (err) {
     // Ignore errors when writing to local storage.
   }

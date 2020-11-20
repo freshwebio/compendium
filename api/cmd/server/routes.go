@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/freshwebio/apydox-api/pkg/auth"
+	"github.com/freshwebio/compendium-api/pkg/auth"
 	"github.com/julienschmidt/httprouter"
 )
 

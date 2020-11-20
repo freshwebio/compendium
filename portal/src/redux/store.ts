@@ -9,7 +9,7 @@ import { loadState } from '../services/stateStorage'
 import persistenceAndRedirection from './middleware/persistenceAndRedirection'
 
 const composeEnhancers = composeWithDevTools({
-  name: 'apydox portal',
+  name: ' portal',
 })
 
 const middleware = applyMiddleware(

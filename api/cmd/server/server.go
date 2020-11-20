@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/freshwebio/apydox-api/pkg/core"
+	"github.com/freshwebio/compendium-api/pkg/core"
 	"github.com/freshwebio/entre"
 )
 

@@ -1,12 +1,12 @@
-version: '3.2'
+version: "3.2"
 
 services:
-  apydox-api:
+  compendium-api:
     build:
-      context: '.'
-      dockerfile: ${APYDOX_DOCKERFILE}
+      context: "."
+      dockerfile: ${COMPENDIUM_DOCKERFILE}
       args:
-        APYDOX_API_PORT: ${APYDOX_API_PORT}
-        APYDOX_API_CONFIG_FILE: ${APYDOX_API_CONFIG_FILE}
+        COMPENDIUM_API_PORT: ${COMPENDIUM_API_PORT}
+        COMPENDIUM_API_CONFIG_FILE: ${COMPENDIUM_API_CONFIG_FILE}
     ports:
-      - '${APYDOX_API_HOST_PORT}:${APYDOX_API_PORT}'
+      - "${COMPENDIUM_API_HOST_PORT}:${COMPENDIUM_API_PORT}"

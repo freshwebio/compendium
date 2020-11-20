@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
-// HandlePing provides functionality for imlementations of apydox
+// HandlePing provides functionality for imlementations of compendium
 // in a serverless architecture to handle ping events on a timer
 // that exist to keep serverless functions warm to reduce the request time.
 //

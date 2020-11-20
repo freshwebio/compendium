@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # For now only works for unix based systems.
-if ! sudo grep -q "127.0.0.1 apydox.local" /etc/hosts; then
-  echo "Adding hosts entry for apydox.local."
-  sudo bash -c 'echo "# Start of apydox managed hosts" >> /etc/hosts'
-  sudo bash -c 'echo "127.0.0.1 apydox.local" >> /etc/hosts'
-  sudo bash -c 'echo "# End of apydox managed hosts" >> /etc/hosts'
+if ! sudo grep -q "127.0.0.1 compendium.local" /etc/hosts; then
+  echo "Adding hosts entry for compendium.local."
+  sudo bash -c 'echo "# Start of compendium managed hosts" >> /etc/hosts'
+  sudo bash -c 'echo "127.0.0.1 compendium.local" >> /etc/hosts'
+  sudo bash -c 'echo "# End of compendium managed hosts" >> /etc/hosts'
 fi
 
 echo "
@@ -31,22 +31,22 @@ fi
 
 
 echo "
-Configuring nginx proxy for apydox.local if it is not already configured."
-if [ ! -f "/usr/local/etc/nginx/servers/apydox.conf" ]; then
-  echo "    Adding nginx proxy config for apydox"
-  export NGINX_APYDOX_CONFIG=$(cat <<-END
+Configuring nginx proxy for compendium.local if it is not already configured."
+if [ ! -f "/usr/local/etc/nginx/servers/compendium.conf" ]; then
+  echo "    Adding nginx proxy config for compendium"
+  export NGINX_COMPENDIUM_CONFIG=$(cat <<-END
 server {
     listen 80;
-    server_name apydox.local;
+    server_name compendium.local;
     return 301 https://\$server_name\$request_uri;
 }
 
 server {
     listen 443 ssl;
-    server_name apydox.local;
+    server_name compendium.local;
 
-    ssl_certificate $(pwd)/__apydox_local_certs/apydox.crt;
-    ssl_certificate_key $(pwd)/__apydox_local_certs/apydox.key;
+    ssl_certificate $(pwd)/__compendium_local_certs/compendium.crt;
+    ssl_certificate_key $(pwd)/__compendium_local_certs/compendium.key;
     ssl_protocols TLSv1.2;
     ssl_prefer_server_ciphers on;
     ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384;
@@ -82,7 +82,7 @@ server {
 }
 END
 )
-  sudo -E bash -c 'echo "$NGINX_APYDOX_CONFIG" >> /usr/local/etc/nginx/servers/apydox.conf'
+  sudo -E bash -c 'echo "$NGINX_COMPENDIUM_CONFIG" >> /usr/local/etc/nginx/servers/compendium.conf'
 else
   echo "    nginx proxy has already been configured"
 fi

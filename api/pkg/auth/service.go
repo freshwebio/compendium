@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/freshwebio/apydox-api/pkg/core"
+	"github.com/freshwebio/compendium-api/pkg/core"
 	"github.com/google/go-github/v31/github"
 )
 

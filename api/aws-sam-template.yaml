@@ -1,13 +1,13 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: "AWS::Serverless-2016-10-31"
 
-Description: Serverless API resources for the apydox api
+Description: Serverless API resources for the compendium api
 
 Parameters:
   SecretID:
     Type: String
-    Default: APYDOX/API-SECRETS
-    Description: The name of the secret that holds all the secrets and configuration needed for the apydox api
+    Default: COMPENDIUM/API-SECRETS
+    Description: The name of the secret that holds all the secrets and configuration needed for the compendium api
   SecretSourceEndpoint:
     Type: String
     Default: ""
@@ -15,11 +15,11 @@ Parameters:
   SecurityGroupID:
     Type: String
     Default: ""
-    Description: The security group the lambda functions in the apydox api belong to
+    Description: The security group the lambda functions in the compendium api belong to
   SubnetID:
     Type: String
     Default: ""
-    Description: The subnet the lambda functions in the apydox api belong to
+    Description: The subnet the lambda functions in the compendium api belong to
   SecretResourceARN:
     Type: String
     Description: "The exact ARN of the secret or with wildcards as per the format here: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html"
@@ -38,9 +38,9 @@ Globals:
     Timeout: 60
     Environment:
       Variables:
-        APYDOX_API_SECRET_ID: !Ref SecretID
-        APYDOX_API_SECRET_SOURCE: aws_secrets_manager
-        APYDOX_API_SECRET_SOURCE_ENDPOINT: !Ref SecretSourceEndpoint
+        COMPENDIUM_API_SECRET_ID: !Ref SecretID
+        COMPENDIUM_API_SECRET_SOURCE: aws_secrets_manager
+        COMPENDIUM_API_SECRET_SOURCE_ENDPOINT: !Ref SecretSourceEndpoint
     VpcConfig:
       SecurityGroupIds:
         - !If [HasSecurityGroupID, !Ref SecurityGroupID, !Ref "AWS::NoValue"]
@@ -54,9 +54,9 @@ Globals:
       MaxAge: "'600'"
 
 Resources:
-  ApydoxApi:
+  CompendiumApi:
     Type: "AWS::Serverless::Api"
-    Name: ApydoxApi
+    Name: CompendiumApi
     Properties:
       StageName: "v1"
   OptionsFunction:
@@ -64,7 +64,7 @@ Resources:
     Condition: LocalEnvOnly
     Properties:
       # create a custom handler to return 200 and appropriate headers for your OPTIONS requests
-      FunctionName: ApyDox-OptionsFunction
+      FunctionName: Compendium-OptionsFunction
       CodeUri: ./cmd/handlers/options
       Handler: main
       Events:
@@ -76,12 +76,12 @@ Resources:
   CheckAccessTokenFunction:
     Type: "AWS::Serverless::Function"
     Properties:
-      FunctionName: ApyDox-CheckAccessTokenFunction
+      FunctionName: Compendium-CheckAccessTokenFunction
       CodeUri: ./cmd/handlers/check_access_token
       Handler: main
       Policies:
         - Statement:
-            - Sid: SecretsManagerGetApydoxSecret
+            - Sid: SecretsManagerGetCompendiumSecret
               Effect: Allow
               Action:
                 - secretsmanager:GetSecretValue
@@ -91,7 +91,7 @@ Resources:
         CheckAccessToken:
           Type: Api
           Properties:
-            RestApiId: !Ref ApydoxApi
+            RestApiId: !Ref CompendiumApi
             Path: "/auth/github/check"
             Method: post
         CheckAccessTokenPing:
@@ -102,12 +102,12 @@ Resources:
   RetrieveAccessTokenFunction:
     Type: "AWS::Serverless::Function"
     Properties:
-      FunctionName: ApyDox-RetrieveAccessTokenFunction
+      FunctionName: Compendium-RetrieveAccessTokenFunction
       CodeUri: ./cmd/handlers/retrieve_access_token
       Handler: main
       Policies:
         - Statement:
-            - Sid: SecretsManagerGetApydoxSecret
+            - Sid: SecretsManagerGetCompendiumSecret
               Effect: Allow
               Action:
                 - secretsmanager:GetSecretValue
@@ -117,7 +117,7 @@ Resources:
         RetrieveAccessToken:
           Type: Api
           Properties:
-            RestApiId: !Ref ApydoxApi
+            RestApiId: !Ref CompendiumApi
             Path: "/auth/github/oauth/access-token"
             Method: post
         RetrieveAccessTokenPing:
@@ -128,12 +128,12 @@ Resources:
   RevokeAccessTokenFunction:
     Type: "AWS::Serverless::Function"
     Properties:
-      FunctionName: ApyDox-RevokeAccessTokenFunction
+      FunctionName: Compendium-RevokeAccessTokenFunction
       CodeUri: ./cmd/handlers/revoke_access_token
       Handler: main
       Policies:
         - Statement:
-            - Sid: SecretsManagerGetApydoxSecret
+            - Sid: SecretsManagerGetCompendiumSecret
               Effect: Allow
               Action:
                 - secretsmanager:GetSecretValue
@@ -143,7 +143,7 @@ Resources:
         RevokeAccessToken:
           Type: Api
           Properties:
-            RestApiId: !Ref ApydoxApi
+            RestApiId: !Ref CompendiumApi
             Path: "/auth/github/revoke"
             Method: delete
         RevokeAccessTokenPing:

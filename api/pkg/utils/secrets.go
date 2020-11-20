@@ -8,11 +8,11 @@ import (
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
 )
 
-// ApyDoxSecrets provides a structure
-// for a set of secrets specific to the apydox api.
-type ApyDoxSecrets struct {
-	GithubClientID     string `json:"APYDOX_API_GITHUB_CLIENT_ID"`
-	GithubClientSecret string `json:"APYDOX_API_GITHUB_CLIENT_SECRET"`
+// CompendiumSecrets provides a structure
+// for a set of secrets specific to the compendium api.
+type CompendiumSecrets struct {
+	GithubClientID     string `json:"COMPENDIUM_API_GITHUB_CLIENT_ID"`
+	GithubClientSecret string `json:"COMPENDIUM_API_GITHUB_CLIENT_SECRET"`
 }
 
 // SecretRetriever provides a base definition
@@ -24,7 +24,7 @@ type SecretRetriever interface {
 // GetSecrets retrieves a secret from AWS secrets manager and extracts
 // all the secrets from the secret string or binary making use of a provided
 // secret retrieval service.
-func GetSecrets(secretID string, secretsRetriever SecretRetriever) (*ApyDoxSecrets, error) {
+func GetSecrets(secretID string, secretsRetriever SecretRetriever) (*CompendiumSecrets, error) {
 	secretInput := &secretsmanager.GetSecretValueInput{
 		SecretId: &secretID,
 	}
@@ -45,7 +45,7 @@ func GetSecrets(secretID string, secretsRetriever SecretRetriever) (*ApyDoxSecre
 		decodedBinarySecret = string(decodedBinarySecretBytes[:len])
 	}
 
-	var secrets = &ApyDoxSecrets{}
+	var secrets = &CompendiumSecrets{}
 	if secretString != "" {
 		err = json.Unmarshal([]byte(secretString), secrets)
 		if err != nil {

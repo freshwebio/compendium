@@ -46,8 +46,8 @@ describe('githubApiInjector middleware', (): void => {
   it('should modify a github api RSAA action with the correct endpoint and authorization header', (): void => {
     process.env.REACT_APP_API_DOCS_REPO_OWNER = 'freshwebio'
     process.env.REACT_APP_API_DOCS_REPO = 'test-content'
-    process.env.REACT_APP_TOKEN_NAME = 'apydox-test-token'
-    sessionStorage.setItem('apydox-test-token', 'fsdfg0321ds')
+    process.env.REACT_APP_TOKEN_NAME = 'compendium-test-token'
+    sessionStorage.setItem('compendium-test-token', 'fsdfg0321ds')
     const action = {
       [RSAA]: {
         endpoint: '/content/core-services/Service1.yaml',

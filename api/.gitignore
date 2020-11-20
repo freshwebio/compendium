@@ -1,5 +1,5 @@
-apydox-api
-apydox-api.conf
+compendium-api
+compendium-api.conf
 .env
 coverage.out
 **/main

@@ -6,8 +6,8 @@ import (
 	"log"
 
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/freshwebio/apydox-api/pkg/auth"
-	"github.com/freshwebio/apydox-api/pkg/utils"
+	"github.com/freshwebio/compendium-api/pkg/auth"
+	"github.com/freshwebio/compendium-api/pkg/utils"
 )
 
 // CheckAccessTokenRequestHandler produces a request handler to be used

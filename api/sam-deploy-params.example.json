@@ -1,4 +1,4 @@
 {
-  "EnvType": "production" ,
-  "SecretResourceARN": "arn:aws:secretsmanager:EXAMPLE_REGION:ACCOUNT_ID:secret:APYDOX/API-SECRETS-*"
+  "EnvType": "production",
+  "SecretResourceARN": "arn:aws:secretsmanager:EXAMPLE_REGION:ACCOUNT_ID:secret:COMPENDIUM/API-SECRETS-*"
 }

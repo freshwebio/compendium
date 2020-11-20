@@ -1,19 +1,19 @@
 FROM alpine:latest
 
-ARG APYDOX_API_PORT=4305
-ARG APYDOX_API_CONFIG_FILE=/config/apydox-api.conf
+ARG COMPENDIUM_API_PORT=4305
+ARG COMPENDIUM_API_CONFIG_FILE=/config/compendium-api.conf
 
 # Will be overriden if provided at container runtime.
-ENV APYDOX_API_CONFIG_FILE=$APYDOX_API_CONFIG_FILE
+ENV COMPENDIUM_API_CONFIG_FILE=$COMPENDIUM_API_CONFIG_FILE
 
 RUN apk --no-cache add ca-certificates
 
-COPY ./cmd/server/main /apydox-api
+COPY ./cmd/server/main /compendium-api
 
-RUN chmod +x /apydox-api
+RUN chmod +x /compendium-api
 
-EXPOSE "${APYDOX_API_PORT}"
+EXPOSE "${COMPENDIUM_API_PORT}"
 
 # We can only use args in CMD running through sh.
 # https://github.com/moby/moby/issues/5509#issuecomment-45243772
-CMD ["sh", "-c", "/apydox-api -config ${APYDOX_API_CONFIG_FILE}"]
+CMD ["sh", "-c", "/compendium-api -config ${COMPENDIUM_API_CONFIG_FILE}"]

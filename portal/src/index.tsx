@@ -7,10 +7,10 @@ import store from 'appredux/store'
 
 import App from 'App'
 import * as serviceWorker from 'serviceWorker'
-import apydoxv1 from 'styles/themes/apydoxv1'
+import compendiumv1 from 'styles/themes/compendiumv1'
 
 ReactDOM.render(
-  <ThemeProvider theme={apydoxv1}>
+  <ThemeProvider theme={compendiumv1}>
     <Provider store={store()}>
       <App />
     </Provider>

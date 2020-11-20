@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import createMockStore from 'redux-mock-store'
 import { ThemeProvider } from 'styled-components'
 
-import theme from 'styles/themes/apydoxv1'
+import theme from 'styles/themes/compendiumv1'
 import { getApiDefs, ApiDefinitionGroup } from 'services/github'
 import ApiDefList from './ApiDefList'
 import StandaloneApiDefGroup from 'components/ApiDefGroup/ApiDefGroup'

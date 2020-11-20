@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
-	"github.com/freshwebio/apydox-api/pkg/utils"
+	"github.com/freshwebio/compendium-api/pkg/utils"
 	"github.com/namsral/flag"
 )
 

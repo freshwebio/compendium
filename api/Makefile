@@ -14,7 +14,7 @@ build: clean
 	cd cmd/server && \
 	GOOS=linux GOARCH=amd64 go build -o main && \
 	cd ../.. && \
-	docker-compose -p apydox_server build
+	docker-compose -p compendium_server build
 
 .PHONY: cibuild
 cibuild: clean
@@ -25,4 +25,4 @@ cibuild: clean
 
 .PHONY: api
 api: build
-	docker-compose -p apydox_server up
+	docker-compose -p compendium_server up

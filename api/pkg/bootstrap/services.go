@@ -1,8 +1,8 @@
 package bootstrap
 
 import (
-	"github.com/freshwebio/apydox-api/pkg/auth"
-	"github.com/freshwebio/apydox-api/pkg/core"
+	"github.com/freshwebio/compendium-api/pkg/auth"
+	"github.com/freshwebio/compendium-api/pkg/core"
 )
 
 // SetupServices deals with setting up the services provided by the modules

@@ -1,6 +1,6 @@
 package auth
 
-import "github.com/freshwebio/apydox-api/pkg/core"
+import "github.com/freshwebio/compendium-api/pkg/core"
 
 // SetupServices provides the auth services to the rest of
 // the applications.

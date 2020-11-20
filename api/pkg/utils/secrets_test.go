@@ -12,12 +12,12 @@ type mockSecretRetriever struct{}
 
 func (s *mockSecretRetriever) GetSecretValue(secretInput *secretsmanager.GetSecretValueInput) (*secretsmanager.GetSecretValueOutput, error) {
 	if *secretInput.SecretId == "validFromString" {
-		validFromStr := "{\"APYDOX_API_GITHUB_CLIENT_ID\":\"testClientId\",\"APYDOX_API_GITHUB_CLIENT_SECRET\":\"testClientSecret\"}"
+		validFromStr := "{\"COMPENDIUM_API_GITHUB_CLIENT_ID\":\"testClientId\",\"COMPENDIUM_API_GITHUB_CLIENT_SECRET\":\"testClientSecret\"}"
 		return &secretsmanager.GetSecretValueOutput{
 			SecretString: &validFromStr,
 		}, nil
 	} else if *secretInput.SecretId == "validFromBytes" {
-		validFromBytes := []byte("{\"APYDOX_API_GITHUB_CLIENT_ID\":\"testClientId\",\"APYDOX_API_GITHUB_CLIENT_SECRET\":\"testClientSecret\"}")
+		validFromBytes := []byte("{\"COMPENDIUM_API_GITHUB_CLIENT_ID\":\"testClientId\",\"COMPENDIUM_API_GITHUB_CLIENT_SECRET\":\"testClientSecret\"}")
 		encodedBinarySecretBytes := make([]byte, base64.StdEncoding.EncodedLen(len(validFromBytes)))
 		base64.StdEncoding.Encode(encodedBinarySecretBytes, validFromBytes)
 		return &secretsmanager.GetSecretValueOutput{
@@ -26,12 +26,12 @@ func (s *mockSecretRetriever) GetSecretValue(secretInput *secretsmanager.GetSecr
 	} else if *secretInput.SecretId == "networkOrAuthError" {
 		return nil, errors.New("Failed to retrieve secret")
 	} else if *secretInput.SecretId == "invalidJSON" {
-		invalidJSON := "{\"APYDOX_API_GITHUB_CLIENT_ID\":\"testClientId\"\"APYDOX_API_GITHUB_CLIENT_SECRET\":\"testClientSecret\""
+		invalidJSON := "{\"COMPENDIUM_API_GITHUB_CLIENT_ID\":\"testClientId\"\"COMPENDIUM_API_GITHUB_CLIENT_SECRET\":\"testClientSecret\""
 		return &secretsmanager.GetSecretValueOutput{
 			SecretString: &invalidJSON,
 		}, nil
 	} else if *secretInput.SecretId == "invalidBase64" {
-		invalidBase64 := []byte("{\"APYDOX_API_GITHUB_CLIENT_ID\":\"testClientId\",\"APYDOX_API_GITHUB_CLIENT_SECRET\":\"testClientSecret\"}")
+		invalidBase64 := []byte("{\"COMPENDIUM_API_GITHUB_CLIENT_ID\":\"testClientId\",\"COMPENDIUM_API_GITHUB_CLIENT_SECRET\":\"testClientSecret\"}")
 		return &secretsmanager.GetSecretValueOutput{
 			SecretBinary: invalidBase64,
 		}, nil

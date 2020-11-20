@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/freshwebio/apydox-api/pkg/utils"
+	"github.com/freshwebio/compendium-api/pkg/utils"
 	"github.com/julienschmidt/httprouter"
 )
 

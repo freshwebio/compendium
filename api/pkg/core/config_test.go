@@ -5,13 +5,13 @@ import (
 	"testing"
 
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
-	"github.com/freshwebio/apydox-api/pkg/utils"
+	"github.com/freshwebio/compendium-api/pkg/utils"
 	"github.com/namsral/flag"
 )
 
 func Test_config_loads_correctly_from_config_file(t *testing.T) {
-	conf, err := LoadConfig(flag.NewFlagSet("apydox-api", flag.ContinueOnError), []string{
-		"-config", "__test_resources/apydox-api.test.conf",
+	conf, err := LoadConfig(flag.NewFlagSet("compendium-api", flag.ContinueOnError), []string{
+		"-config", "__test_resources/compendium-api.test.conf",
 	}, nil)
 	if err != nil {
 		t.Errorf("Failed to load configuration due to %v", err)
@@ -46,7 +46,7 @@ func Test_config_loads_correctly_from_config_file(t *testing.T) {
 type testSecretsMgr struct{}
 
 func (s *testSecretsMgr) GetSecretValue(secretInput *secretsmanager.GetSecretValueInput) (*secretsmanager.GetSecretValueOutput, error) {
-	secretString := "{\"APYDOX_API_GITHUB_CLIENT_ID\":\"a1f3uda1\",\"APYDOX_API_GITHUB_CLIENT_SECRET\":\"39sdf8fj2dasdu3ydasdasd\"}"
+	secretString := "{\"COMPENDIUM_API_GITHUB_CLIENT_ID\":\"a1f3uda1\",\"COMPENDIUM_API_GITHUB_CLIENT_SECRET\":\"39sdf8fj2dasdu3ydasdasd\"}"
 	return &secretsmanager.GetSecretValueOutput{
 		SecretString: &secretString,
 	}, nil
@@ -57,10 +57,10 @@ func testCreateSecretsMgr(endpoint string) utils.SecretRetriever {
 }
 
 func Test_config_loads_correctly_from_secrets_mgr(t *testing.T) {
-	os.Setenv("APYDOX_API_SECRET_ID", "APYDOX-API-SECRETS")
-	os.Setenv("APYDOX_ENV_TEST", "true")
-	os.Setenv("APYDOX_API_SECRET_SOURCE", "aws_secrets_manager")
-	conf, err := LoadConfig(flag.NewFlagSet("apydox-api", flag.ContinueOnError), []string{}, testCreateSecretsMgr)
+	os.Setenv("COMPENDIUM_API_SECRET_ID", "COMPENDIUM-API-SECRETS")
+	os.Setenv("COMPENDIUM_ENV_TEST", "true")
+	os.Setenv("COMPENDIUM_API_SECRET_SOURCE", "aws_secrets_manager")
+	conf, err := LoadConfig(flag.NewFlagSet("compendium-api", flag.ContinueOnError), []string{}, testCreateSecretsMgr)
 	if err != nil {
 		t.Errorf("Failed to load configuration due to %v", err)
 	}

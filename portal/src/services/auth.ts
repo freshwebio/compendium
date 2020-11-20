@@ -23,7 +23,7 @@ export const isLoggedIn = async (demoMode?: boolean): Promise<boolean> => {
   let token
   try {
     token = sessionStorage.getItem(
-      process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
+      process.env.REACT_APP_TOKEN_NAME || 'compendium-token'
     )
   } catch (err) {
     return false
@@ -48,7 +48,7 @@ export const logout = async (demoMode?: boolean): Promise<boolean> => {
 
   let token
   try {
-    const tokenName = process.env.REACT_APP_TOKEN_NAME || 'apydox-token'
+    const tokenName = process.env.REACT_APP_TOKEN_NAME || 'compendium-token'
     token = sessionStorage.getItem(tokenName)
     sessionStorage.removeItem(tokenName)
   } catch (err) {

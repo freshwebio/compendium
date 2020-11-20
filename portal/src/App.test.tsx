@@ -8,7 +8,7 @@ import StandaloneHeader from 'components/Header/Header'
 import App from './App'
 import { ButtonLink } from 'components/Header/header.styles'
 import { TOGGLE_DEMO_MODE } from 'appredux/actions/global/types'
-import theme from 'styles/themes/apydoxv1'
+import theme from 'styles/themes/compendiumv1'
 
 jest.mock('services/github')
 jest.mock('services/auth')
