@@ -16,11 +16,9 @@ const logoutAndRedirect = (
   demoMode?: boolean
 ): void => {
   if (!demoMode) {
-    logout().then(
-      (): void => {
-        window.location.href = '/'
-      }
-    )
+    logout().then((): void => {
+      window.location.href = '/'
+    })
   } else {
     toggleDemoMode()
   }

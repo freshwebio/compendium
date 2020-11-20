@@ -127,11 +127,9 @@ describe('Notification', (): void => {
     )
 
     // Now to test the close functionality.
-    act(
-      (): void => {
-        wrapper.find(NotificationClose).simulate('click', { target: {} })
-      }
-    )
+    act((): void => {
+      wrapper.find(NotificationClose).simulate('click', { target: {} })
+    })
 
     await act(
       async (): Promise<void> => {

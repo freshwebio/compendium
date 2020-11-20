@@ -158,7 +158,7 @@ const getLocalApiDefs = (owner: string, repo: string): FlatTreeResponse => {
 }
 
 export const getApiDefs = async (
-  branch: string = 'master',
+  branch = 'master',
   demoMode?: boolean
 ): Promise<ApiDefinitionGroup[]> => {
   const owner = process.env.REACT_APP_API_DOCS_REPO_OWNER || ''
@@ -221,7 +221,7 @@ const getLocalServiceDefinition = (
  */
 export const loadServiceDefinition = async (
   service: string,
-  branch: string = 'master',
+  branch = 'master',
   demoMode?: boolean
 ): Promise<{ content: string; sha: string }> => {
   try {

@@ -6,35 +6,30 @@ import LoadingScreen from 'components/LoadingScreen'
 import Sidebar from 'components/Sidebar'
 import ServiceView from './ServiceView'
 
-jest.mock(
-  'services/github',
-  (): any => ({
-    loadServiceDefinition: jest.fn(),
-    getApiDefs: jest.fn(),
-  })
-)
+jest.mock('services/github', (): any => ({
+  loadServiceDefinition: jest.fn(),
+  getApiDefs: jest.fn(),
+}))
 
 /* eslint-disable */
 import { loadServiceDefinition, getApiDefs } from 'services/github'
 
 describe('ServiceView page', (): void => {
-  beforeEach(
-    (): void => {
-      // @ts-ignore
-      loadServiceDefinition.mockReset()
-      // @ts-ignore
-      loadServiceDefinition.mockReturnValue(
-        Promise.resolve({
-          content: 'test content',
-          sha: 'testsha324031fasfo12',
-        })
-      )
-      // @ts-ignore
-      getApiDefs.mockReset()
-      // @ts-ignore
-      getApiDefs.mockReturnValue(Promise.resolve([]))
-    }
-  )
+  beforeEach((): void => {
+    // @ts-ignore
+    loadServiceDefinition.mockReset()
+    // @ts-ignore
+    loadServiceDefinition.mockReturnValue(
+      Promise.resolve({
+        content: 'test content',
+        sha: 'testsha324031fasfo12',
+      })
+    )
+    // @ts-ignore
+    getApiDefs.mockReset()
+    // @ts-ignore
+    getApiDefs.mockReturnValue(Promise.resolve([]))
+  })
 
   it('should render without any issues and load the service definition along with the sidebar', async (): Promise<
     void

@@ -26,11 +26,9 @@ const ServiceView: FunctionComponent<Props> = ({
 
   useEffect((): void => {
     loadServiceDefinition(match.params.service, 'master', demoMode)
-      .then(
-        (result: { content: string; sha: string }): void => {
-          setSpec(result.content)
-        }
-      )
+      .then((result: { content: string; sha: string }): void => {
+        setSpec(result.content)
+      })
       .catch((err): void => console.log(err))
   }, [match.params.service])
 

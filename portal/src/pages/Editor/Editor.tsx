@@ -54,15 +54,13 @@ class Editor extends Component<EditorProps, EditorCompState> {
 
     if (params.service && params.service !== prevParams.service) {
       loadServiceDefinition(params.service, 'master', this.props.demoMode)
-        .then(
-          (result: { content: string; sha: string }): void => {
-            this.setState({ originalDocument: result.content, loaded: true })
-            this.editor.specActions.updateSpec(result.content)
-            if (this.props.setCurrentDocument) {
-              this.props.setCurrentDocument(result.content, result.sha)
-            }
+        .then((result: { content: string; sha: string }): void => {
+          this.setState({ originalDocument: result.content, loaded: true })
+          this.editor.specActions.updateSpec(result.content)
+          if (this.props.setCurrentDocument) {
+            this.props.setCurrentDocument(result.content, result.sha)
           }
-        )
+        })
         .catch((err): void => console.log(err))
     }
 

@@ -40,11 +40,9 @@ describe('CommitPanel', (): void => {
     )
     const iconButton = wrapper.find(IconButton)
     expect(iconButton.length).toBe(1)
-    act(
-      (): void => {
-        iconButton.simulate('click', { target: {} })
-      }
-    )
+    act((): void => {
+      iconButton.simulate('click', { target: {} })
+    })
     // Does props of a child component count as an implementation detail? possibly find a better approach here.
     expect(wrapper.find(CommitView).props().show).toBeTrue()
   })

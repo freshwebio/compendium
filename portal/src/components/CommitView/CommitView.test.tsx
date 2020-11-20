@@ -39,13 +39,11 @@ describe('CommitView', (): void => {
         commitChanges={(): void => {}}
       />
     )
-    act(
-      (): void => {
-        enzymeFind(wrapper, CommitViewTextArea).simulate('change', {
-          target: { value: 'This is a commit description' },
-        })
-      }
-    )
+    act((): void => {
+      enzymeFind(wrapper, CommitViewTextArea).simulate('change', {
+        target: { value: 'This is a commit description' },
+      })
+    })
     expect(setCurrentCommitDescription).toHaveBeenCalledWith(
       'This is a commit description'
     )
@@ -64,11 +62,9 @@ describe('CommitView', (): void => {
         commitChanges={commitChanges}
       />
     )
-    act(
-      (): void => {
-        enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
-      }
-    )
+    act((): void => {
+      enzymeFind(wrapper, CommitViewButton).simulate('click', { target: {} })
+    })
     expect(commitChanges).toHaveBeenCalledWith(
       'This is the commit description',
       'This is the specification of complete and utter madness',

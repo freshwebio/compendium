@@ -35,9 +35,6 @@ const mapDispatchToProps = (dispatch: any): DispatchProps => {
   }
 }
 
-const ConnectedEditor = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Editor)
+const ConnectedEditor = connect(mapStateToProps, mapDispatchToProps)(Editor)
 
 export default ConnectedEditor
